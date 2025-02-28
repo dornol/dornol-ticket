@@ -1,11 +1,9 @@
 package dev.dornol.ticket.domain.entity.manager
 
+import dev.dornol.ticket.domain.constraint.RegExp
 import dev.dornol.ticket.domain.entity.BaseCreationEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
+import jakarta.validation.constraints.Pattern
 
 @Entity
 class Manager(
@@ -14,9 +12,10 @@ class Manager(
     name: String,
     phone: String,
     email: String,
-    group: ManagerGroup,
+    role: AccessRole,
 ) : BaseCreationEntity() {
 
+    @Pattern(regexp = RegExp.USERNAME_REGEXP)
     @Column(length = 18, nullable = false, updatable = false, unique = true)
     val username: String = username
 
@@ -24,6 +23,7 @@ class Manager(
     var password: String = password
         protected set
 
+    @Pattern(regexp = RegExp.USERNAME_REGEXP)
     @Column(length = 10, nullable = false)
     var name: String = name
         protected set
@@ -36,8 +36,7 @@ class Manager(
     var email: String = email
         protected set
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", nullable = false)
-    var group: ManagerGroup = group
-        protected set
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
+    var managerRole: AccessRole = role
 }

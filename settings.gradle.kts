@@ -1,2 +1,2 @@
 rootProject.name = "dornol-ticket"
-include("domain")
+include("domain", "admin-api")

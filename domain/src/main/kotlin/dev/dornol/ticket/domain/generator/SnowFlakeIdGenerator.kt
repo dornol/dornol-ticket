@@ -17,7 +17,7 @@ final class SnowFlakeIdGenerator(
 ) : IdentifierGenerator {
 
     companion object {
-        val epoch: Long = LocalDateTime.of(2024, 1, 1, 0, 0)
+        val epoch: Long = LocalDateTime.of(2025, 1, 1, 0, 0)
             .atZone(ZoneId.of("Asia/Seoul"))
             .toInstant()
             .toEpochMilli()
