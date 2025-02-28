@@ -6,6 +6,6 @@ import java.util.*
 
 interface AuthTokenRedisRepository : CrudRepository<TokenBundle, UUID> {
 
-    fun findByAccessToken(accessToken: String): TokenBundle?
+    fun findByRefreshTokenValue(refreshTokenValue: String): TokenBundle?
 
 }

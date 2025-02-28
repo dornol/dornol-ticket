@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security
+package dev.dornol.ticket.admin.api.security
 
 import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey

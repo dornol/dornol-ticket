@@ -1,7 +1,6 @@
-package dev.dornol.ticket.admin.api.config.security.authentication
+package dev.dornol.ticket.admin.api.security.authentication
 
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
-import dev.dornol.ticket.admin.api.config.security.userdetails.AdminUserDetailsService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class FormLoginAuthenticationProvider(
     private val managerRepository: ManagerRepository,
-    private val userDetailsService: UserDetailsService,
+    userDetailsService: UserDetailsService,
     passwordEncoder: PasswordEncoder
 ) : DaoAuthenticationProvider(passwordEncoder) {
 

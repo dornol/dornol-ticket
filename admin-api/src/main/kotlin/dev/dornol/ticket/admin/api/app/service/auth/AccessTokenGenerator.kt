@@ -1,5 +1,6 @@
 package dev.dornol.ticket.admin.api.app.service.auth
 
+import dev.dornol.ticket.admin.api.app.dto.auth.TokenDto
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -18,21 +19,24 @@ class AccessTokenGenerator(
     private val expires: Long,
 ) : TokenGenerator {
 
-    override fun generateToken(authentication: Authentication): String {
+    override fun generateToken(authentication: Authentication): TokenDto {
         return this.generateToken(authentication.name, authentication.authorities)
     }
 
-    private fun generateToken(username: String, authorities: Collection<GrantedAuthority>): String {
+    private fun generateToken(username: String, authorities: Collection<GrantedAuthority>): TokenDto {
         val now = Instant.now()
         val scope = authorities.stream().map { it.authority }.collect(Collectors.joining(" "))
+        val expiresAt = now.plus(expires, ChronoUnit.SECONDS)
         val claims = JwtClaimsSet.builder()
             .issuer("self")
             .issuedAt(now)
-            .expiresAt(now.plus(expires, ChronoUnit.SECONDS))
+            .expiresAt(expiresAt)
             .subject(username)
             .claim("scope", scope)
             .build()
-        return encoder.encode(JwtEncoderParameters.from(claims)).tokenValue
+
+        val token = encoder.encode(JwtEncoderParameters.from(claims)).tokenValue
+        return TokenDto(token, expires)
     }
 
 }

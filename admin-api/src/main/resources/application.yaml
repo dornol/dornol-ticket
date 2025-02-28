@@ -24,7 +24,7 @@ dornol:
         public-key: "classpath:certs/public.pem"
         private-key: "classpath:certs/private.pem"
       access-token:
-        expiry-seconds: 1800
+        expiry-seconds: 10
       refresh-token:
         expiry-seconds: 1209600
 

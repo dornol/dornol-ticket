@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security.userdetails
+package dev.dornol.ticket.admin.api.security.userdetails
 
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import org.springframework.data.repository.findByIdOrNull

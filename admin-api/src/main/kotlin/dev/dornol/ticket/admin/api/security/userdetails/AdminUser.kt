@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security.userdetails
+package dev.dornol.ticket.admin.api.security.userdetails
 
 import org.springframework.security.core.CredentialsContainer
 import org.springframework.security.core.GrantedAuthority

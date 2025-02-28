@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security
+package dev.dornol.ticket.admin.api.security
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import java.security.interfaces.RSAPrivateKey

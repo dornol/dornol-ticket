@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security.handler
+package dev.dornol.ticket.admin.api.security.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -7,29 +7,30 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ProblemDetail
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
 
 private val log = KotlinLogging.logger {}
 
 @Component
-class ApiAuthenticationEntryPoint(
-    private val objectMapper: ObjectMapper
-) : AuthenticationEntryPoint {
+class ApiAccessDeniedHandler(
+    private val objectMapper: ObjectMapper,
+) : AccessDeniedHandler {
 
-    override fun commence(
+    override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException
+        accessDeniedException: AccessDeniedException
     ) {
-        log.debug { "unauthorized for ${request.requestURL}" }
+        log.debug { "access denied for ${request.requestURL}" }
         with (response) {
             contentType = MediaType.APPLICATION_JSON.toString()
             characterEncoding = StandardCharsets.UTF_8.name()
-            status = HttpStatus.UNAUTHORIZED.value()
-            objectMapper.writeValue(writer, ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED))
+            status = HttpStatus.FORBIDDEN.value()
+            objectMapper.writeValue(writer, ProblemDetail.forStatus(HttpStatus.FORBIDDEN))
         }
     }
+
 }

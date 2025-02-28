@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config.security.handler
+package dev.dornol.ticket.admin.api.security.handler
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
