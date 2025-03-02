@@ -1,4 +1,4 @@
-package dev.dornol.api
+package dev.dornol.ticket.admin.api
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

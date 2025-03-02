@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Git branch to build')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: BRANCH_NAME, credentialsId: 'Github-DornolApp', url: 'https://github.com/dornol/dornol-ticket'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                script {
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean :admin-api:build'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub_kkkqwerasdf123', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+
+                    sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
+
+                    // Build and push the Docker image in one step
+                    dir('admin-api') {
+                        sh '''
+                        docker buildx build \
+                        --platform linux/arm64 \
+                        -t $DOCKER_HUB_USERNAME/dornol-ticket-admin-api:latest \
+                        -f Dockerfile . --push
+                    '''
+                    }
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                script {
+                    // Remove the local Docker image after push
+                    sh 'docker rmi $DOCKER_HUB_USERNAME/dornol-ticket-admin-api:latest'
+                }
+            }
+        }
+    }
+}
