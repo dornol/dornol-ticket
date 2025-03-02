@@ -1,10 +1,14 @@
 package dev.dornol.ticket.admin.api.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import dev.dornol.ticket.admin.api.security.filter.JsonUsernamePasswordAuthenticationFilter
 import dev.dornol.ticket.domain.entity.manager.AccessRole
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod.*
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -15,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -26,6 +31,7 @@ class SecurityConfig(
     private val authenticationEntryPoint: AuthenticationEntryPoint,
     private val authenticationSuccessHandler: AuthenticationSuccessHandler,
     private val authenticationFailureHandler: AuthenticationFailureHandler,
+    private val objectMapper: ObjectMapper,
 
     @Value("\${dornol.security.cors.allowed-origins:}")
     private val allowedOrigins: Array<String>
@@ -36,7 +42,10 @@ class SecurityConfig(
     }
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain = http.run {
+    fun securityFilterChain(
+        http: HttpSecurity,
+        jsonUsernamePasswordAuthenticationFilter: JsonUsernamePasswordAuthenticationFilter
+    ): SecurityFilterChain = http.run {
         csrf { it.disable() }
         headers {
             it.contentSecurityPolicy { csp -> csp.policyDirectives("script-src 'self'") }
@@ -55,16 +64,13 @@ class SecurityConfig(
             it.accessDeniedHandler(accessDeniedHandler)
             it.authenticationEntryPoint(authenticationEntryPoint)
         }
-        formLogin {
-            it.successHandler(authenticationSuccessHandler)
-            it.failureHandler(authenticationFailureHandler)
-        }
         sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         oauth2ResourceServer {
             it.jwt { }
         }
+        addFilterAt(jsonUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         build()
     }
 
@@ -81,5 +87,19 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+
+    @Bean
+    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
+    }
+
+    @Bean
+    fun jsonUsernamePasswordAuthenticationFilter(authenticationManager: AuthenticationManager): JsonUsernamePasswordAuthenticationFilter {
+        val filter = JsonUsernamePasswordAuthenticationFilter(authenticationManager, objectMapper)
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler)
+        filter.setAuthenticationFailureHandler(authenticationFailureHandler)
+        filter.setFilterProcessesUrl(LOGIN_URL)
+        return filter
+    }
 
 }

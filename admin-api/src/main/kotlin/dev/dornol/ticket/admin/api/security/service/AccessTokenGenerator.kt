@@ -1,6 +1,6 @@
-package dev.dornol.ticket.admin.api.app.service.auth
+package dev.dornol.ticket.admin.api.security.service
 
-import dev.dornol.ticket.admin.api.app.dto.auth.TokenDto
+import dev.dornol.ticket.admin.api.security.dto.TokenDto
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -28,7 +28,7 @@ class AccessTokenGenerator(
         val scope = authorities.stream().map { it.authority }.collect(Collectors.joining(" "))
         val expiresAt = now.plus(expires, ChronoUnit.SECONDS)
         val claims = JwtClaimsSet.builder()
-            .issuer("self")
+            .issuer("https://ticket.dornol.dev")
             .issuedAt(now)
             .expiresAt(expiresAt)
             .subject(username)

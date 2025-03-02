@@ -21,7 +21,7 @@ class FormLoginAuthenticationFailureHandler : AuthenticationFailureHandler {
         log.debug { "authentication failure: ${exception.message}" }
 
         with(response) {
-            sendError(HttpStatus.BAD_REQUEST.value(), exception.localizedMessage)
+            sendError(HttpStatus.UNAUTHORIZED.value(), exception.localizedMessage)
         }
     }
 }

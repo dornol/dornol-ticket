@@ -1,10 +1,9 @@
-package dev.dornol.ticket.admin.api.app.repository.auth
+package dev.dornol.ticket.admin.api.security.repository
 
 import dev.dornol.ticket.admin.api.app.domain.auth.TokenBundle
 import org.springframework.data.repository.CrudRepository
-import java.util.*
 
-interface AuthTokenRedisRepository : CrudRepository<TokenBundle, UUID> {
+interface AuthTokenRedisRepository : CrudRepository<TokenBundle, String> {
 
     fun findByRefreshTokenValue(refreshTokenValue: String): TokenBundle?
 

@@ -1,6 +1,6 @@
-package dev.dornol.ticket.admin.api.app.service.auth
+package dev.dornol.ticket.admin.api.security.service
 
-import dev.dornol.ticket.admin.api.app.dto.auth.TokenDto
+import dev.dornol.ticket.admin.api.security.dto.TokenDto
 import org.springframework.security.core.Authentication
 
 interface TokenGenerator {

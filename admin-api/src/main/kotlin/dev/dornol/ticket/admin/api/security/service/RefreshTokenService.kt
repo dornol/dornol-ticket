@@ -1,8 +1,8 @@
-package dev.dornol.ticket.admin.api.app.service.auth
+package dev.dornol.ticket.admin.api.security.service
 
 import dev.dornol.ticket.admin.api.app.domain.auth.TokenBundle
-import dev.dornol.ticket.admin.api.app.dto.auth.TokenDto
-import dev.dornol.ticket.admin.api.app.repository.auth.AuthTokenRedisRepository
+import dev.dornol.ticket.admin.api.security.dto.TokenDto
+import dev.dornol.ticket.admin.api.security.repository.AuthTokenRedisRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -23,8 +23,11 @@ class RefreshTokenService(
         return TokenDto(tokenBundle.refreshTokenValue, expires)
     }
 
-    fun findRefreshToken(refreshTokenValue: String): TokenBundle? {
-        return authTokenRedisRepository.findByRefreshTokenValue(refreshTokenValue)
+    fun popRefreshToken(refreshTokenValue: String): TokenBundle? {
+        // TODO: Transaction 을 위해 RedisTemplate, GETDEL 사용을 검토
+        return authTokenRedisRepository.findByRefreshTokenValue(refreshTokenValue)?.also {
+            authTokenRedisRepository.delete(it)
+        }
     }
 
 }

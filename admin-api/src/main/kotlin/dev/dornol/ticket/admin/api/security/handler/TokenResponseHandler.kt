@@ -1,9 +1,9 @@
 package dev.dornol.ticket.admin.api.security.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dev.dornol.ticket.admin.api.app.dto.auth.AccessTokenBundleDto
-import dev.dornol.ticket.admin.api.app.dto.auth.TokenBundleDto
-import dev.dornol.ticket.admin.api.app.dto.auth.TokenDto
+import dev.dornol.ticket.admin.api.security.dto.AccessTokenBundleDto
+import dev.dornol.ticket.admin.api.security.dto.TokenBundleDto
+import dev.dornol.ticket.admin.api.security.dto.TokenDto
 import dev.dornol.ticket.admin.api.security.enums.RefreshTokenAcceptType
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
@@ -16,7 +16,11 @@ import org.springframework.stereotype.Component
 class TokenResponseHandler(
     private val objectMapper: ObjectMapper,
 ) {
-    private val refreshTokenAcceptTypeHeaderName: String = "X-Refresh-Token-Accept"
+
+    companion object {
+        const val REFRESH_TOKEN_COOKIE_NAME = "dtrt"
+        const val REFRESH_TOKEN_ACCEPT_HEADER_NAME: String = "X-Refresh-Token-Accept"
+    }
 
     fun responseToken(
         request: HttpServletRequest,
@@ -42,13 +46,14 @@ class TokenResponseHandler(
         }
     }
 
-    private fun resolveRefreshTokenAcceptType(request: HttpServletRequest) = request.getHeader(refreshTokenAcceptTypeHeaderName)
+    private fun resolveRefreshTokenAcceptType(request: HttpServletRequest) = request.getHeader(REFRESH_TOKEN_ACCEPT_HEADER_NAME)
         ?.takeIf { it == RefreshTokenAcceptType.COOKIE.name }
         ?.let { RefreshTokenAcceptType.COOKIE }
         ?: RefreshTokenAcceptType.BODY
 
     private fun makeRefreshTokenCookie(refreshToken: TokenDto): Cookie {
-        val cookie = Cookie("X-Refresh-Token", refreshToken.token)
+
+        val cookie = Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken.value)
         cookie.isHttpOnly = true
         cookie.secure = true
         cookie.path = "/"

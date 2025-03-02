@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.security.handler
 
-import dev.dornol.ticket.admin.api.app.service.auth.RefreshTokenService
-import dev.dornol.ticket.admin.api.app.service.auth.TokenGenerator
+import dev.dornol.ticket.admin.api.security.service.RefreshTokenService
+import dev.dornol.ticket.admin.api.security.service.TokenGenerator
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.Authentication
@@ -21,7 +21,7 @@ class FormLoginAuthenticationSuccessHandler(
         authentication: Authentication
     ) {
         val accessToken = accessTokenGenerator.generateToken(authentication)
-        val refreshToken = refreshTokenService.generateRefreshToken(authentication.name, accessToken.token)
+        val refreshToken = refreshTokenService.generateRefreshToken(authentication.name, accessToken.value)
 
         tokenResponseHandler.responseToken(request, response, accessToken, refreshToken)
     }

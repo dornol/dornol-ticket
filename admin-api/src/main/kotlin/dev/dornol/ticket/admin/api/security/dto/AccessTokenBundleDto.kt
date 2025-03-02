@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.auth
+package dev.dornol.ticket.admin.api.security.dto
 
 open class AccessTokenBundleDto(
     val accessToken: TokenDto
