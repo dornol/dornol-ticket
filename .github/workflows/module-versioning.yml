@@ -3,7 +3,7 @@ name: Module Versioning
 on:
   push:
     branches:
-      - feature/jenkins
+      - main
 
 jobs:
   check-modules:
