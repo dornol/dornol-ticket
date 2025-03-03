@@ -15,6 +15,10 @@ pipeline {
         DOCKER_SWARM_SERVICE = 'admin-api'
     }
 
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH_NAME', type: 'PT_BRANCH'
+    }
+
     stages {
         stage('Checkout') {
             steps {
