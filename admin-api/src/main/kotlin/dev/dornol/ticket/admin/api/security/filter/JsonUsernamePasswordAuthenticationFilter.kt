@@ -14,14 +14,14 @@ class JsonUsernamePasswordAuthenticationFilter(
     authenticationManager: AuthenticationManager,
     private val objectMapper: ObjectMapper,
     private val usernamePropertyName: String = "username",
-    private val passwordPropertyName: String = "password"
+    private val passwordPropertyName: String = "password",
 ) : UsernamePasswordAuthenticationFilter(authenticationManager) {
 
     private val mapTypeReference: TypeReference<Map<String, String>> = object : TypeReference<Map<String, String>>() {}
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
 
-        if (!request.contentType.startsWith(MediaType.APPLICATION_JSON_VALUE)) {
+        if (!requestedWithJson(request)) {
             return super.attemptAuthentication(request, response)
         }
 
@@ -34,6 +34,9 @@ class JsonUsernamePasswordAuthenticationFilter(
         setDetails(request, authRequest)
         return this.authenticationManager.authenticate(authRequest)
     }
+
+    private fun requestedWithJson(request: HttpServletRequest) =
+        request.contentType?.startsWith(MediaType.APPLICATION_JSON_VALUE) ?: false
 
     private fun obtainUsername(requestBody: Map<String, String>): String {
         return requestBody[usernamePropertyName]?.trim() ?: ""

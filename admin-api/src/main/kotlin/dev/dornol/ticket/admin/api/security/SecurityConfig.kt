@@ -95,7 +95,10 @@ class SecurityConfig(
 
     @Bean
     fun jsonUsernamePasswordAuthenticationFilter(authenticationManager: AuthenticationManager): JsonUsernamePasswordAuthenticationFilter {
-        val filter = JsonUsernamePasswordAuthenticationFilter(authenticationManager, objectMapper)
+        val filter = JsonUsernamePasswordAuthenticationFilter(
+            authenticationManager = authenticationManager,
+            objectMapper = objectMapper
+        )
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler)
         filter.setAuthenticationFailureHandler(authenticationFailureHandler)
         filter.setFilterProcessesUrl(LOGIN_URL)

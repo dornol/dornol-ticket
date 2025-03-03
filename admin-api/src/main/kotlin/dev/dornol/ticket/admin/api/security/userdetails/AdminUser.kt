@@ -6,7 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.io.Serializable
 
 class AdminUser(
-    private val userId: Long,
+    val userId: Long,
+    private val username: String,
     password: String,
     private val authorities: Collection<GrantedAuthority>
 ) : UserDetails, Serializable, CredentialsContainer {
@@ -17,7 +18,7 @@ class AdminUser(
 
     override fun getPassword() = password
 
-    override fun getUsername() = userId.toString()
+    override fun getUsername() = username
 
     override fun eraseCredentials() {
         this.password = null
