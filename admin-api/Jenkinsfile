@@ -60,8 +60,6 @@ pipeline {
                         -f Dockerfile . --quiet --push
                         '''
                     }
-
-                    sh 'sed -i \'s/^$ENV_VERSION_NAME=.*/$ENV_VERSION_NAME=$TAG_NAME/\' /home/ubuntu/docker/.env'
                 }
             }
         }
