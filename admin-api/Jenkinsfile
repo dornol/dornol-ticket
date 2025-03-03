@@ -14,16 +14,6 @@ pipeline {
         DOCKER_SWARM_SERVICE = "dornol_$MODULE"
     }
 
-    parameters {
-        gitParameter(
-            branchFilter: 'refs/tags/*',
-            name: 'TAG_NAME',
-            type: 'PT_TAG',
-            sortMode: 'DESCENDING',
-            quickFilterEnabled: true
-        )
-    }
-
     stages {
         stage('Checkout') {
             steps {
