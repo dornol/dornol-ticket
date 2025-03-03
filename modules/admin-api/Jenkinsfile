@@ -27,7 +27,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: TAG_NAME, credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
+                git branch: "$TAG_NAME", credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
             }
         }
 
