@@ -17,7 +17,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: "refs/tags/$TAG_NAME", credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
+                checkout scmGit(
+                        branches: [[name: "$TAG_NAME"]],
+                        extensions: [],
+                        userRemoteConfigs: [[credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL]]
+                )
             }
         }
 
