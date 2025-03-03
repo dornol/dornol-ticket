@@ -50,8 +50,6 @@ pipeline {
                         -f Dockerfile . --quiet --push
                     '''
                     }
-
-                    sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
                 }
             }
         }
