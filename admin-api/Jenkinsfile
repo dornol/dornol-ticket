@@ -1,14 +1,24 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Git branch to build')
+    environment {
+        MODULE = 'admin-api'
+
+        GIT_CREDENTIAL_ID = 'Github-DornolApp'
+        GIT_URL = 'https://github.com/dornol/dornol-ticket'
+
+        DOCKER_REPOSITORY = 'dornol-ticket-$MODULE'
+        DOCKER_IMAGE_TAG = 'latest'
+        DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
+
+        DOCKER_SWARM_STACK = 'dornol'
+        DOCKER_SWARM_SERVICE = 'admin-api'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: BRANCH_NAME, credentialsId: 'Github-DornolApp', url: 'https://github.com/dornol/dornol-ticket'
+                git branch: BRANCH_NAME, credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
             }
         }
 
@@ -16,14 +26,14 @@ pipeline {
             steps {
                 script {
                     sh 'chmod +x ./gradlew'
-                    sh './gradlew clean :admin-api:build'
+                    sh './gradlew clean :$MODULE:build'
                 }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DockerHub_kkkqwerasdf123', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
 
                     sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
 
@@ -32,7 +42,7 @@ pipeline {
                         sh '''
                         docker buildx build \
                         --platform linux/arm64 \
-                        -t $DOCKER_HUB_USERNAME/dornol-ticket-admin-api:latest \
+                        -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG \
                         -f Dockerfile . --push
                     '''
                     }
@@ -44,7 +54,7 @@ pipeline {
             steps {
                 script {
                     // Remove the local Docker image after push
-                    sh 'docker rmi $DOCKER_HUB_USERNAME/dornol-ticket-admin-api:latest'
+                    sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
                 }
             }
         }
