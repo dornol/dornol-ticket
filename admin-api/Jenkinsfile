@@ -14,6 +14,16 @@ pipeline {
         ENV_VERSION_NAME = "ADMIN_API_VERSION"
     }
 
+    parameters {
+        gitParameter(
+            branchFilter: '.*',
+            name: 'TAG_NAME',
+            type: 'PT_TAG',
+            sortMode: 'DESCENDING_SMART',
+            quickFilterEnabled: true
+        )
+    }
+
     stages {
         stage('Checkout') {
             steps {
