@@ -12,7 +12,7 @@ pipeline {
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
         DOCKER_SWARM_STACK = 'dornol'
-        DOCKER_SWARM_SERVICE = 'admin-api'
+        DOCKER_SWARM_SERVICE = MODULE
     }
 
     parameters {
@@ -47,18 +47,33 @@ pipeline {
                         docker buildx build \
                         --platform linux/arm64 \
                         -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG \
-                        -f Dockerfile . --push
+                        -f Dockerfile . --quiet --push
                     '''
                     }
+
+                    sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
                 }
             }
         }
 
         stage('Clean Up') {
             steps {
-                script {
-                    // Remove the local Docker image after push
-                    sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                    script {
+                        // Remove the local Docker image after push
+                        sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
+                    }
+                }
+            }
+        }
+
+        stage('Update Docker Service') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                    script {
+                        // Remove the local Docker image after push
+                        sh 'docker service update --image $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG $DOCKER_SWARM_STACK_$DOCKER_SWARM_SERVICE --quiet'
+                    }
                 }
             }
         }
