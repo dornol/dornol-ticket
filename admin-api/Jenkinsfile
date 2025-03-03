@@ -8,10 +8,10 @@ pipeline {
         GIT_URL = 'https://github.com/dornol/dornol-ticket'
 
         DOCKER_REPOSITORY = "dornol-ticket-$MODULE"
-        DOCKER_IMAGE_TAG = 'latest'
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
         DOCKER_SWARM_SERVICE = "dornol_$MODULE"
+        ENV_VERSION_NAME = "ADMIN_API_VERSION"
     }
 
     stages {
@@ -45,10 +45,12 @@ pipeline {
                         sh '''
                         docker buildx build \
                         --platform linux/arm64 \
-                        -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG \
+                        -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME \
                         -f Dockerfile . --quiet --push
-                    '''
+                        '''
                     }
+
+                    sh 'sed -i \'s/^$ENV_VERSION_NAME=.*/$ENV_VERSION_NAME=$TAG_NAME/\' /home/ubuntu/docker/.env'
                 }
             }
         }
@@ -58,7 +60,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
                     script {
                         // Remove the local Docker image after push
-                        sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG'
+                        sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME'
                     }
                 }
             }
