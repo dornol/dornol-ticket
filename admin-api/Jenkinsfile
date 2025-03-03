@@ -7,7 +7,7 @@ pipeline {
         GIT_CREDENTIAL_ID = 'Github-DornolApp'
         GIT_URL = 'https://github.com/dornol/dornol-ticket'
 
-        DOCKER_REPOSITORY = 'dornol-ticket-$MODULE'
+        DOCKER_REPOSITORY = "dornol-ticket-$MODULE"
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
@@ -42,7 +42,7 @@ pipeline {
                     sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
 
                     // Build and push the Docker image in one step
-                    dir('admin-api') {
+                    dir(MODULE) {
                         sh '''
                         docker buildx build \
                         --platform linux/arm64 \
