@@ -16,7 +16,7 @@ pipeline {
 
     parameters {
         gitParameter(
-            branchFilter: 'refs/tags/(.*)',
+            branchFilter: 'refs/tags/*',
             name: 'TAG_NAME',
             type: 'PT_TAG',
             sortMode: 'DESCENDING',
@@ -27,7 +27,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: "tags/$TAG_NAME", credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
+                git branch: "$TAG_NAME", credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL
             }
         }
 
@@ -47,7 +47,7 @@ pipeline {
                     sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
 
                     // Build and push the Docker image in one step
-                    dir("modules/$MODULE") {
+                    dir(MODULE) {
                         sh '''
                         docker buildx build \
                         --platform linux/arm64 \
