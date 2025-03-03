@@ -11,8 +11,7 @@ pipeline {
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
-        DOCKER_SWARM_STACK = 'dornol'
-        DOCKER_SWARM_SERVICE = "$MODULE"
+        DOCKER_SWARM_SERVICE = "dornol_$MODULE"
     }
 
     parameters {
