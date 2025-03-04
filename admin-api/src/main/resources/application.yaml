@@ -15,6 +15,9 @@ spring:
   jpa:
     open-in-view: false
 
+  flyway:
+    enabled: false
+
 dornol:
   security:
     cors:
