@@ -80,7 +80,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
                     script {
                         // Remove the local Docker image after push
-                        sh 'docker service update --image $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG $DOCKER_SWARM_SERVICE --quiet'
+                        sh 'docker service update --image $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME $DOCKER_SWARM_SERVICE --quiet'
                     }
                 }
             }
