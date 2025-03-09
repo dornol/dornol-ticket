@@ -3,16 +3,15 @@ import NextAuth, { DefaultSession, DefaultUser, JWT } from "next-auth";
 
 // Session 타입 확장
 declare module "next-auth" {
-  interface Session {
-    // accessToken: string;
-    // refreshToken: string; // `refreshToken`을 선택적으로 추가
-    // accessTokenExpires: number;
+  interface Session extends DefaultSession {
+    accessToken: string;
+    refreshToken: string; // `refreshToken`을 선택적으로 추가
+    accessTokenExpires: number;
     error?: string;
+    user: User
   }
 
   interface User extends DefaultUser {
-    id: string;
-    name: string;
     accessToken: string;
     refreshToken: string; // `refreshToken`을 선택적으로 추가
     accessTokenExpires: number;
@@ -22,11 +21,10 @@ declare module "next-auth" {
 // JWT 타입 확장
 declare module "next-auth/jwt" {
   interface JWT {
-    // id: string;
+    userId: string;
     accessToken: string;
     refreshToken: string;
     accessTokenExpires: number;
     error?: string;
-    exp: number;
   }
 }

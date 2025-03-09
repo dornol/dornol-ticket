@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { auth, signOut } from "@/auth";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { signOut } from "next-auth/react";
+import SignOut from "@/ui/sign-out";
 
 export default async function Home() {
-  const session = await auth();
+  const session = await getServerSession();
 
   return (
     <div
@@ -30,25 +32,7 @@ export default async function Home() {
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
-          {session?.user && <form
-              action={async () => {
-                "use server"
-                await signOut()
-              }}
-          >
-              <button type="submit"
-                      className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-                  <Image
-                      className="dark:invert"
-                      src="/vercel.svg"
-                      alt="Vercel logomark"
-                      width={20}
-                      height={20}
-                  />
-                  Sign Out
-              </button>
-          </form>
-          }
+          {session?.user && <SignOut />}
           {
             !session?.user && <Link
                   className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"

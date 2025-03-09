@@ -7,6 +7,7 @@ import java.io.Serializable
 
 class AdminUser(
     val userId: Long,
+    val name: String,
     private val username: String,
     password: String,
     private val authorities: Collection<GrantedAuthority>

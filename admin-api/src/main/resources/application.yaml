@@ -18,6 +18,11 @@ spring:
   flyway:
     enabled: false
 
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+
 dornol:
   security:
     cors:

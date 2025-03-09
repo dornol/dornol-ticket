@@ -12,7 +12,7 @@ class JoinController(
     private val managerService: ManagerService
 ) {
 
-    @GetMapping("/join/exists-username")
+    @PostMapping("/join/exists-username")
     fun existsUsername(@RequestBody @Validated request: CheckUsernameDto): CheckUsernameResponseDto {
         return CheckUsernameResponseDto(managerService.existsUsername(username = request.username))
     }

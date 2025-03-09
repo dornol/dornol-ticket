@@ -4,10 +4,8 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-  // console.log('token', token);
 
   if (!token) {
-    // console.log(`expire ${Date.now()} ${token?.accessTokenExpires}`)
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -15,6 +13,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!login|api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!join|login|api|_next/static|_next/image|favicon.ico).*)"],
   // matcher: ["/:path*"],
 };
