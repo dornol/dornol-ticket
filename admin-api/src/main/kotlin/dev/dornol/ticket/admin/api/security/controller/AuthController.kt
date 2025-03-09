@@ -1,24 +1,22 @@
 package dev.dornol.ticket.admin.api.security.controller
 
 import dev.dornol.ticket.admin.api.security.dto.RefreshTokenRequestDto
-import dev.dornol.ticket.admin.api.security.dto.TokenBundleDto
 import dev.dornol.ticket.admin.api.security.handler.TokenResponseHandler
 import dev.dornol.ticket.admin.api.security.service.AccessTokenGenerator
 import dev.dornol.ticket.admin.api.security.service.RefreshTokenService
-import dev.dornol.ticket.admin.api.security.userdetails.AdminUser
-import dev.dornol.ticket.admin.api.security.userdetails.AdminUserDetailsService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/auth")
 @RestController
 class AuthController(
     private val refreshTokenService: RefreshTokenService,
-    private val userDetailsService: AdminUserDetailsService,
+    private val userDetailsService: UserDetailsService,
     private val accessTokenGenerator: AccessTokenGenerator,
     private val tokenResponseHandler: TokenResponseHandler,
 ) {
@@ -42,19 +40,13 @@ class AuthController(
             throw BadCredentialsException("Access token does not match")
         }
 
-        val admin = userDetailsService.loadUserByUsername(tokenBundle.username)
+        val userDetails = userDetailsService.loadUserByUsername(tokenBundle.username)
 
-        val authentication = createAuthentication(admin)
+        val authentication = createAuthentication(userDetails)
         val accessToken = accessTokenGenerator.generateToken(authentication)
-        val refreshToken = refreshTokenService.generateRefreshToken(admin.username, accessToken.value)
+        val refreshToken = refreshTokenService.generateRefreshToken(userDetails.username, accessToken.value)
 
-        tokenResponseHandler.responseToken(request, response, TokenBundleDto(
-            userId = admin.userId,
-            username = admin.username,
-            name = admin.name,
-            accessToken = accessToken,
-            refreshToken = refreshToken
-        ))
+        tokenResponseHandler.responseToken(request, response, accessToken, refreshToken)
     }
 
     private fun createAuthentication(userDetails: UserDetails): UsernamePasswordAuthenticationToken {

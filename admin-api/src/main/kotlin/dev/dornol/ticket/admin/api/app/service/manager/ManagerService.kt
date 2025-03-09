@@ -1,7 +1,9 @@
 package dev.dornol.ticket.admin.api.app.service.manager
 
 import dev.dornol.ticket.admin.api.app.dto.manager.JoinRequestDto
+import dev.dornol.ticket.admin.api.app.dto.user.UserDto
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
+import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.config.exception.join.UsernameExistsException
 import dev.dornol.ticket.domain.entity.manager.AccessRole
 import dev.dornol.ticket.domain.entity.manager.Manager
@@ -36,5 +38,10 @@ class ManagerService(
         val manager = managerRepository.findByUsername(username)
         return manager != null
     }
+
+    @Transactional(readOnly = true)
+    fun getUserDataByUsername(username: String) = managerRepository.findByUsername(username)
+        ?.let { UserDto(it.id, it.name, it.username, it.email, it.phone) }
+        ?: throw BadRequestException()
 
 }

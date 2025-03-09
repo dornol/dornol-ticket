@@ -5,7 +5,9 @@ import dev.dornol.ticket.admin.api.app.dto.manager.CheckUsernameResponseDto
 import dev.dornol.ticket.admin.api.app.dto.manager.JoinRequestDto
 import dev.dornol.ticket.admin.api.app.service.manager.ManagerService
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class JoinController(
@@ -21,6 +23,5 @@ class JoinController(
     fun join(@RequestBody @Validated joinDto: JoinRequestDto) {
         managerService.join(joinDto)
     }
-
 
 }

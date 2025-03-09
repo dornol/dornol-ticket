@@ -21,13 +21,17 @@ class TokenResponseHandler(
     fun responseToken(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        tokenBundleDto: TokenBundleDto
+        accessToken: TokenDto,
+        refreshToken: TokenDto
     ) {
         response.status = HttpStatus.OK.value()
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         objectMapper.writeValue(
             response.writer,
-            tokenBundleDto
+            TokenBundleDto(
+                accessToken = accessToken,
+                refreshToken = refreshToken
+            )
         )
     }
 

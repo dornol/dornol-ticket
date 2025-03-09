@@ -56,6 +56,7 @@ class SecurityConfig(
         authorizeHttpRequests {
             it.requestMatchers(LOGIN_URL).permitAll()
             it.requestMatchers(LOGOUT_URL).permitAll()
+            it.requestMatchers("/user/**").authenticated()
             it.requestMatchers("/sites/**").access(hasScope(AccessRole.SYSTEM.name))
 
             it.anyRequest().permitAll()

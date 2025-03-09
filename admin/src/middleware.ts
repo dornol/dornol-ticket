@@ -13,6 +13,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!join|login|api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!error|join|login|api|_next/static|_next/image|favicon.ico).*)"],
   // matcher: ["/:path*"],
 };
