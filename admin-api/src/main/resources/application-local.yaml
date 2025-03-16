@@ -1,0 +1,10 @@
+spring:
+  flyway:
+    enabled: false
+
+server:
+  servlet:
+    context-path: /api/v1
+logging:
+  level:
+    dev.dornol: debug

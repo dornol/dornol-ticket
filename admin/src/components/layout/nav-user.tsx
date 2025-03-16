@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar, } from "@/components/ui/sidebar"
-import { signOut } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { authService } from "@/lib/service/auth/auth-service";
 
 export function NavUser({
   user,
@@ -79,7 +79,7 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={async () => await signOut()}>
+            <DropdownMenuItem onClick={async () => authService.logout()}>
               <LogOut />
               Log out
             </DropdownMenuItem>

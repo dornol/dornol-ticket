@@ -1,17 +1,18 @@
 package dev.dornol.ticket.admin.api.app.dto.manager
 
-import dev.dornol.ticket.domain.constraint.RegExp
+import dev.dornol.ticket.domain.constant.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
+import jakarta.validation.constraints.Size
 
 data class JoinRequestDto(
     @field:NotBlank
-    @field:Pattern(regexp = RegExp.USERNAME_REGEXP)
+    @field:Pattern(regexp = USERNAME_PATTERN)
     val username: String,
 
     @field:NotBlank
-    @field:Pattern(regexp = RegExp.PASSWORD_REGEXP)
+    @field:Size(min = 4, max = 30)
     val password: String,
 
     @field:NotBlank
@@ -19,10 +20,10 @@ data class JoinRequestDto(
     val email: String,
 
     @field:NotBlank
-    @field:Pattern(regexp =  RegExp.PHONE_NUMBER_REGEXP)
+    @field:Pattern(regexp =  PHONE_NUMBER_PATTERN)
     val phone: String,
 
     @field:NotBlank
-    @field:Pattern(regexp =  RegExp.MANAGER_NAME_REGEXP)
+    @field:Pattern(regexp =  MANAGER_NAME_PATTERN)
     val name: String
 )

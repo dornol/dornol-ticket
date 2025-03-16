@@ -15,9 +15,6 @@ spring:
   jpa:
     open-in-view: false
 
-  flyway:
-    enabled: false
-
 server:
   servlet:
     encoding:
@@ -26,7 +23,7 @@ server:
 dornol:
   security:
     cors:
-      allowed-origins: http://localhost:8080
+      allowed-origins: http://localhost:8080,http://localhost:3000
     jwt:
       rsa:
         public-key: "classpath:certs/public.pem"

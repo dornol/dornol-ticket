@@ -18,14 +18,8 @@ import { NavMain } from "@/components/layout/nav-main"
 import { NavProjects } from "@/components/layout/nav-projects"
 import { NavUser } from "@/components/layout/nav-user"
 import { TeamSwitcher } from "@/components/layout/team-switcher"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
-import { useSession } from "next-auth/react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, } from "@/components/ui/sidebar"
+import useAuthStore from "@/lib/store/auth";
 
 // This is sample data.
 const data = {
@@ -59,12 +53,12 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "main",
+          url: "/",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "dashboard",
+          url: "/dashboard",
         },
         {
           title: "Settings",
@@ -158,7 +152,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session } = useSession();
+  const { userInfo } = useAuthStore();
 
   return (
     <>
@@ -172,8 +166,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarContent>
         <SidebarFooter>
           <NavUser user={{
-            name: session?.user.name,
-            email: session?.user.email,
+            name: userInfo?.name,
+            email: userInfo?.email,
             avatar: '/avatars/shadcn.jpg'
           }}/>
         </SidebarFooter>

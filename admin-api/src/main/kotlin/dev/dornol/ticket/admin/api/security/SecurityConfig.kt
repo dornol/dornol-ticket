@@ -2,6 +2,7 @@ package dev.dornol.ticket.admin.api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.dornol.ticket.admin.api.security.filter.JsonUsernamePasswordAuthenticationFilter
+import dev.dornol.ticket.admin.api.security.handler.TokenResponseHandler
 import dev.dornol.ticket.domain.entity.manager.AccessRole
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -81,6 +82,7 @@ class SecurityConfig(
         config.allowCredentials = true
         config.allowedOrigins = allowedOrigins.toMutableList()
         config.allowedMethods = mutableListOf(GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD).map { it.name() }
+        config.allowedHeaders = listOf("Authorization", "Cache-Control", "Content-Type", TokenResponseHandler.REFRESH_TOKEN_ACCEPT_HEADER_NAME)
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", config)
         return source
