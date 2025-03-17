@@ -14,7 +14,7 @@ apiClient.interceptors.request.use(
   async (config) => {
     if (tokenProvider.expired()) {
       await authService.refreshAccessToken()
-        .catch((error) => {
+        .catch(() => {
           tokenProvider.clearAccessToken();
           window.location.href = '/login';
         });

@@ -10,7 +10,7 @@ export default function AuthCheck({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [initialized, setInitialized] = useState(false)
   const { userInfo } = useAuthStore();
-  const { data, isSuccess, isError } = useQuery({
+  const { isSuccess, isError } = useQuery({
     queryKey: ['auth-check'],
     queryFn: () => authService.loadUser(),
     enabled: !!accessToken

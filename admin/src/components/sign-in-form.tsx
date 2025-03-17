@@ -23,10 +23,10 @@ export function LoginForm({
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: (login: { username: string, password: string }) => authService.login(login.username, login.password),
-    onSuccess: (data, variables, context) => {
+    onSuccess: () => {
       router.replace('/');
     },
-    onError: (error) => {
+    onError: () => {
       setPassword("");
       if (passwordInput.current) {
         passwordInput.current.focus();

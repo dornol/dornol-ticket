@@ -80,7 +80,7 @@ export function JoinForm({
             {
               error
                 ? <p className="accent-red-500">{error.message}</p>
-                : <p>'Fill out the form below to sign up'</p>
+                : <p>Fill out the form below to sign up</p>
             }
           </CardDescription>
         </CardHeader>

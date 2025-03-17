@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    environment {
+        MODULE = 'admin'
+
+        GIT_CREDENTIAL_ID = 'Github-DornolApp'
+        GIT_URL = 'https://github.com/dornol/dornol-ticket'
+
+        DOCKER_REPOSITORY = "dornol-ticket-$MODULE"
+        DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
+
+        DOCKER_SWARM_SERVICE = "dornol_$MODULE"
+        ENV_VERSION_NAME = "ADMIN_VERSION"
+    }
+
+    parameters {
+        gitParameter(
+            branchFilter: '.*',
+            name: 'TAG_NAME',
+            type: 'PT_TAG',
+            sortMode: 'DESCENDING_SMART',
+            quickFilterEnabled: true
+        )
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(
+                        branches: [[name: "$TAG_NAME"]],
+                        extensions: [],
+                        userRemoteConfigs: [[credentialsId: GIT_CREDENTIAL_ID, url: GIT_URL]]
+                )
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+
+                    sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
+
+                    // Build and push the Docker image in one step
+                    dir(MODULE) {
+                        sh '''
+                        docker buildx build \
+                        --platform linux/arm64 \
+                        -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME \
+                        -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:latest \
+                        -f Dockerfile . --quiet --push
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                    script {
+                        // Remove the local Docker image after push
+                        sh 'docker rmi $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME'
+                    }
+                }
+            }
+        }
+
+        stage('Update Docker Service') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIAL_ID, passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                    script {
+                        // Remove the local Docker image after push
+                        sh 'docker service update --image $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME $DOCKER_SWARM_SERVICE --quiet'
+                    }
+                }
+            }
+        }
+    }
+}

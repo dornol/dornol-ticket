@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dialog } from "@/lib/alert/alert";
 
 const authApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
