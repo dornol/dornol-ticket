@@ -15,3 +15,16 @@ spring:
     url: "****"
     username: "****"
     password: "****"
+
+dornol:
+  security:
+    cors:
+      allowed-origins: https://admin.ticket.dornol.dev
+    jwt:
+      rsa:
+        public-key: "classpath:certs/public.pem"
+        private-key: "classpath:certs/private.pem"
+      access-token:
+        expiry-seconds: 900
+      refresh-token:
+        expiry-seconds: 1209600
