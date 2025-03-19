@@ -2,12 +2,12 @@
 
 import useAuthStore from "@/lib/store/auth";
 
-export default function DashboardPage() {
+export default function AdminListPage() {
   const { userInfo } = useAuthStore();
 
   return (
     <>
-      DashBoard!!
+      관리자 관리..
       <p>data: {JSON.stringify(userInfo)}</p>
     </>
   )
