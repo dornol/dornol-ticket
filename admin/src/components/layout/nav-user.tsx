@@ -1,28 +1,39 @@
 "use client"
 
-import { ChevronsUpDown, LogOut, } from "lucide-react"
+import {
+  BellIcon,
+  CreditCardIcon,
+  LogOutIcon,
+  MoreVerticalIcon,
+  UserCircleIcon,
+} from "lucide-react"
 
-import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar, } from "@/components/ui/sidebar"
-import { Skeleton } from "@/components/ui/skeleton";
-import { authService } from "@/lib/service/auth/auth-service";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar"
+import { UserInfo } from "@/lib/service/auth/auth-service";
 
 export function NavUser({
-  user,
-}: {
-  user: {
-    name?: string
-    email?: string
-    avatar?: string
-  }
+                          user,
+                        }: {
+  user: UserInfo
 }) {
   const { isMobile } = useSidebar()
 
@@ -35,29 +46,17 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+              <Avatar className="h-8 w-8 rounded-lg grayscale">
+                <AvatarImage src='/avatars/shadcn.jpg' alt={user.user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                {
-                  user?.name && <>
-                        <span className="truncate font-semibold">{user.name}</span>
-                        <span className="truncate text-xs">{user.email}</span>
-                    </>
-                }
-                {
-                  !user?.name && <>
-                        <span className="truncate font-semibold">
-                        <Skeleton className="h-3 w-[50px]" />
-                        </span>
-                        <span className="truncate text-xs">
-                        <Skeleton className="h-3 w-[150px]" />
-                        </span>
-                    </>
-                }
+                <span className="truncate font-medium">{user.user.name}</span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {user.user.email}
+                </span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <MoreVerticalIcon className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -69,18 +68,35 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src='/avatars/shadcn.jpg' alt={user.user.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{user.user.name}</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {user.user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={async () => authService.logout()}>
-              <LogOut />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <UserCircleIcon />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CreditCardIcon />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BellIcon />
+                Notifications
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogOutIcon />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

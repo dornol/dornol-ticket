@@ -1,19 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "@/lib/axios/api";
+import useAuthStore from "@/lib/store/auth";
 
 export default function DashboardPage() {
-  const { data } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: () => apiClient.get('/user/me')
-  });
-
+  const { userInfo } = useAuthStore();
 
   return (
     <>
       DashBoard!!
-      <p>data: {JSON.stringify(data)}</p>
+      <p>data: {JSON.stringify(userInfo)}</p>
     </>
   )
 }

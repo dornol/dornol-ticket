@@ -18,8 +18,11 @@ interface TokenBundle {
 }
 
 interface UserInfo {
-  name: string;
-  email: string;
+  user: {
+    name: string;
+    email: string;
+  },
+  authorities: string[]
 }
 
 class TokenProvider {

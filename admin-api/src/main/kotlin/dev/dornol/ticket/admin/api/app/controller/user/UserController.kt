@@ -1,5 +1,6 @@
 package dev.dornol.ticket.admin.api.app.controller.user
 
+import dev.dornol.ticket.admin.api.app.domain.user.UserWithAuthDto
 import dev.dornol.ticket.admin.api.app.service.manager.ManagerService
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,6 +14,9 @@ class UserController(
 ) {
 
     @GetMapping("/me")
-    fun me(authentication: Authentication) = managerService.getUserDataByUsername(authentication.name)
+    fun me(authentication: Authentication) = UserWithAuthDto(
+        user = managerService.getUserDataByUsername(authentication.name),
+        authorities = authentication.authorities.map { it.authority }
+    )
 
 }

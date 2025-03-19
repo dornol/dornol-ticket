@@ -1,5 +1,6 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorResponse
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorResponseDetail
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorScope
@@ -10,6 +11,7 @@ import jakarta.validation.ValidationException
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.ObjectError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -58,17 +60,33 @@ class ValidationExceptionHandler(
             log.warn(e) { "resolved validation exception : $e" }
         }
 
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ErrorResponse {
+        return when (val cause = e.cause) {
+            is MismatchedInputException -> {
+                errorResponse("errors.validation").apply {
+                    errors.addAll(cause.path.map { errorResponseDetail(it.fieldName, it.description) })
+                }
+            }
+
+            else -> errorResponse("errors.validation")
+        }
+    }
+
     fun errorResponseDetail(error: ObjectError): ErrorResponseDetail {
         return if (error.codes?.isNotEmpty() == true) {
-            ErrorResponseDetail(
+            errorResponseDetail(
                 error.objectName,
-                error.defaultMessage
+                error.defaultMessage ?: messageResolver.getMessage("errors.validation")
             )
         } else {
-            ErrorResponseDetail(
+            errorResponseDetail(
                 error.objectName,
                 messageResolver.getMessage("errors.validation")
             )
         }
     }
+
+    fun errorResponseDetail(fieldName: String, description: String) =
+        ErrorResponseDetail(fieldName, description)
 }

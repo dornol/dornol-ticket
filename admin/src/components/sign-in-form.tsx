@@ -22,7 +22,7 @@ export function LoginForm({
 
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: (login: { username: string, password: string }) => authService.login(login.username, login.password),
+    mutationFn: async (login: { username: string, password: string }) => await authService.login(login.username, login.password),
     onSuccess: () => {
       router.replace('/');
     },

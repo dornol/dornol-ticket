@@ -39,10 +39,7 @@ const formSchema = z.object({
     .regex(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, { message: "올바른 전화번호를 입력해 주세요." })
 })
 
-export function JoinForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<ApiError | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -96,7 +93,7 @@ export function JoinForm({
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
-                    <FormMessage/>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -107,9 +104,9 @@ export function JoinForm({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="" type="password" {...field} />
                     </FormControl>
-                    <FormMessage/>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -122,7 +119,7 @@ export function JoinForm({
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
-                    <FormMessage/>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -135,7 +132,7 @@ export function JoinForm({
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
-                    <FormMessage/>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -148,7 +145,7 @@ export function JoinForm({
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
-                    <FormMessage/>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
