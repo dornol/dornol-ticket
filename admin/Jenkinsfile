@@ -48,7 +48,7 @@ pipeline {
                         --platform linux/arm64 \
                         -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:$TAG_NAME \
                         -t $DOCKER_HUB_USERNAME/$DOCKER_REPOSITORY:latest \
-                        -f Dockerfile . --quiet --push
+                        -f Dockerfile . --quiet --no-cache --push
                         '''
                     }
                 }

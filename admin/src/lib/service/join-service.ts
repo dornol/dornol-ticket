@@ -1,19 +1,9 @@
 import auth from "@/lib/axios/auth";
+import { JoinRequest, UsernameCheckResponse } from "@/lib/types/join/join.dto";
 
 const JOIN_URL = "/join";
 const CHECK_USERNAME_URL = "/join/check-username"
 
-interface JoinRequest {
-  name: string;
-  email: string;
-  phone: string;
-  username: string;
-  password: string;
-}
-
-interface UsernameCheckResponse {
-  available: boolean;
-}
 
 class JoinService {
 

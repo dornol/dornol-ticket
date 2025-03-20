@@ -1,29 +1,14 @@
 import auth from "@/lib/axios/auth";
 import api from "@/lib/axios/api";
 import useAuthStore from "@/lib/store/auth";
+import { Token, TokenBundle, UserInfo } from "@/lib/types/auth/auth";
+import { LoginRequestDto } from "@/lib/types/login/login.dto";
 
 const ACCESS_TOKEN_NAME: string = 'accessToken';
 const ACCESS_TOKEN_EXPIRES_NAME: string = 'accessTokenExpiresAt';
 const LOGIN_URL: string = '/auth/authenticate';
 const AUTHENTICATION_REFRESH_URL: string = '/auth/refresh';
 
-interface Token {
-  value: string;
-  expiresIn: number;
-}
-
-interface TokenBundle {
-  accessToken: Token;
-  refreshToken?: Token | null;
-}
-
-interface UserInfo {
-  user: {
-    name: string;
-    email: string;
-  },
-  authorities: string[]
-}
 
 class TokenProvider {
 
@@ -58,16 +43,10 @@ let refreshPromise: Promise<void> | null = null;
 
 const authService = {
 
-  login: async function (username: string, password: string): Promise<void> {
+  login: async function ({username, password}: LoginRequestDto): Promise<TokenBundle> {
     return auth.post(LOGIN_URL, {
       username, password
-    })
-      .then((response) => {
-        const data: TokenBundle = response.data;
-        tokenProvider.accessToken = data.accessToken;
-        this.loadUser()
-        return Promise.resolve();
-      })
+    }).then(response => response.data);
   },
 
   logout: async (): Promise<void> => {

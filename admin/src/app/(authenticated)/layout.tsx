@@ -2,13 +2,13 @@ import { ReactNode } from "react";
 
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { SidebarInset, SidebarProvider, } from "@/components/ui/sidebar"
-import AuthCheck from "@/components/provider/auth-check";
 import { SiteHeader } from "@/components/layout/site-header";
+import AuthChecker from "@/components/provider/auth-checker";
 
 export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <AuthCheck>
+      <AuthChecker>
         <SidebarProvider>
           <AppSidebar variant="inset" />
           <SidebarInset>
@@ -24,7 +24,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
             </div>
           </SidebarInset>
         </SidebarProvider>
-      </AuthCheck>
+      </AuthChecker>
     </>
   )
 }

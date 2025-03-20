@@ -8,23 +8,26 @@ import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { authService } from "@/lib/service/auth/auth-service";
+import { authService, tokenProvider } from "@/lib/service/auth/auth-service";
+import useAuthStore from "@/lib/store/auth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const { userInfo } = useAuthStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const passwordInput = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: async (login: { username: string, password: string }) => await authService.login(login.username, login.password),
-    onSuccess: () => {
-      router.replace('/');
+    mutationFn: authService.login,
+    onSuccess: (data) => {
+      tokenProvider.accessToken = data.accessToken;
+      return authService.loadUser();
     },
     onError: () => {
       setPassword("");
@@ -33,6 +36,16 @@ export function LoginForm({
       }
     }
   })
+
+  useEffect(() => {
+    if (userInfo != null) {
+      router.replace("/");
+    }
+  }, [userInfo, router]);
+
+  useEffect(() => {
+    authService.loadUser()
+  }, [router]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -79,7 +92,7 @@ export function LoginForm({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   ref={passwordInput}
-                  required/>
+                  required />
               </div>
               <Button type="submit" className="w-full">
                 Login
