@@ -8,7 +8,6 @@ import jakarta.persistence.Entity
 class Company(
     name: String,
     businessNumber: String,
-    telNumber: String,
 ) : BaseCreationEntity() {
 
     @Column(length = 30, nullable = false)
@@ -19,7 +18,4 @@ class Company(
     var businessNumber: String = businessNumber
         protected set
 
-    @Column(length = 11, nullable = false)
-    var telNumber:String = telNumber
-        protected set
 }

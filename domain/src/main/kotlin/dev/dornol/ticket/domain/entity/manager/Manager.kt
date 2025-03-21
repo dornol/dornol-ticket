@@ -1,10 +1,8 @@
 package dev.dornol.ticket.domain.entity.manager
 
-import dev.dornol.ticket.domain.entity.BaseCreationEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
+import dev.dornol.ticket.domain.entity.BaseEntity
+import dev.dornol.ticket.domain.entity.company.Company
+import jakarta.persistence.*
 
 @Entity
 class Manager(
@@ -13,8 +11,10 @@ class Manager(
     name: String,
     phone: String,
     email: String,
-    role: AccessRole,
-) : BaseCreationEntity() {
+    role: ManagerRole,
+    approval: ManagerApproval = ManagerApproval(),
+    company: Company? = null,
+) : BaseEntity() {
 
     @Column(length = 18, nullable = false, updatable = false, unique = true)
     val username: String = username
@@ -35,7 +35,14 @@ class Manager(
     var email: String = email
         protected set
 
+    @Embedded
+    val approval: ManagerApproval = approval
+
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
-    var managerRole: AccessRole = role
+    @Column(length = 20, nullable = false)
+    var managerRole: ManagerRole = role
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", updatable = false)
+    val company: Company? = company
 }

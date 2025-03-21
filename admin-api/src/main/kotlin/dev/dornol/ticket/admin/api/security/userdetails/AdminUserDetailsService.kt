@@ -4,9 +4,7 @@ import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.stereotype.Component
 
-@Component
 class AdminUserDetailsService(
     private val managerRepository: ManagerRepository
 ) : UserDetailsService {
@@ -19,6 +17,7 @@ class AdminUserDetailsService(
             name = manager.name,
             username = manager.username,
             password = manager.password,
+            approved = manager.approval.approved,
             authorities = listOf(SimpleGrantedAuthority(manager.managerRole.name))
         )
     }

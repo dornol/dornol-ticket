@@ -10,10 +10,13 @@ class AdminUser(
     val name: String,
     private val username: String,
     password: String,
+    approved: Boolean,
     private val authorities: Collection<GrantedAuthority>
 ) : UserDetails, Serializable, CredentialsContainer {
 
     private var password: String? = password
+
+    val approved: Boolean = approved
 
     override fun getAuthorities() = authorities
 

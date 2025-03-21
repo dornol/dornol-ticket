@@ -65,7 +65,7 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ID</FormLabel>
+                    <FormLabel>아이디</FormLabel>
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
@@ -78,7 +78,7 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>비밀번호</FormLabel>
                     <FormControl>
                       <Input placeholder="" type="password" {...field} />
                     </FormControl>
@@ -91,9 +91,9 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>이름</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="" {...field} maxLength={10} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,9 +104,9 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>이메일</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input type="email" placeholder="" {...field} maxLength={320} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -117,9 +117,36 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>전화번호</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="" {...field} inputMode="numeric" maxLength={11} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="company.businessName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>사업자명</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} maxLength={20} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="company.businessNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>사업자번호</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} maxLength={10} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

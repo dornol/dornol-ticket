@@ -13,7 +13,7 @@ export interface UserInfo {
     name: string;
     email: string;
   },
-  authorities: AccessRole[]
+  authorities: ManagerRole[]
 }
 
 export interface AuthState {
@@ -22,4 +22,4 @@ export interface AuthState {
   clearUser: () => void;
 }
 
-export type AccessRole = "SCOPE_SYSTEM" | "SCOPE_MANAGER";
+export type ManagerRole = "SCOPE_SYSTEM_ADMIN" | "SCOPE_BUSINESS_ADMIN" | "SCOPE_BUSINESS_STAFF";

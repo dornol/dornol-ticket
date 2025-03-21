@@ -7,4 +7,6 @@ interface ManagerRepository : JpaRepository<Manager, Long> {
 
     fun findByUsername(username: String): Manager?
 
+    fun existsByEmail(email: String): Boolean
+
 }

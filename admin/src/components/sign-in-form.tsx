@@ -55,7 +55,7 @@ export function LoginForm({
           <CardDescription>
             {
               mutation.isError
-                ? <p className="text-red-500">Check your username or password</p>
+                ? <p className="text-red-500">{mutation.error.message}</p>
                 : <p>Enter your Username below to login to your account</p>
             }
 
