@@ -3,6 +3,7 @@ package dev.dornol.ticket.domain.entity.manager
 import dev.dornol.ticket.domain.entity.BaseEntity
 import dev.dornol.ticket.domain.entity.company.Company
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 class Manager(
@@ -45,4 +46,8 @@ class Manager(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", updatable = false)
     val company: Company? = company
+
+    fun approve(approvedBy: Long, approvedDate: LocalDateTime) {
+        this.approval.approve(approvedBy, approvedDate)
+    }
 }

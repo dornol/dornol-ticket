@@ -24,13 +24,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import useAuthStore from "@/lib/store/auth";
+import { ManagerRole } from "@/lib/types/auth/auth";
 
 const data = {
   navMain: [
     {
       title: "Dashboard",
       url: "/",
-      icon: LayoutDashboardIcon,
+      icon: LayoutDashboardIcon
     },
   ],
   navSecondary: [
@@ -53,8 +54,11 @@ const data = {
   documents: [
     {
       name: "Admin",
-      url: "/admin",
+      url: "/managers",
       icon: DatabaseIcon,
+      scopes: [
+        ManagerRole.SCOPE_SYSTEM_ADMIN
+      ]
     },
   ],
 }
@@ -81,7 +85,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments title="관리자 관리" items={data.documents} />
+        {
+          data.documents.some(it => it.scopes.some(scope => userInfo?.authorities?.includes(scope))) &&
+            <NavDocuments title="관리자 관리" items={data.documents} />
+        }
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

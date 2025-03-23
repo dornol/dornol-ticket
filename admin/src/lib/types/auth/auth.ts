@@ -22,4 +22,8 @@ export interface AuthState {
   clearUser: () => void;
 }
 
-export type ManagerRole = "SCOPE_SYSTEM_ADMIN" | "SCOPE_BUSINESS_ADMIN" | "SCOPE_BUSINESS_STAFF";
+export enum ManagerRole {
+  SCOPE_SYSTEM_ADMIN = "SCOPE_SYSTEM_ADMIN",
+  SCOPE_BUSINESS_ADMIN = "SCOPE_BUSINESS_ADMIN",
+  SCOPE_BUSINESS_STAFF = "SCOPE_BUSINESS_STAFF",
+}

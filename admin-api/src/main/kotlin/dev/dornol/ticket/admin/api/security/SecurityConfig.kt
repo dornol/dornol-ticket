@@ -67,7 +67,6 @@ class SecurityConfig(
             it.requestMatchers(LOGIN_URL).permitAll()
             it.requestMatchers(LOGOUT_URL).permitAll()
             it.requestMatchers("/user/**").authenticated()
-            it.requestMatchers("/sites/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
             it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
 
             it.anyRequest().permitAll()

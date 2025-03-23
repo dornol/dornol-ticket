@@ -128,7 +128,7 @@ export function JoinForm({ className, ...props }: React.ComponentPropsWithoutRef
 
               <FormField
                 control={form.control}
-                name="company.businessName"
+                name="company.name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>사업자명</FormLabel>

@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.domain.auth
+package dev.dornol.ticket.admin.api.app.dto.auth
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash

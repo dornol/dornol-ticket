@@ -6,6 +6,11 @@ spring:
     redis:
       host: localhost
       port: 6379
+    web:
+      pageable:
+        size-parameter: pageSize
+        page-parameter: pageIndex
+        serialization-mode: via_dto
 
   datasource:
     url: jdbc:postgresql://localhost:5432/dornol_ticket
@@ -36,7 +41,7 @@ dornol:
         public-key: "classpath:certs/public.pem"
         private-key: "classpath:certs/private.pem"
       access-token:
-        expiry-seconds: 10
+        expiry-seconds: 3600
       refresh-token:
         expiry-seconds: 1209600
 

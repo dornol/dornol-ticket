@@ -31,5 +31,5 @@ data class JoinRequestDto(
     val name: String,
 
     @field:Valid
-    val company: CompanyDto
+    val company: CompanyRequestDto
 )

@@ -4,19 +4,19 @@ import dev.dornol.ticket.admin.api.security.dto.RefreshTokenRequestDto
 import dev.dornol.ticket.admin.api.security.handler.TokenResponseHandler
 import dev.dornol.ticket.admin.api.security.service.AccessTokenGenerator
 import dev.dornol.ticket.admin.api.security.service.RefreshTokenService
+import dev.dornol.ticket.admin.api.security.userdetails.AdminUser
+import dev.dornol.ticket.admin.api.security.userdetails.AdminUserDetailsService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/auth")
 @RestController
 class AuthController(
     private val refreshTokenService: RefreshTokenService,
-    private val userDetailsService: UserDetailsService,
+    private val userDetailsService: AdminUserDetailsService,
     private val accessTokenGenerator: AccessTokenGenerator,
     private val tokenResponseHandler: TokenResponseHandler,
 ) {
@@ -49,9 +49,9 @@ class AuthController(
         tokenResponseHandler.responseToken(request, response, accessToken, refreshToken)
     }
 
-    private fun createAuthentication(userDetails: UserDetails): UsernamePasswordAuthenticationToken {
+    private fun createAuthentication(userDetails: AdminUser): UsernamePasswordAuthenticationToken {
         return UsernamePasswordAuthenticationToken(
-            userDetails.username, null, userDetails.authorities
+            userDetails, null, userDetails.authorities
         )
     }
 

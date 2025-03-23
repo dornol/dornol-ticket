@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.config
+package dev.dornol.ticket.admin.api.config.jpa
 
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Configuration

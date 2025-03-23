@@ -4,11 +4,11 @@ export interface JoinRequest {
   phone: string;
   username: string;
   password: string;
-  company: Company
+  company: CompanyRequest
 }
 
-export interface Company {
-  businessName: string;
+export interface CompanyRequest {
+  name: string;
   businessNumber: string;
 }
 

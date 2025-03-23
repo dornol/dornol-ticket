@@ -1,6 +1,7 @@
 package dev.dornol.ticket.admin.api.security.service
 
 import dev.dornol.ticket.admin.api.security.dto.TokenDto
+import dev.dornol.ticket.admin.api.security.userdetails.AdminUser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -20,10 +21,10 @@ class AccessTokenGenerator(
 ) : TokenGenerator {
 
     override fun generateToken(authentication: Authentication): TokenDto {
-        return this.generateToken(authentication.name, authentication.authorities)
+        return this.generateToken((authentication.principal as AdminUser).userId, authentication.authorities)
     }
 
-    private fun generateToken(username: String, authorities: Collection<GrantedAuthority>): TokenDto {
+    private fun generateToken(userId: Long, authorities: Collection<GrantedAuthority>): TokenDto {
         val now = Instant.now()
         val scope = authorities.stream().map { it.authority }.collect(Collectors.joining(" "))
         val expiresAt = now.plus(expires, ChronoUnit.SECONDS)
@@ -31,7 +32,7 @@ class AccessTokenGenerator(
             .issuer("https://ticket.dornol.dev")
             .issuedAt(now)
             .expiresAt(expiresAt)
-            .subject(username)
+            .subject(userId.toString())
             .claim("scope", scope)
             .build()
 

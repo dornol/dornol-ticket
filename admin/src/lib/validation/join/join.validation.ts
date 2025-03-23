@@ -22,12 +22,12 @@ export const joinFormScheme = z.object({
     .regex(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, { message: "올바른 전화번호를 입력해 주세요." }),
   company: z.object({
     businessNumber: z.string()
-      .min(10)
-      .max(10)
+      .min(10, {message: "정확한 사업자번호를 입력해 주세요."})
+      .max(10, {message: "정확한 사업자번호를 입력해 주세요."})
       .regex(/^[0-9]{10}$/, {message: "정확한 사업자번호를 입력해 주세요."}),
-    businessName: z.string()
-      .min(2)
-      .max(20)
+    name: z.string()
+      .min(2, {message: "사업자명은 2~20 자 까지 입력 가능합니다."})
+      .max(20, {message: "사업자명은 2~20 자 까지 입력 가능합니다."})
       .regex(/^[a-zA-Z0-9가-힣()\s]{2,20}$/, {message:"사업자명은 2~20 자 까지 입력 가능합니다."})
   })
 });
@@ -40,6 +40,6 @@ export const joinFormDefaultValues = {
   phone: "",
   company: {
     businessNumber: "",
-    businessName: "",
+    name: "",
   }
 }

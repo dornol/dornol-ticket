@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.security.service
 
-import dev.dornol.ticket.admin.api.app.domain.auth.TokenBundle
+import dev.dornol.ticket.admin.api.app.dto.auth.TokenBundle
 import dev.dornol.ticket.admin.api.security.dto.TokenDto
 import dev.dornol.ticket.admin.api.security.repository.AuthTokenRedisRepository
 import org.springframework.beans.factory.annotation.Value
