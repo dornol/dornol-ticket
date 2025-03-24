@@ -17,7 +17,9 @@ class ManagerController(
 ) {
 
     @GetMapping
-    fun getManagers(search: ManagerSearchDto, page: Pageable) = managerService.searchManagers(search, page)
+    fun getManagers(search: ManagerSearchDto, page: Pageable) = managerService.searchManagers(search, page).also {
+        log.debug { "page: $page" }
+    }
 
     @PostMapping("/{id}/approve")
     fun approveManager(

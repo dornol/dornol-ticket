@@ -1,7 +1,7 @@
 import { ManagerListDto } from "@/lib/types/manager/manager-list.dto";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import SortableHeader from "@/app/(authenticated)/managers/sortable-header";
 
 export function getColumns(
   onApproveClick: (manager: ManagerListDto) => void,
@@ -9,25 +9,33 @@ export function getColumns(
   return [
     {
       accessorKey: "username",
-      header: ({ column }) => {
+      header: (context) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <SortableHeader context={context}>
             ID
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+          </SortableHeader>
         )
       },
     },
     {
       accessorKey: "name",
-      header: "이름"
+      header: (context) => {
+        return (
+          <SortableHeader context={context}>
+            이름
+          </SortableHeader>
+        )
+      },
     },
     {
       accessorKey: "email",
-      header: "이메일"
+      header: (context) => {
+        return (
+          <SortableHeader context={context}>
+            이메일
+          </SortableHeader>
+        )
+      },
     },
     {
       accessorKey: "phone",
@@ -38,14 +46,28 @@ export function getColumns(
       header: "권한"
     },
     {
+      id: "businessName",
       accessorFn: originalRow => originalRow.company?.name,
-      header: "회사명",
-      cell: ({ cell }) => cell.getValue()
+      cell: ({ cell }) => cell.getValue(),
+      header: (context) => {
+        return (
+          <SortableHeader context={context}>
+            회사명
+          </SortableHeader>
+        )
+      },
     },
     {
+      id: "businessNumber",
       accessorFn: originalRow => originalRow.company?.businessNumber,
-      header: "사업자번호",
-      cell: ({ cell }) => cell.getValue()
+      cell: ({ cell }) => cell.getValue(),
+      header: (context) => {
+        return (
+          <SortableHeader context={context}>
+            사업자 번호
+          </SortableHeader>
+        )
+      },
     },
     {
       accessorFn: originalRow => originalRow.approval.approved,

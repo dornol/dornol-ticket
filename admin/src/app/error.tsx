@@ -13,7 +13,7 @@ export default function GlobalError({ error }: ErrorProps) {
   useEffect(() => {
     router.replace('/');
     console.log(error)
-  }, [error]);
+  }, [error, router]);
 
   return (
     <>

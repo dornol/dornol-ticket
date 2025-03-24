@@ -65,7 +65,7 @@ class ValidationExceptionHandler(
         return when (val cause = e.cause) {
             is MismatchedInputException -> {
                 errorResponse("errors.validation").apply {
-                    errors.addAll(cause.path.map { errorResponseDetail(it.fieldName, it.description) })
+                    errors.addAll(cause.path.map { ErrorResponseDetail(it.fieldName, it.fieldName, ErrorScope.FIELD) })
                 }
             }
 

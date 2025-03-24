@@ -10,9 +10,16 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
-import { Button } from "@/components/ui/button";
 
 interface Page {
   number: number;
@@ -40,8 +47,6 @@ export default function DataTable<TData, TValue>({
   sorting,
   setSorting
 }: DataTableProps<TData, TValue>) {
-
-  console.log('pagination', pagination);
   const table = useReactTable({
     data,
     columns,
@@ -57,6 +62,9 @@ export default function DataTable<TData, TValue>({
     onPaginationChange: setPagination,
     pageCount: page.totalPages,
   })
+
+  const start = (page.number) - (page.number) % 10;
+  const end = Math.min(start + 10, page.totalPages);
 
   return (
     <div>
@@ -105,22 +113,34 @@ export default function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" onClick={() => {
+                setPagination((old) => ({ ...old, pageIndex: Math.max(start - 1, 0) }))
+              }}
+              />
+            </PaginationItem>
+            {
+              Array.from({ length: end - start }, (_, i) => (
+                <PaginationItem key={start + i}>
+                  <PaginationLink
+                    href="#"
+                    onClick={() => setPagination((old) => ({ ...old, pageIndex: start + i }))}
+                    isActive={start + i === page.number}
+                  >
+                    {start + i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))
+            }
+            <PaginationItem>
+              <PaginationNext href="#" onClick={() => {
+                setPagination((old) => ({ ...old, pageIndex: Math.min(end, page.totalPages - 1) }))
+              }} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   )

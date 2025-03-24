@@ -83,8 +83,11 @@ class ManagerRepositoryImpl(
     private fun sort(sort: Sort) = sort.map {
         log.info { "direction: ${it.direction.name} ${it.direction.isAscending}" }
         when (it.property) {
-            "name" -> OrderSpecifier(order(it.direction.isAscending), manager.name)
             "username" -> OrderSpecifier(order(it.direction.isAscending), manager.username)
+            "name" -> OrderSpecifier(order(it.direction.isAscending), manager.name)
+            "email" -> OrderSpecifier(order(it.direction.isAscending), manager.email)
+            "businessName" -> OrderSpecifier(order(it.direction.isAscending), company.name)
+            "businessNumber" -> OrderSpecifier(order(it.direction.isAscending), company.businessNumber)
             else -> OrderSpecifier(order(it.direction.isAscending), manager.name)
         }
     }.toList().toTypedArray()

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "@/lib/axios/api";
 import DataTable from "@/app/(authenticated)/managers/data-table";
 import { getColumns } from "@/app/(authenticated)/managers/columns";
@@ -12,12 +12,12 @@ import { PaginationState, SortingState } from "@tanstack/react-table";
 export default function AdminListPage() {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 2,
+    pageSize: 20,
   });
   const [sorting, setSorting] = useState<SortingState>([]);
-  const { data, refetch, isSuccess } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['get-managers', pagination, sorting],
-    queryFn: () => {
+    queryFn: async () => {
       const params = new URLSearchParams();
       Object.keys(pagination).forEach(key => {
         const typedKey = key as keyof typeof pagination;
@@ -27,11 +27,12 @@ export default function AdminListPage() {
         console.log(`sorting: `, sort);
         params.append('sort', `${sort.id},${sort.desc ? 'desc' : 'asc'}`);
       })
-      return apiClient.get('/managers', {
+      const res = await apiClient.get('/managers', {
         params: params
-      })
-        .then(res => res.data)
+      });
+      return res.data;
     },
+    placeholderData: keepPreviousData,
     throwOnError: true
   });
 
@@ -49,7 +50,7 @@ export default function AdminListPage() {
     <>
       <div className="container mx-auto py-10">
         {
-          isSuccess && !!data && <DataTable columns={getColumns(mutation.mutate)} data={data?.content ?? {}} page={data?.page ?? {}} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} />
+          <DataTable columns={getColumns(mutation.mutate)} data={data?.content ?? {}} page={data?.page ?? {}} pagination={pagination} setPagination={setPagination} sorting={sorting} setSorting={setSorting} />
         }
       </div>
     </>
