@@ -28,3 +28,5 @@ dornol:
         expiry-seconds: 10
       refresh-token:
         expiry-seconds: 1209600
+
+node-id: 0
