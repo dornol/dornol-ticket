@@ -1,7 +1,7 @@
 import { ManagerListDto } from "@/lib/types/manager/manager-list.dto";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import SortableHeader from "@/app/(authenticated)/managers/sortable-header";
+import SortableHeader from "@/components/table/sortable-header";
 
 export function getColumns(
   onApproveClick: (manager: ManagerListDto) => void,

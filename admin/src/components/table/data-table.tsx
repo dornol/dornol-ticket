@@ -5,7 +5,6 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  OnChangeFn,
   PaginationState,
   SortingState,
   useReactTable,
@@ -20,35 +19,47 @@ import {
 } from "@/components/ui/pagination"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
-
-interface Page {
-  number: number;
-  size: number;
-  totalElements: number;
-  totalPages: number;
-}
+import { useState } from "react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { PageImpl } from "@/lib/types/common/page";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[],
-  page: Page,
-  pagination: PaginationState,
-  setPagination: OnChangeFn<PaginationState>,
-  sorting: SortingState,
-  setSorting: OnChangeFn<SortingState>,
+  queryKey: string;
+  queryFn: (params: URLSearchParams) => Promise<PageImpl<TData>>;
 }
 
 export default function DataTable<TData, TValue>({
   columns,
-  data,
-  page,
-  pagination,
-  setPagination,
-  sorting,
-  setSorting
+  queryKey,
+  queryFn,
 }: DataTableProps<TData, TValue>) {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 1,
+  });
+  const [sorting, setSorting] = useState<SortingState>([]);
+
+  const { data } = useQuery({
+    queryKey: [queryKey, pagination, sorting],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      Object.keys(pagination).forEach(key => {
+        const typedKey = key as keyof typeof pagination;
+        params.append(key, String(pagination[typedKey]));
+      });
+      sorting.forEach((sort) => {
+        console.log(`sorting: `, sort);
+        params.append('sort', `${sort.id},${sort.desc ? 'desc' : 'asc'}`);
+      })
+      return queryFn(params);
+    },
+    placeholderData: keepPreviousData,
+    throwOnError: true
+  });
+
   const table = useReactTable({
-    data,
+    data: data?.content ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -60,11 +71,11 @@ export default function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     manualPagination: true,
     onPaginationChange: setPagination,
-    pageCount: page.totalPages,
+    pageCount: data?.page.totalPages,
   })
 
-  const start = (page.number) - (page.number) % 10;
-  const end = Math.min(start + 10, page.totalPages);
+  const start = (data?.page.number ?? 0) - (data?.page.number ?? 0) % 10;
+  const end = Math.min(start + 10, data?.page.totalPages ?? 1);
 
   return (
     <div>
@@ -127,7 +138,7 @@ export default function DataTable<TData, TValue>({
                   <PaginationLink
                     href="#"
                     onClick={() => setPagination((old) => ({ ...old, pageIndex: start + i }))}
-                    isActive={start + i === page.number}
+                    isActive={start + i === data?.page.number}
                   >
                     {start + i + 1}
                   </PaginationLink>
@@ -136,7 +147,7 @@ export default function DataTable<TData, TValue>({
             }
             <PaginationItem>
               <PaginationNext href="#" onClick={() => {
-                setPagination((old) => ({ ...old, pageIndex: Math.min(end, page.totalPages - 1) }))
+                setPagination((old) => ({ ...old, pageIndex: Math.min(end, (data?.page.totalPages ?? 1) - 1) }))
               }} />
             </PaginationItem>
           </PaginationContent>

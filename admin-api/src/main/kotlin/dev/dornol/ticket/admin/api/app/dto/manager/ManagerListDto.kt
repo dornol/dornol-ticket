@@ -6,7 +6,7 @@ import dev.dornol.ticket.domain.entity.manager.ManagerApproval
 import dev.dornol.ticket.domain.entity.manager.ManagerRole
 
 data class ManagerListDto(
-    val id: Long,
+    val id: String,
     val username: String,
     val name: String,
     val phone: String,
@@ -27,7 +27,7 @@ data class ManagerListDto(
         approval: ManagerApproval,
         company: Company?
     ) : this(
-        id,
+        id.toString(),
         username,
         name,
         phone,

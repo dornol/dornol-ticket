@@ -11,7 +11,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import joinService from "@/lib/service/join-service";
-import { Dialog } from "@/lib/alert/alert";
+import { Dialog } from "@/lib/dialog/dialog";
 import { ApiError } from "@/lib/types/common/api-error";
 import { z } from "zod";
 

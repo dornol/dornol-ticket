@@ -26,6 +26,8 @@ class ManagerRepositoryImpl(
 ) : ManagerQueryRepository {
 
     override fun searchManagers(search: ManagerSearchDto, pageable: Pageable): Page<ManagerListDto> {
+        val condition = managerListCondition(search)
+
         val listQuery = query
             .select(
                 QManagerListDto(
@@ -41,10 +43,7 @@ class ManagerRepositoryImpl(
             )
             .from(manager)
             .leftJoin(manager.company, company)
-            .where(
-                approved(search.approved),
-                text(search.searchType, search.searchText)
-            )
+            .where(*condition)
             .orderBy(*sort(pageable.sort))
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
@@ -52,13 +51,16 @@ class ManagerRepositoryImpl(
         val countQuery = query
             .select(manager.count())
             .from(manager)
-            .where(
-                approved(search.approved),
-                text(search.searchType, search.searchText)
-            )
+            .where(*condition)
 
         return PageableExecutionUtils.getPage(listQuery.fetch(), pageable) { countQuery.fetchOne() ?: 0 }
     }
+
+    private fun managerListCondition(search: ManagerSearchDto) = arrayOf(
+        approved(search.approved),
+        text(search.searchType, search.searchText),
+        manager.deleted.isFalse
+    )
 
     private fun approved(approved: Boolean?): BooleanExpression? {
         return approved?.let { manager.approval.approved.eq(it) }
@@ -88,7 +90,7 @@ class ManagerRepositoryImpl(
             "email" -> OrderSpecifier(order(it.direction.isAscending), manager.email)
             "businessName" -> OrderSpecifier(order(it.direction.isAscending), company.name)
             "businessNumber" -> OrderSpecifier(order(it.direction.isAscending), company.businessNumber)
-            else -> OrderSpecifier(order(it.direction.isAscending), manager.name)
+            else -> OrderSpecifier(Order.DESC, manager.id)
         }
     }.toList().toTypedArray()
 

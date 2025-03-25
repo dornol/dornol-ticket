@@ -2,7 +2,7 @@ import { ManagerRole } from "@/lib/types/auth/auth";
 import { Company } from "@/lib/types/company/company.dto";
 
 export interface ManagerListDto {
-  id: number;
+  id: string;
   username: string;
   name: string;
   phone: string;
