@@ -11,3 +11,5 @@ server:
 logging:
   level:
     dev.dornol: debug
+
+node-id: 0
