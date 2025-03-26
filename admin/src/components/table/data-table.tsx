@@ -36,7 +36,7 @@ export default function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 1,
+    pageSize: 15,
   });
   const [sorting, setSorting] = useState<SortingState>([]);
 

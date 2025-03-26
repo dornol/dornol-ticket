@@ -65,7 +65,11 @@ class ValidationExceptionHandler(
         return when (val cause = e.cause) {
             is MismatchedInputException -> {
                 errorResponse("errors.validation").apply {
-                    errors.addAll(cause.path.map { ErrorResponseDetail(it.fieldName, it.fieldName, ErrorScope.FIELD) })
+                    errors.add(ErrorResponseDetail(
+                        cause.path.joinToString(".") { it.fieldName },
+                        messageResolver.getMessage("NotBlank"),
+                        ErrorScope.FIELD
+                    ))
                 }
             }
 

@@ -25,6 +25,8 @@ spring:
     use-code-as-default-message: true
     encoding: UTF-8
 
+
+
 server:
   servlet:
     encoding:
@@ -44,4 +46,3 @@ dornol:
         expiry-seconds: 3600
       refresh-token:
         expiry-seconds: 1209600
-
