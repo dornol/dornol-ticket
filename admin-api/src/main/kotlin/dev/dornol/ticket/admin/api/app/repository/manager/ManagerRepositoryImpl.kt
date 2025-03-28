@@ -1,13 +1,13 @@
 package dev.dornol.ticket.admin.api.app.repository.manager
 
-import com.querydsl.core.types.Order
-import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
-import dev.dornol.ticket.admin.api.app.dto.manager.ManagerListDto
-import dev.dornol.ticket.admin.api.app.dto.manager.ManagerSearchDto
-import dev.dornol.ticket.admin.api.app.dto.manager.ManagerSearchType
-import dev.dornol.ticket.admin.api.app.dto.manager.QManagerListDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.ManagerSearchDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.ManagerSearchType
+import dev.dornol.ticket.admin.api.app.dto.manager.response.ManagerListDto
+import dev.dornol.ticket.admin.api.app.dto.manager.response.QManagerListDto
+import dev.dornol.ticket.admin.api.util.sort
+import dev.dornol.ticket.admin.api.util.toOrderBy
 import dev.dornol.ticket.domain.entity.company.QCompany.company
 import dev.dornol.ticket.domain.entity.manager.QManager.manager
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -82,23 +82,15 @@ class ManagerRepositoryImpl(
             }
         }
 
-    private fun sort(sort: Sort) = sort.map {
-        log.info { "direction: ${it.direction.name} ${it.direction.isAscending}" }
+    private fun sort(sort: Sort) = sort.toOrderBy {
         when (it.property) {
-            "username" -> OrderSpecifier(order(it.direction.isAscending), manager.username)
-            "name" -> OrderSpecifier(order(it.direction.isAscending), manager.name)
-            "email" -> OrderSpecifier(order(it.direction.isAscending), manager.email)
-            "businessName" -> OrderSpecifier(order(it.direction.isAscending), company.name)
-            "businessNumber" -> OrderSpecifier(order(it.direction.isAscending), company.businessNumber)
-            else -> OrderSpecifier(Order.DESC, manager.id)
+            "username" -> manager.username.sort(it)
+            "name" -> manager.name.sort(it)
+            "email" -> manager.email.sort(it)
+            "businessName" -> company.name.sort(it)
+            "businessNumber" -> company.businessNumber.sort(it)
+            else -> manager.id.sort(it)
         }
-    }.toList().toTypedArray()
-
-    private fun order(isAscending: Boolean): Order {
-        if (isAscending) {
-            return Order.ASC
-        }
-        return Order.DESC
     }
 
 }

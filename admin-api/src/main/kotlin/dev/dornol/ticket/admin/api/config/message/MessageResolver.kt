@@ -34,7 +34,7 @@ class MessageResolver(
                 try {
                     return messageSource.getMessage(code, args, locale)
                 } catch (e: NoSuchMessageException) {
-                    log.debug { "No message found for code $code" }
+                    log.trace { "No message found for code $code" }
                 }
             }
         }

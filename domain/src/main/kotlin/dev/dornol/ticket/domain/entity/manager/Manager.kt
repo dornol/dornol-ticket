@@ -14,7 +14,7 @@ class Manager(
     email: String,
     role: ManagerRole,
     approval: ManagerApproval = ManagerApproval(),
-    company: Company? = null,
+    company: Company,
 ) : BaseEntity() {
 
     @Column(length = 18, nullable = false, updatable = false, unique = true)
@@ -44,8 +44,8 @@ class Manager(
     var managerRole: ManagerRole = role
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", updatable = false)
-    val company: Company? = company
+    @JoinColumn(name = "company_id", nullable = false, updatable = false)
+    val company: Company = company
 
     fun approve(approvedBy: Long, approvedDate: LocalDateTime) {
         this.approval.approve(approvedBy, approvedDate)

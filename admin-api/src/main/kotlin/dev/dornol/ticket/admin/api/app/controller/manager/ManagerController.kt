@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.controller.manager
 
-import dev.dornol.ticket.admin.api.app.dto.manager.ManagerSearchDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.ManagerSearchDto
 import dev.dornol.ticket.admin.api.app.service.manager.ManagerService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.data.domain.Pageable

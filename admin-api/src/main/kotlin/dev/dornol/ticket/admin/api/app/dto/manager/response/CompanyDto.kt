@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.manager
+package dev.dornol.ticket.admin.api.app.dto.manager.response
 
 import com.querydsl.core.annotations.QueryProjection
 

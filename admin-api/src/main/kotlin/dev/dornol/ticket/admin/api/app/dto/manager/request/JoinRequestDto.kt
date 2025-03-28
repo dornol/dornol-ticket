@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.manager
+package dev.dornol.ticket.admin.api.app.dto.manager.request
 
 import dev.dornol.ticket.domain.constant.MANAGER_NAME_PATTERN
 import dev.dornol.ticket.domain.constant.PHONE_NUMBER_PATTERN

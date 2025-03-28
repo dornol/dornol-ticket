@@ -22,7 +22,6 @@ spring:
 
   messages:
     basename: messages, errors
-    use-code-as-default-message: true
     encoding: UTF-8
 
 

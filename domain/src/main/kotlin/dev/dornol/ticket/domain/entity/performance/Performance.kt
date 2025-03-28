@@ -13,9 +13,11 @@ class Performance(
 
     @Column(length = 255, nullable = false)
     var name: String = name
+        protected set
 
     @Enumerated(EnumType.STRING)
     var type: PerformanceType = type
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id", nullable = false, updatable = false)

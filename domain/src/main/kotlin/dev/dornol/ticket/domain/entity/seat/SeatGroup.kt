@@ -16,6 +16,7 @@ class SeatGroup(
 
     @Column(length = 30, nullable = false)
     var name: String = name
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id", nullable = false, updatable = false)
