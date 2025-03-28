@@ -12,6 +12,7 @@ import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.FieldError
 import org.springframework.validation.ObjectError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -42,13 +43,12 @@ class ValidationExceptionHandler(
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException) =
         errorResponse("errors.validation").apply {
             errors.addAll(e.bindingResult.globalErrors.map {
-                errorResponseDetail(it)
+                errorResponseDetail(it, e.parameter.parameterName)
             })
             errors.addAll(e.bindingResult.fieldErrors.map {
                 ErrorResponseDetail(
                     it.field,
-                    if (it.isBindingFailure) messageResolver.getMessage("errors.validation")
-                    else it.defaultMessage,
+                    resolveFieldErrorMessage(it),
                     ErrorScope.FIELD
                 )
             })
@@ -77,15 +77,27 @@ class ValidationExceptionHandler(
         }
     }
 
-    fun errorResponseDetail(error: ObjectError): ErrorResponseDetail {
+    private fun resolveFieldErrorMessage(error: FieldError): String? {
+        if (!error.isBindingFailure) {
+            return error.defaultMessage
+        }
+        if (error.codes != null && error.codes!!.isNotEmpty()) {
+            return messageResolver.getMessage(error.codes, error.arguments)
+        }
+        return messageResolver.getMessage("errors.validation")
+    }
+
+    fun errorResponseDetail(error: ObjectError, parameterName: String?): ErrorResponseDetail {
         return if (error.codes?.isNotEmpty() == true) {
+            log.info { "error: $error" }
             errorResponseDetail(
-                error.objectName,
+                parameterName ?: error.objectName,
                 error.defaultMessage ?: messageResolver.getMessage("errors.validation")
             )
         } else {
+            log.info { "error: $error" }
             errorResponseDetail(
-                error.objectName,
+                parameterName ?: error.objectName,
                 messageResolver.getMessage("errors.validation")
             )
         }

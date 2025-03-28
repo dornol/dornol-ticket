@@ -66,9 +66,12 @@ class SecurityConfig(
         authorizeHttpRequests {
             it.requestMatchers(LOGIN_URL).permitAll()
             it.requestMatchers(LOGOUT_URL).permitAll()
-            it.requestMatchers("/user/**").authenticated()
-            it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
 
+            it.requestMatchers("/user/**").authenticated()
+
+            it.requestMatchers("/sites/**").authenticated()
+
+            it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
             it.anyRequest().permitAll()
         }
         exceptionHandling {

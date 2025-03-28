@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.app.service.manager
 
-import dev.dornol.ticket.admin.api.app.dto.manager.JoinRequestDto
-import dev.dornol.ticket.admin.api.app.dto.manager.ManagerSearchDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.JoinRequestDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.ManagerSearchDto
 import dev.dornol.ticket.admin.api.app.dto.user.UserDto
 import dev.dornol.ticket.admin.api.app.repository.company.CompanyRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository

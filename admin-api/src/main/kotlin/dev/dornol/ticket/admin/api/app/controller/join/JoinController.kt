@@ -1,8 +1,8 @@
 package dev.dornol.ticket.admin.api.app.controller.join
 
-import dev.dornol.ticket.admin.api.app.dto.manager.CheckUsernameDto
-import dev.dornol.ticket.admin.api.app.dto.manager.CheckUsernameResponseDto
-import dev.dornol.ticket.admin.api.app.dto.manager.JoinRequestDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.CheckUsernameDto
+import dev.dornol.ticket.admin.api.app.dto.manager.request.JoinRequestDto
+import dev.dornol.ticket.admin.api.app.dto.manager.response.CheckUsernameResponseDto
 import dev.dornol.ticket.admin.api.app.service.manager.ManagerService
 import org.springframework.http.CacheControl
 import org.springframework.http.ResponseEntity

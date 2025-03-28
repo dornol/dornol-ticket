@@ -19,9 +19,11 @@ class Site(
 
     @Column(name = "name", length = 100, nullable = false)
     var name: String = name
+        protected set
 
     @Embedded
     var address: Address = address
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false, updatable = false)
