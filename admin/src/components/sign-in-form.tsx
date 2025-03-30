@@ -11,7 +11,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { authService, tokenProvider } from "@/lib/service/auth/auth-service";
-import useAuthStore from "@/lib/store/auth";
+import useAuthStore from "@/lib/store/auth-store";
 
 export function LoginForm({
   className,

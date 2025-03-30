@@ -1,10 +1,38 @@
+"use client"
+
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import ThemeToggle from "@/components/layout/theme-toggle";
+import useMenusStore from "@/lib/store/menus-store";
+import { usePathname } from "next/navigation";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList, BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
+import { DefaultMenu, Menus, ProjectsMenuItem } from "@/lib/types/menu/menu";
+
+const getSelectedMenu = (menus: Menus) => {
+  return menus.main.find(it => it.isActive) || menus.projects.find(it => it.isActive) || menus.secondary.find(it => it.isActive) || menus.main[0];
+}
+
+const getSelectedSubMenu = (menus: Menus) => {
+  return menus.projects.find((it) => it.isActive)?.items.find((it) => it.isActive)
+}
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  const { menus } = useMenusStore(pathname);
+
+  const mainMenu: DefaultMenu = getSelectedMenu(menus);
+  const subMenu: ProjectsMenuItem | undefined = getSelectedSubMenu(menus);
+
   return (
-    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
+    <header
+      className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
         <ThemeToggle />
@@ -12,7 +40,39 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">Documents</h1>
+
+        <Breadcrumb className="hidden sm:block">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              {
+                !!subMenu && (
+                  <BreadcrumbLink href="#" asChild={true}>
+                    <Link href={mainMenu.url ?? '/'}>
+                      {mainMenu.title}
+                    </Link>
+                  </BreadcrumbLink>
+                )
+              }
+              {
+                !subMenu && (
+                  <BreadcrumbPage>{mainMenu.title}</BreadcrumbPage>
+                )
+              }
+            </BreadcrumbItem>
+            {
+              subMenu && (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{subMenu.title}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </>
+              )
+            }
+          </BreadcrumbList>
+        </Breadcrumb>
+
+        {/*<h1 className="text-base font-medium">Documents</h1>*/}
       </div>
     </header>
   )

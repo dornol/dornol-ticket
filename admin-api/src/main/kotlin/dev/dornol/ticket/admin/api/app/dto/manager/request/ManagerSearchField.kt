@@ -1,7 +1,6 @@
 package dev.dornol.ticket.admin.api.app.dto.manager.request
 
-enum class ManagerSearchType {
-    ALL,
+enum class ManagerSearchField {
     NAME,
     USERNAME,
     COMPANY_NAME,

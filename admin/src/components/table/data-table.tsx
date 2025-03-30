@@ -27,12 +27,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   queryKey: string;
   queryFn: (params: URLSearchParams) => Promise<PageImpl<TData>>;
+  search: object;
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   queryKey,
   queryFn,
+  search,
 }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -41,15 +43,18 @@ export default function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const { data } = useQuery({
-    queryKey: [queryKey, pagination, sorting],
+    queryKey: [queryKey, pagination, sorting, search],
     queryFn: async () => {
       const params = new URLSearchParams();
       Object.keys(pagination).forEach(key => {
         const typedKey = key as keyof typeof pagination;
         params.append(key, String(pagination[typedKey]));
       });
+      Object.keys(search).forEach(key => {
+        const typedKey = key as keyof typeof search;
+        params.append(key, String(search[typedKey]));
+      });
       sorting.forEach((sort) => {
-        console.log(`sorting: `, sort);
         params.append('sort', `${sort.id},${sort.desc ? 'desc' : 'asc'}`);
       })
       return queryFn(params);

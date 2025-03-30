@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { LucideIcon } from "lucide-react"
 
 import {
   SidebarGroup,
@@ -11,16 +10,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link";
+import { DefaultMenu } from "@/lib/types/menu/menu";
 
 export function NavSecondary({
   items,
   ...props
 }: {
-  items: {
-    title: string
-    url: string
-    icon: LucideIcon
-  }[]
+  items: DefaultMenu[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>

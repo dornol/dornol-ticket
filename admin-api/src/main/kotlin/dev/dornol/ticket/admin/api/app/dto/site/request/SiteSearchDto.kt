@@ -1,9 +1,8 @@
 package dev.dornol.ticket.admin.api.app.dto.site.request
 
-import jakarta.validation.constraints.NotNull
+import dev.dornol.ticket.admin.api.app.dto.common.request.DefaultSearchDto
 
-data class SiteSearchDto(
-    @field:NotNull
-    val searchType: SiteSearchType = SiteSearchType.ALL,
-    val searchText: String = ""
-)
+class SiteSearchDto(
+    searchFields: Set<SiteSearchField> = setOf(),
+    searchText: String = ""
+) : DefaultSearchDto<SiteSearchField>(searchFields, searchText)
