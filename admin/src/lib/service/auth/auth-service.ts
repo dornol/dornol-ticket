@@ -1,6 +1,6 @@
 import auth from "@/lib/axios/auth";
 import api from "@/lib/axios/api";
-import useAuthStore from "@/lib/store/auth";
+import useAuthStore from "@/lib/store/auth-store";
 import { Token, TokenBundle, UserInfo } from "@/lib/types/auth/auth";
 import { LoginRequestDto } from "@/lib/types/login/login.dto";
 

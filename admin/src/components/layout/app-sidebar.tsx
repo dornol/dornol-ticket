@@ -1,16 +1,8 @@
 "use client"
 
 import * as React from "react"
-import {
-  ArrowUpCircleIcon,
-  DatabaseIcon,
-  HelpCircleIcon,
-  LayoutDashboardIcon,
-  SearchIcon,
-  SettingsIcon,
-} from "lucide-react"
-
-import { NavDocuments } from "@/components/layout/nav-documents"
+import { useEffect } from "react"
+import { ArrowUpCircleIcon, } from "lucide-react"
 import { NavMain } from "@/components/layout/nav-main"
 import { NavSecondary } from "@/components/layout/nav-secondary"
 import { NavUser } from "@/components/layout/nav-user"
@@ -23,48 +15,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import useAuthStore from "@/lib/store/auth";
-import { ManagerRole } from "@/lib/types/auth/auth";
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/",
-      icon: LayoutDashboardIcon
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: SettingsIcon,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: HelpCircleIcon,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: SearchIcon,
-    },
-  ],
-  documents: [
-    {
-      name: "Admin",
-      url: "/managers",
-      icon: DatabaseIcon,
-      scopes: [
-        ManagerRole.SCOPE_SYSTEM_ADMIN
-      ]
-    },
-  ],
-}
+import useAuthStore from "@/lib/store/auth-store";
+import { NavProjects } from "@/components/layout/nav-projects";
+import { usePathname } from "next/navigation";
+import useMenusStore from "@/lib/store/menus-store";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
   const { userInfo } = useAuthStore();
+  const { menus, setMenus } = useMenusStore(pathname);
+
+  useEffect(() => {
+    setMenus(menus, pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -84,12 +48,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        {
-          data.documents.some(it => it.scopes.some(scope => userInfo?.authorities?.includes(scope))) &&
-            <NavDocuments title="관리자 관리" items={data.documents} />
-        }
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={menus.main} />
+        <NavProjects title={'projects'} items={menus.projects} />
+        <NavSecondary items={menus.secondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userInfo!} />

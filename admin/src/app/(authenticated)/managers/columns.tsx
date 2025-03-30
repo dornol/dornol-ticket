@@ -22,7 +22,7 @@ export function getColumns(
       header: (context) => {
         return (
           <SortableHeader context={context}>
-            이름
+            Name
           </SortableHeader>
         )
       },
@@ -32,18 +32,18 @@ export function getColumns(
       header: (context) => {
         return (
           <SortableHeader context={context}>
-            이메일
+            Email
           </SortableHeader>
         )
       },
     },
     {
       accessorKey: "phone",
-      header: "전화번호"
+      header: "Phone"
     },
     {
       accessorKey: "managerRole",
-      header: "권한"
+      header: "Role"
     },
     {
       id: "businessName",
@@ -52,7 +52,7 @@ export function getColumns(
       header: (context) => {
         return (
           <SortableHeader context={context}>
-            회사명
+            Company name
           </SortableHeader>
         )
       },
@@ -64,7 +64,7 @@ export function getColumns(
       header: (context) => {
         return (
           <SortableHeader context={context}>
-            사업자 번호
+            Business No
           </SortableHeader>
         )
       },
@@ -72,16 +72,16 @@ export function getColumns(
     {
       accessorFn: originalRow => originalRow.approval.approved,
       accessorKey: "approved",
-      header: "승인",
+      header: "Approved",
       cell: ({ cell, row }) => {
         return (
           <>
             {
-              cell.getValue() && '승인'
+              cell.getValue() && 'Approved'
             }
             {
-              !cell.getValue() && <Button onClick={() => onApproveClick(row.original)}>
-                    승인하기
+              !cell.getValue() && <Button size="sm" onClick={() => onApproveClick(row.original)}>
+                    Approve
                 </Button>
             }
           </>

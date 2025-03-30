@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import useAuthStore from "@/lib/store/auth";
+import useAuthStore from "@/lib/store/auth-store";
 import { ReactNode, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { authService, tokenProvider } from "@/lib/service/auth/auth-service";

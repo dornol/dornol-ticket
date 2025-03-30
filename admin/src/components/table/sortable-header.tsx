@@ -7,7 +7,8 @@ export default function SortableHeader<TData, TValue>({children, context}: {chil
   return (
     <Button
       variant="ghost"
-      onClick={() => context.column.toggleSorting(context.column.getIsSorted() === "asc")}
+      onClick={() => context.column.toggleSorting(context.column.getIsSorted() !== "desc", false)
+    }
     >
       {children}
       <ArrowUpDown className="ml-2 h-4 w-4" />
