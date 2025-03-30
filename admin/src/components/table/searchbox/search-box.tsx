@@ -17,10 +17,10 @@ import {
 
 function SearchOptionBox({ searchOption }: { searchOption: SearchOption }) {
   return (
-    <>
+    <div>
       {searchOption.type === "select" && SearchSelectBox(searchOption)}
       {searchOption.type === "checkbox" && SearchCheckbox(searchOption)}
-    </>
+    </div>
   )
 }
 
@@ -48,13 +48,13 @@ export default function SearchBox({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex w-full items-center space-x-2 ml-auto">
+      <div className="flex w-full flex-wrap space-x-0 space-y-2 md:space-x-2 md:space-y-0">
         {
           searchOptions.searchOptions.map((searchOption) => <SearchOptionBox key={`search-box-${searchOption.name}`}
                                                                              searchOption={searchOption} />)
         }
         <div
-          className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent text-base shadow-xs outline-none items-center overflow-hidden"
+          className="border-input flex h-9 w-full rounded-md border bg-transparent text-base shadow-xs outline-none items-center overflow-hidden md:w-auto md:min-w-96 md:flex-1"
         >
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
@@ -91,8 +91,8 @@ export default function SearchBox({
           </DropdownMenu>
           <Input type="text" placeholder="Search query" name="searchText"
                  className="border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:border-none rounded-none" />
+          <Button type="submit" variant="outline">Search</Button>
         </div>
-        <Button type="submit" variant="outline">Search</Button>
       </div>
     </form>
   )

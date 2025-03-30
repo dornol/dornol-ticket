@@ -25,7 +25,6 @@ class SiteRepositoryImpl(
         NAME to listOf(site.name),
         COMPANY_NAME to listOf(site.company.name),
         ADDRESS to listOf(site.address.mainAddress, site.address.detailAddress, site.address.zipCode),
-
     )
 
     override fun search(search: SiteSearchDto, pageable: Pageable): Page<SiteListDto> {
