@@ -14,7 +14,7 @@ export const menus: Menus = {
   projects: [
     {
       title: "Managers",
-      url: "/managers",
+      url: "#",
       icon: DatabaseIcon,
       scopes: [
         ManagerRole.SCOPE_SYSTEM_ADMIN
@@ -25,13 +25,12 @@ export const menus: Menus = {
           title: "Managers",
           url: "/managers",
           isActive: false,
-          subUrls: [''],
         }
       ]
     },
     {
       title: "Sites",
-      url: "/sites",
+      url: "#",
       icon: DatabaseIcon,
       scopes: [
         ManagerRole.SCOPE_SYSTEM_ADMIN,
@@ -43,7 +42,13 @@ export const menus: Menus = {
           title: "Sites",
           url: "/sites",
           isActive: false,
-          subUrls: [''],
+          items: [
+            {
+              title: 'Add new site',
+              url: '/sites/new',
+              isActive: false,
+            }
+          ],
         }
       ]
     },
