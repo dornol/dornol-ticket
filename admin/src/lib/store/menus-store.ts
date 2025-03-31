@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Menus, MenusState, ProjectsMenu, ProjectsMenuItem } from "@/lib/types/menu/menu";
+import { Menus, MenusState, ProjectsMenuItem } from "@/lib/types/menu/menu";
 import { menus } from "@/lib/data/menus/menus";
 
 const markActiveProjectMenus = (menu: ProjectsMenuItem, pathname: string): boolean => {
