@@ -19,6 +19,7 @@ import useAuthStore from "@/lib/store/auth-store";
 import { NavProjects } from "@/components/layout/nav-projects";
 import { usePathname } from "next/navigation";
 import useMenusStore from "@/lib/store/menus-store";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
@@ -39,10 +40,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <Link href="/">
                 <ArrowUpCircleIcon className="h-5 w-5" />
                 <span className="text-base font-semibold">Dornol Ticket Admin</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

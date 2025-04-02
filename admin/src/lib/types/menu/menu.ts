@@ -21,12 +21,12 @@ export interface DefaultMenu {
 
 export interface ProjectsMenu extends DefaultMenu {
   scopes: ManagerRole[];
-  items: ProjectsMenuItem[]
+  items: ProjectsMenuItem[];
 }
 
 export interface ProjectsMenuItem {
   title: string;
   url: string;
   isActive: boolean;
-  subUrls: string[];
+  items?: ProjectsMenuItem[];
 }

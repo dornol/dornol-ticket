@@ -61,7 +61,6 @@ const authService = {
     return api.get('/user/me')
       .then(response => {
         useAuthStore.getState().setUser(response.data);
-        console.log(response.data);
         return response.data;
       })
       .catch(async (e: Error) => {

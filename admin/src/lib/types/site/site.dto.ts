@@ -10,3 +10,8 @@ export interface Address {
   detailAddress: string;
   zipcode: string;
 }
+
+export interface SiteAddRequestDto {
+  name: string;
+  address: Address;
+}

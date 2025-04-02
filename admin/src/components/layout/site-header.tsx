@@ -5,15 +5,9 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import ThemeToggle from "@/components/layout/theme-toggle";
 import useMenusStore from "@/lib/store/menus-store";
 import { usePathname } from "next/navigation";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList, BreadcrumbPage,
-  BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
-import Link from "next/link";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { DefaultMenu, Menus, ProjectsMenuItem } from "@/lib/types/menu/menu";
+import SiteHeaderBreadcrumbItem from "@/components/layout/site-header-breadcrumb-item";
 
 const getSelectedMenu = (menus: Menus) => {
   return menus.main.find(it => it.isActive) || menus.projects.find(it => it.isActive) || menus.secondary.find(it => it.isActive) || menus.main[0];
@@ -44,35 +38,13 @@ export function SiteHeader() {
         <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
             <BreadcrumbItem>
-              {
-                !!subMenu && (
-                  <BreadcrumbLink href="#" asChild={true}>
-                    <Link href={mainMenu.url ?? '/'}>
-                      {mainMenu.title}
-                    </Link>
-                  </BreadcrumbLink>
-                )
-              }
-              {
-                !subMenu && (
-                  <BreadcrumbPage>{mainMenu.title}</BreadcrumbPage>
-                )
-              }
+              <BreadcrumbPage>{mainMenu.title}</BreadcrumbPage>
             </BreadcrumbItem>
             {
-              subMenu && (
-                <>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>{subMenu.title}</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </>
-              )
+              !!subMenu && <SiteHeaderBreadcrumbItem menu={subMenu} />
             }
           </BreadcrumbList>
         </Breadcrumb>
-
-        {/*<h1 className="text-base font-medium">Documents</h1>*/}
       </div>
     </header>
   )
