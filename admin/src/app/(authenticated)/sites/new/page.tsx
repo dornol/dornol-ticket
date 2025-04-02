@@ -81,6 +81,10 @@ export default function SiteAddPage() {
     mutation.mutate(data);
   };
 
+  const goBack = () => {
+    router.back();
+  }
+
   return (
     <>
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -150,6 +154,7 @@ export default function SiteAddPage() {
 
             {/* 제출 버튼 */}
             <Button type="submit">Save</Button>
+            <Button type="button" variant="secondary" onClick={goBack} >Cancel</Button>
           </form>
         </Form>
 
