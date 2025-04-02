@@ -1,12 +1,18 @@
 import apiClient from "@/lib/axios/api";
-import { SiteAddRequestDto, SiteListDto } from "@/lib/types/site/site.dto";
+import { SiteAddRequestDto, SiteDto, SiteListDto } from "@/lib/types/site/site.dto";
 import { PageImpl } from "@/lib/types/common/page";
 
 const SITE_LIST_URL = "/sites"
 const SITE_ADD_URL = "/sites";
+const SITE_EDIT_URL = (id: string) => `/sites/${id}/edit`;
 
 
 class SiteService {
+
+  async get(id: string): Promise<SiteDto> {
+    const res = await apiClient.get(`/sites/${id}`);
+    return res.data;
+  }
 
   async list(params: URLSearchParams): Promise<PageImpl<SiteListDto>> {
     const res = await apiClient.get(SITE_LIST_URL, {
@@ -16,7 +22,11 @@ class SiteService {
   }
 
   async add(data: SiteAddRequestDto): Promise<void> {
-    return apiClient.post(SITE_ADD_URL, data)
+    return apiClient.post(SITE_ADD_URL, data);
+  }
+
+  async edit(id: string, data: SiteAddRequestDto): Promise<void> {
+    return apiClient.put(SITE_EDIT_URL(id), data);
   }
 
 }

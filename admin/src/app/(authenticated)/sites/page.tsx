@@ -8,6 +8,7 @@ import { getColumns } from "@/app/(authenticated)/sites/columns";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import siteService from "@/lib/service/site/site-service";
+import { SiteListDto } from "@/lib/types/site/site.dto";
 
 const queryKey: string = 'get-sites';
 
@@ -18,6 +19,10 @@ export default function SiteListPage() {
     searchFields: ""
   })
 
+  const onEditClick = (data: SiteListDto) => {
+    router.push(`/sites/${data.id}/edit`);
+  }
+
   return (
     <>
       <SearchBox searchOptions={searchOptions} onSearch={setSearch} />
@@ -25,7 +30,7 @@ export default function SiteListPage() {
         <Button onClick={() => router.push('/sites/new')}>Add</Button>
       </div>
       <div className="container mx-auto py-10">
-        <DataTable columns={getColumns()} queryKey={queryKey} queryFn={siteService.list} search={search} />
+        <DataTable columns={getColumns({onEditClick})} queryKey={queryKey} queryFn={siteService.list} search={search} />
       </div>
     </>
   )
