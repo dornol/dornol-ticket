@@ -2,14 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, } from "@/components/ui/drawer"
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,15 +20,15 @@ const profileFormSchema = z.object({
   }),
   address: z.object({
     zipCode: z.string()
-      .nonempty({message: "주소를 선택해 주세요."})
-      .length(5, {message: "정확한 우편번호를 입력해 주세요."})
-      .regex(/^[0-9]{5}$/, {message: "정확한 우편번호를 입력해 주세요."}),
+      .nonempty({ message: "주소를 선택해 주세요." })
+      .length(5, { message: "정확한 우편번호를 입력해 주세요." })
+      .regex(/^[0-9]{5}$/, { message: "정확한 우편번호를 입력해 주세요." }),
     mainAddress: z.string()
-      .nonempty({message: "주소를 선택해 주세요."})
-      .max(150, {message: "올바른 주소를 선택해 주세요."}),
+      .nonempty({ message: "주소를 선택해 주세요." })
+      .max(150, { message: "올바른 주소를 선택해 주세요." }),
     detailAddress: z.string()
-      .nonempty({message: "상세주소를 입력해 주세요."})
-      .max(150, {message: "올바른 상세주소를 입력해 주세요 ."})
+      .nonempty({ message: "상세주소를 입력해 주세요." })
+      .max(150, { message: "올바른 상세주소를 입력해 주세요 ." })
   })
 });
 
@@ -71,77 +64,74 @@ export default function SiteForm({
 
   return (
     <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {/* 사용자 이름 필드 */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Site name</FormLabel>
+                <FormControl>
+                  <Input placeholder="이름을 입력하세요" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="address.zipCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <span>Address zipcode</span>
+                  <Button type="button" size="sm" variant="outline" onClick={() => setDrawerOpen(true)}>주소검색</Button>
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="주소를 선택해 주세요." {...field} readOnly />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="address.mainAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input placeholder="주소를 선택해 주세요." {...field} readOnly />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="address.detailAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address detail</FormLabel>
+                <FormControl>
+                  <Input placeholder="상세주소를 입력해 주세요." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* 제출 버튼 */}
+          <Button type="submit">Save</Button>
+          <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
+        </form>
+      </Form>
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {/* 사용자 이름 필드 */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Site name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="이름을 입력하세요" {...field}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="address.zipCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <span>Address zipcode</span>
-                    <DrawerTrigger asChild>
-                      <Button type="button" size="sm" variant="outline">주소검색</Button>
-                    </DrawerTrigger>
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="주소를 선택해 주세요." {...field} readOnly />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="address.mainAddress"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="주소를 선택해 주세요." {...field} readOnly />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="address.detailAddress"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address detail</FormLabel>
-                  <FormControl>
-                    <Input placeholder="상세주소를 입력해 주세요." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* 제출 버튼 */}
-            <Button type="submit">Save</Button>
-            <Button type="button" variant="secondary" onClick={onCancel} >Cancel</Button>
-          </form>
-        </Form>
-
         <DrawerContent>
           <div className="mx-auto w-full">
             <VisuallyHidden>
@@ -151,7 +141,7 @@ export default function SiteForm({
               </DrawerHeader>
             </VisuallyHidden>
             <DaumPostcodeEmbed
-              style={{ width: '100%'}}
+              style={{ width: '100%' }}
               onComplete={onAddressSearchComplete}
             ></DaumPostcodeEmbed>
           </div>
