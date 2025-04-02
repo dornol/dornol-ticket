@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size
 data class AddressDto(
     @field:Size(max = 5)
     @field:NotBlank
-    val zipCode: String,
+    val zipCode: String?,
     @field:NotBlank
     @field:Size(max = 255)
     val mainAddress: String,

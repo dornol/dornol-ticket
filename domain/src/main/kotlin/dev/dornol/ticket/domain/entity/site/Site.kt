@@ -29,4 +29,9 @@ class Site(
     @JoinColumn(name = "company_id", nullable = false, updatable = false)
     val company: Company = company
 
+    fun edit(name: String, address: Address) {
+        this.name = name
+        this.address = address
+    }
+
 }

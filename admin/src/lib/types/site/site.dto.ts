@@ -8,10 +8,16 @@ export interface SiteListDto {
 export interface Address {
   mainAddress: string;
   detailAddress: string;
-  zipcode: string;
+  zipCode: string;
 }
 
 export interface SiteAddRequestDto {
+  name: string;
+  address: Address;
+}
+
+export interface SiteDto {
+  id: string;
   name: string;
   address: Address;
 }

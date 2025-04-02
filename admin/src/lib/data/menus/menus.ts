@@ -47,6 +47,11 @@ export const menus: Menus = {
               title: 'Add new site',
               url: '/sites/new',
               isActive: false,
+            },
+            {
+              title: 'Edit site',
+              url: '/sites/.*/edit',
+              isActive: false,
             }
           ],
         }
