@@ -131,7 +131,7 @@ export default function SiteForm({
           <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
         </form>
       </Form>
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} direction="top">
         <DrawerContent>
           <div className="mx-auto w-full">
             <VisuallyHidden>
@@ -141,7 +141,7 @@ export default function SiteForm({
               </DrawerHeader>
             </VisuallyHidden>
             <DaumPostcodeEmbed
-              style={{ width: '100%' }}
+              style={{ width: '100%'}}
               onComplete={onAddressSearchComplete}
             ></DaumPostcodeEmbed>
           </div>

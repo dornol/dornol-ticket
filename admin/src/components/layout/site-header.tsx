@@ -35,7 +35,7 @@ export function SiteHeader() {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
 
-        <Breadcrumb className="hidden sm:block">
+        <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbPage>{mainMenu.title}</BreadcrumbPage>

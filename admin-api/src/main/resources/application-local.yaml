@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dornol_ticket
+    username: postgres
+    password: postgres
+
   flyway:
     enabled: true
 
