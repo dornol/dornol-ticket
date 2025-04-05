@@ -54,6 +54,12 @@ export const menus: Menus = {
               isActive: false,
             }
           ],
+        },
+        {
+          title: "Seats",
+          url: "/seats",
+          isActive: false,
+          items: [],
         }
       ]
     },

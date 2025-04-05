@@ -4,6 +4,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/provider/theme-provider";
 import ClientQueryClientProvider from "@/components/provider/client-query-client-provider";
 import React from "react";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default async function RootLayout({
       <ClientQueryClientProvider>
         {children}
       </ClientQueryClientProvider>
+      <Toaster />
     </ThemeProvider>
     </body>
     </html>

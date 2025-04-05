@@ -22,7 +22,7 @@ export function getColumns({
     {
       accessorKey: "address",
       cell: ({ row }) => {
-        return `${row.original.address.mainAddress} ${row.original.address.detailAddress}`
+        return `(${row.original.address.zipCode}) ${row.original.address.mainAddress} ${row.original.address.detailAddress}`
       },
       header: (context) => {
         return (

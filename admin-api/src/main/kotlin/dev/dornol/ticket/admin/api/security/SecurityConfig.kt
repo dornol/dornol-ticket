@@ -67,12 +67,16 @@ class SecurityConfig(
             it.requestMatchers(LOGIN_URL).permitAll()
             it.requestMatchers(LOGOUT_URL).permitAll()
 
+            it.requestMatchers("/join/**").permitAll()
+            it.requestMatchers("/auth/**").permitAll()
             it.requestMatchers("/user/**").authenticated()
-
             it.requestMatchers("/sites/**").authenticated()
+            it.requestMatchers("/seats/**").authenticated()
+            it.requestMatchers("/files").authenticated()
 
             it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
-            it.anyRequest().permitAll()
+
+            it.anyRequest().denyAll()
         }
         exceptionHandling {
             it.accessDeniedHandler(accessDeniedHandler)

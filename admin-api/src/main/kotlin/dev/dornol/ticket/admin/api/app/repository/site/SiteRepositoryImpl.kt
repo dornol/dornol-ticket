@@ -33,10 +33,10 @@ class SiteRepositoryImpl(
 
         val list = query
             .select(QSiteListDto(
-                site.id.stringValue(),
+                site.id,
                 site.name,
                 site.address,
-                site.company.id.stringValue()
+                site.company.id
             ))
             .from(site)
             .join(site.company)

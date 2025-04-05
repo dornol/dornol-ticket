@@ -12,9 +12,11 @@ import { useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Address as DaumAddress } from "react-daum-postcode/lib/loadPostcode";
-import { SiteAddRequestDto } from "@/lib/types/site/site.dto";
+import { SiteAddRequestDto, SiteDto } from "@/lib/types/site/site.dto";
+import FileFormItem from "@/components/common/file-form-item";
+import { FileUploadResponseDto } from "@/lib/types/file/file.dto";
 
-const profileFormSchema = z.object({
+const siteAddFormSchema = z.object({
   name: z.string().min(2, {
     message: "이름은 최소 2자 이상이어야 합니다.",
   }),
@@ -29,29 +31,47 @@ const profileFormSchema = z.object({
     detailAddress: z.string()
       .nonempty({ message: "상세주소를 입력해 주세요." })
       .max(150, { message: "올바른 상세주소를 입력해 주세요 ." })
-  })
+  }),
+  seatingMapFileId: z.string()
+    .nonempty({ message: "좌석 배치도를 업로드해주세요." })
+});
+
+const siteEditFormSchema = z.object({
+  name: z.string().min(2, {
+    message: "이름은 최소 2자 이상이어야 합니다.",
+  }),
+  address: z.object({
+    zipCode: z.string()
+      .nonempty({ message: "주소를 선택해 주세요." })
+      .length(5, { message: "정확한 우편번호를 입력해 주세요." })
+      .regex(/^[0-9]{5}$/, { message: "정확한 우편번호를 입력해 주세요." }),
+    mainAddress: z.string()
+      .nonempty({ message: "주소를 선택해 주세요." })
+      .max(150, { message: "올바른 주소를 선택해 주세요." }),
+    detailAddress: z.string()
+      .nonempty({ message: "상세주소를 입력해 주세요." })
+      .max(150, { message: "올바른 상세주소를 입력해 주세요 ." })
+  }),
+  seatingMapFileId: z.string()
 });
 
 export default function SiteForm({
-  defaultValues = {
-    name: "",
-    address: {
-      zipCode: "",
-      mainAddress: "",
-      detailAddress: "",
-    },
-  },
+  site,
   onSubmit,
   onCancel,
+  mode,
 }: {
-  defaultValues?: SiteAddRequestDto;
+  site?: SiteDto;
   onSubmit: (data: SiteAddRequestDto) => void;
   onCancel: () => void;
+  mode: "add" | "edit"
 }) {
+  console.log('site: ', site)
+  const schema = mode === "add" ? siteAddFormSchema : siteEditFormSchema
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
-  const form = useForm<z.infer<typeof profileFormSchema>>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues: defaultValues,
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: site,
   });
 
   const onAddressSearchComplete = (address: DaumAddress) => {
@@ -60,6 +80,10 @@ export default function SiteForm({
     form.setValue("address.mainAddress", address.address);
     form.setValue("address.detailAddress", '');
     form.setFocus("address.detailAddress");
+  }
+
+  const onFileUpload = (data: FileUploadResponseDto) => {
+    form.setValue("seatingMapFileId", data.id);
   }
 
   return (
@@ -126,6 +150,14 @@ export default function SiteForm({
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="seatingMapFileId"
+            render={() => (
+              <FileFormItem accept="image/*" onUpload={onFileUpload} defaultLocation={site?.seatingMapLocation} />
+            )}
+          />
+
           {/* 제출 버튼 */}
           <Button type="submit">Save</Button>
           <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
@@ -141,7 +173,7 @@ export default function SiteForm({
               </DrawerHeader>
             </VisuallyHidden>
             <DaumPostcodeEmbed
-              style={{ width: '100%'}}
+              style={{ width: '100%' }}
               onComplete={onAddressSearchComplete}
             ></DaumPostcodeEmbed>
           </div>

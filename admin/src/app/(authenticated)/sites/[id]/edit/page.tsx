@@ -36,12 +36,9 @@ export default function SiteEditPage() {
     router.back();
   }
 
-
-  console.log(data);
-
   return (
     <>
-      {data && <SiteForm onSubmit={onSubmit} onCancel={goBack} defaultValues={data} />}
+      {data && <SiteForm onSubmit={onSubmit} onCancel={goBack} site={data} mode="edit" />}
     </>
   )
 }

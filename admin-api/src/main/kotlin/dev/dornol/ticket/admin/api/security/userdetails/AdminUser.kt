@@ -15,13 +15,13 @@ class AdminUser(
 
     private var password: String? = manager.password
 
-    val userId: Long = manager.id
+    val userId: Long = manager.id!!
 
     val name: String = manager.name
 
     val approved: Boolean = manager.approval.approved
 
-    val companyId: Long = manager.company.id
+    val companyId: Long = manager.company.id!!
 
     override fun getAuthorities() = authorities
 

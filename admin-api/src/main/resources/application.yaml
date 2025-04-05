@@ -29,6 +29,12 @@ server:
       force: true
 
 dornol:
+  properties:
+    cloud:
+      s3:
+        endpoint: https://s3.dornol.dev
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
   security:
     cors:
       allowed-origins: http://localhost:8080,http://localhost:3000
