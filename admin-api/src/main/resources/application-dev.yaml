@@ -20,7 +20,7 @@ dornol:
   properties:
     cloud:
       s3:
-        endpoint: https://minio:9000
+        endpoint: http://minio:9000
   security:
     cors:
       allowed-origins: https://admin.ticket.dornol.dev
