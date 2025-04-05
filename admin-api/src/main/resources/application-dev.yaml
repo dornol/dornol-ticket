@@ -17,10 +17,6 @@ spring:
     password: "****"
 
 dornol:
-  properties:
-    cloud:
-      s3:
-        endpoint: http://minio:9000
   security:
     cors:
       allowed-origins: https://admin.ticket.dornol.dev
