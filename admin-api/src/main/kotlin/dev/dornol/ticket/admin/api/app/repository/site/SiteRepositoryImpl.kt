@@ -2,6 +2,7 @@ package dev.dornol.ticket.admin.api.app.repository.site
 
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
+import dev.dornol.ticket.admin.api.app.dto.common.SearchContext
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchDto
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchField.*
 import dev.dornol.ticket.admin.api.app.dto.site.response.QSiteListDto
@@ -27,8 +28,8 @@ class SiteRepositoryImpl(
         ADDRESS to listOf(site.address.mainAddress, site.address.detailAddress, site.address.zipCode),
     )
 
-    override fun search(search: SiteSearchDto, pageable: Pageable): Page<SiteListDto> {
-        val condition = condition(search)
+    override fun search(context: SearchContext<SiteSearchDto>, pageable: Pageable): Page<SiteListDto> {
+        val condition = condition(context)
 
         val list = query
             .select(QSiteListDto(
@@ -54,10 +55,11 @@ class SiteRepositoryImpl(
         return PageableExecutionUtils.getPage(list, pageable) { countQuery.fetchOne() ?: 0}
     }
 
-    private fun condition(search: SiteSearchDto): Array<BooleanExpression?> {
+    private fun condition(context: SearchContext<SiteSearchDto>): Array<BooleanExpression?> {
         return arrayOf(
             site.deleted.isFalse,
-            search.textSearch(mapper),
+            context.search.textSearch(mapper),
+            site.company.id.eq(context.companyId)
         )
     }
 

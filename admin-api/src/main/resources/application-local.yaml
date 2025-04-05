@@ -25,4 +25,14 @@ logging:
   level:
     dev.dornol: debug
 
+
+dornol:
+  security:
+    jwt:
+      access-token:
+        expiry-seconds: 10
+      refresh-token:
+        expiry-seconds: 3600
+
+
 node-id: 0

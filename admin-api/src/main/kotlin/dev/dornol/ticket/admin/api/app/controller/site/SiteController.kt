@@ -1,10 +1,10 @@
 package dev.dornol.ticket.admin.api.app.controller.site
 
+import dev.dornol.ticket.admin.api.app.dto.common.request.toContext
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteAddRequestDto
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchDto
 import dev.dornol.ticket.admin.api.app.service.site.SiteService
 import org.springframework.data.domain.Pageable
-import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.validation.annotation.Validated
@@ -19,8 +19,9 @@ class SiteController(
     @GetMapping
     fun sites(
         search: SiteSearchDto,
-        @PageableDefault(sort = ["default"]) pageable: Pageable
-    ) = siteService.search(search, pageable)
+        pageable: Pageable,
+        @AuthenticationPrincipal jwt: Jwt
+    ) = siteService.search(search.toContext(jwt), pageable)
 
     @GetMapping("/{id}")
     fun site(

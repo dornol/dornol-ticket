@@ -1,5 +1,6 @@
 package dev.dornol.ticket.admin.api.app.service.site
 
+import dev.dornol.ticket.admin.api.app.dto.common.SearchContext
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteAddRequestDto
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchDto
 import dev.dornol.ticket.admin.api.app.dto.site.response.AddressDto
@@ -22,7 +23,7 @@ class SiteService(
 ) {
 
     @Transactional(readOnly = false)
-    fun search(search: SiteSearchDto, pageable: Pageable): Page<SiteListDto> {
+    fun search(search: SearchContext<SiteSearchDto>, pageable: Pageable): Page<SiteListDto> {
         return siteRepository.search(search, pageable)
     }
 
