@@ -66,12 +66,20 @@ export default function SiteForm({
   onCancel: () => void;
   mode: "add" | "edit"
 }) {
-  console.log('site: ', site)
-  const schema = mode === "add" ? siteAddFormSchema : siteEditFormSchema
+  const schema = mode === "add" ? siteAddFormSchema : siteEditFormSchema;
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: site,
+    defaultValues: {
+      name: "",
+      address: {
+        zipCode: "",
+        mainAddress: "",
+        detailAddress: "",
+      },
+      seatingMapFileId: "",
+      ...site,
+    },
   });
 
   const onAddressSearchComplete = (address: DaumAddress) => {

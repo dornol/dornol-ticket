@@ -8,12 +8,14 @@ import { Dialog } from "@/lib/dialog/dialog";
 import { ApiError } from "@/lib/types/common/api-error";
 import { SiteAddRequestDto, SiteDto } from "@/lib/types/site/site.dto";
 
+const queryKey = 'site';
+
 export default function SiteEditPage() {
   const { id }: { id: string } = useParams();
   const router = useRouter();
 
-  const { data } = useQuery<SiteDto>({
-    queryKey: ['site', id],
+  const { data, refetch } = useQuery<SiteDto>({
+    queryKey: [queryKey, id],
     queryFn: () => siteService.get(id)
   })
 
@@ -21,6 +23,7 @@ export default function SiteEditPage() {
     mutationFn: (data: SiteAddRequestDto) => siteService.edit(id, data),
     onSuccess: async () => {
       await Dialog.alert("저장되었습니다.");
+      refetch();
       router.push('/sites');
     },
     onError: (error: ApiError) => {

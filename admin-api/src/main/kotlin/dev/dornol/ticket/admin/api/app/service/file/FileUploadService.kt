@@ -29,7 +29,7 @@ class FileUploadService(
             RequestBody.fromInputStream(inputStream, inputStream.available().toLong())
         )
 
-        return "${s3Properties.endpoint}/$bucket/$key"
+        return "${s3Properties.baseUrl}/$bucket/$key"
     }
 
 }

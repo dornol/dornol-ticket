@@ -53,7 +53,7 @@ class SiteService(
     @Transactional
     fun edit(userId: Long, id: Long, newSite: SiteAddRequestDto): Site {
         val manager = managerRepository.findByIdOrNull(userId) ?: throw BadRequestException()
-        val seatingMapFile = commonFileRepository.findByIdOrNull(newSite.seatingMapFileId)
+        val seatingMapFile = newSite.seatingMapFileId?.let { commonFileRepository.findByIdOrNull(it) }
         val site = siteRepository.findByIdOrNull(id)?.takeIf { it.company.id == manager.company.id }
             ?: throw BadRequestException()
 

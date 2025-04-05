@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "dornol.properties.cloud.s3")
 data class CloudS3Properties(
+    val baseUrl: String,
     val endpoint: String,
     val accessKey: String,
     val secretKey: String,
