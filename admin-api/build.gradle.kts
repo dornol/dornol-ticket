@@ -42,6 +42,13 @@ dependencies {
     implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.10.1")
     kapt("io.github.openfeign.querydsl:querydsl-apt:6.10.1")
 
+    implementation("software.amazon.awssdk:s3:2.31.15")
+    implementation("software.amazon.awssdk:auth:2.31.15") // credentials
+    implementation("software.amazon.awssdk:regions:2.31.15")
+
+    // https://mvnrepository.com/artifact/org.apache.tika/tika-core
+    implementation("org.apache.tika:tika-core:3.1.0")
+
     implementation(project(":domain"))
 }
 

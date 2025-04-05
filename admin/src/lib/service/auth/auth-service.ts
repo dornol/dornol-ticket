@@ -89,7 +89,7 @@ const authService = {
         const tokenBundle: TokenBundle = response.data;
         tokenProvider.accessToken = tokenBundle.accessToken;
       } catch (error) {
-        console.error("Failed to refresh token:", error);
+        console.debug("Failed to refresh token:", error);
         await logout();
       } finally {
         refreshPromise = null; // 실행 완료 후 락 해제

@@ -9,8 +9,10 @@ spring:
 
   jpa:
     show-sql: true
-    properties:
-      hibernate.format_sql: true
+#    properties:
+#      hibernate.format_sql: true
+    hibernate:
+      ddl-auto: update
 
   data:
     redis:
@@ -32,7 +34,7 @@ dornol:
       access-token:
         expiry-seconds: 10
       refresh-token:
-        expiry-seconds: 3600
+        expiry-seconds: 120
 
 
 node-id: 0

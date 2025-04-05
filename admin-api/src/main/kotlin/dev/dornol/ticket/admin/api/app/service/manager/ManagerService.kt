@@ -52,7 +52,7 @@ class ManagerService(
 
     @Transactional(readOnly = true)
     fun getUserDataById(id: Long) = managerRepository.findByIdOrNull(id)
-        ?.let { UserDto(it.id, it.name, it.username, it.email, it.phone) }
+        ?.let { UserDto(it.id!!, it.name, it.username, it.email, it.phone) }
         ?: throw BadRequestException()
 
     @Transactional(readOnly = true)

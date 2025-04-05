@@ -3,6 +3,7 @@ import { SiteAddRequestDto, SiteDto, SiteListDto } from "@/lib/types/site/site.d
 import { PageImpl } from "@/lib/types/common/page";
 
 const SITE_LIST_URL = "/sites"
+const SITE_GET_URL = (id: string) => `/sites/${id}`;
 const SITE_ADD_URL = "/sites";
 const SITE_EDIT_URL = (id: string) => `/sites/${id}/edit`;
 
@@ -10,7 +11,7 @@ const SITE_EDIT_URL = (id: string) => `/sites/${id}/edit`;
 class SiteService {
 
   async get(id: string): Promise<SiteDto> {
-    const res = await apiClient.get(`/sites/${id}`);
+    const res = await apiClient.get(SITE_GET_URL(id));
     return res.data;
   }
 

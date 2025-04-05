@@ -32,7 +32,7 @@ export default function SiteAddPage() {
 
   return (
     <>
-      <SiteForm onSubmit={onSubmit} onCancel={goBack} />
+      <SiteForm onSubmit={onSubmit} onCancel={goBack} mode="add" />
     </>
   )
 }
