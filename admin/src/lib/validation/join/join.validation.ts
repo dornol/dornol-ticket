@@ -15,7 +15,7 @@ export const joinFormScheme = z.object({
   name: z.string()
     .min(2, { message: "이름은 2글자 이상으로 입력해 주세요.", })
     .max(10, { message: "이름은 10글자 이내로 입력해 주세요.", })
-    .regex(/[가-힣]{2,10}/, { message: "이름은 한글로 입력해 주세요.", }),
+    .regex(/^[가-힣]{2,10}$/, { message: "이름은 한글로 입력해 주세요.", }),
   email: z.string()
     .email({ message: "이메을 형식을 확인해 주세요." }),
   phone: z.string()

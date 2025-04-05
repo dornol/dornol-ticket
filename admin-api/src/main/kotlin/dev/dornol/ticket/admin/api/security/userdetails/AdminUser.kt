@@ -1,22 +1,27 @@
 package dev.dornol.ticket.admin.api.security.userdetails
 
+import dev.dornol.ticket.domain.entity.manager.Manager
 import org.springframework.security.core.CredentialsContainer
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.io.Serializable
 
 class AdminUser(
-    val userId: Long,
-    val name: String,
-    private val username: String,
-    password: String,
-    approved: Boolean,
+    manager: Manager,
     private val authorities: Collection<GrantedAuthority>
 ) : UserDetails, Serializable, CredentialsContainer {
 
-    private var password: String? = password
+    private val username: String = manager.username
 
-    val approved: Boolean = approved
+    private var password: String? = manager.password
+
+    val userId: Long = manager.id
+
+    val name: String = manager.name
+
+    val approved: Boolean = manager.approval.approved
+
+    val companyId: Long = manager.company.id
 
     override fun getAuthorities() = authorities
 

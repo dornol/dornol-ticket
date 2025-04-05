@@ -37,7 +37,7 @@ class AuthController(
             ?: throw BadCredentialsException("Refresh token not found")
 
         if (tokenBundle.accessTokenValue != refreshTokenRequest.accessToken) {
-            throw BadCredentialsException("Access token does not match")
+            throw BadCredentialsException("Access token does not match, request: ${refreshTokenRequest.accessToken}, saved: ${tokenBundle.accessTokenValue}")
         }
 
         val userDetails = userDetailsService.loadUserByUsername(tokenBundle.username)

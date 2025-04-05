@@ -21,10 +21,10 @@ class AccessTokenGenerator(
 ) : TokenGenerator {
 
     override fun generateToken(authentication: Authentication): TokenDto {
-        return this.generateToken((authentication.principal as AdminUser).userId, authentication.authorities)
+        return this.generateToken(authentication.principal as AdminUser, authentication.authorities)
     }
 
-    private fun generateToken(userId: Long, authorities: Collection<GrantedAuthority>): TokenDto {
+    private fun generateToken(user: AdminUser, authorities: Collection<GrantedAuthority>): TokenDto {
         val now = Instant.now()
         val scope = authorities.stream().map { it.authority }.collect(Collectors.joining(" "))
         val expiresAt = now.plus(expires, ChronoUnit.SECONDS)
@@ -32,8 +32,9 @@ class AccessTokenGenerator(
             .issuer("https://ticket.dornol.dev")
             .issuedAt(now)
             .expiresAt(expiresAt)
-            .subject(userId.toString())
+            .subject(user.userId.toString())
             .claim("scope", scope)
+            .claim("companyId", user.companyId.toString())
             .build()
 
         val token = encoder.encode(JwtEncoderParameters.from(claims)).tokenValue

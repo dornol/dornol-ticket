@@ -13,11 +13,7 @@ class AdminUserDetailsService(
         val manager = managerRepository.findByUsername(username) ?: throw UsernameNotFoundException("User Not Found")
 
         return AdminUser(
-            userId = manager.id,
-            name = manager.name,
-            username = manager.username,
-            password = manager.password,
-            approved = manager.approval.approved,
+            manager = manager,
             authorities = listOf(SimpleGrantedAuthority(manager.managerRole.name))
         )
     }
