@@ -31,7 +31,7 @@ class AuthController(
     ) {
         val refreshTokenValue = refreshTokenRequest.refreshToken
             ?: refreshTokenInCookie
-            ?: throw BadCredentialsException("Refresh token is missing or invalid")
+            ?: throw BadCredentialsException("Refresh token is missing or invalid body: ${refreshTokenRequest.refreshToken}, cookie: ${refreshTokenInCookie}")
 
         val tokenBundle = refreshTokenService.popRefreshToken(refreshTokenValue)
             ?: throw BadCredentialsException("Refresh token not found")
