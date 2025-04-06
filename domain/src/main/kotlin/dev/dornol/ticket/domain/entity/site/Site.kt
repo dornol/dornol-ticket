@@ -32,7 +32,7 @@ class Site(
     @JoinColumn(name = "company_id", nullable = false, updatable = false)
     val company: Company = company
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seating_map_file_id", nullable = false)
     var seatingMapFile: CommonFile = seatingMapFile
         protected set
