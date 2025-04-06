@@ -1,12 +1,12 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    kotlin("plugin.spring") version "2.1.20"
-    id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.jpa") version "2.1.20"
-    kotlin("kapt") version "2.1.20"
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+    kotlin("plugin.jpa")
+    kotlin("kapt")
 }
 
 java {
@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -39,8 +40,8 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.oshai/kotlin-logging-jvm
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.4")
 
-    implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.10.1")
-    kapt("io.github.openfeign.querydsl:querydsl-apt:6.10.1")
+    implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.11")
+    kapt("io.github.openfeign.querydsl:querydsl-apt:6.11")
 
     implementation("software.amazon.awssdk:s3:2.31.15")
     implementation("software.amazon.awssdk:auth:2.31.15") // credentials
@@ -51,6 +52,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+
+    implementation("io.micrometer:micrometer-registry-prometheus")
 
     implementation(project(":domain"))
 }

@@ -16,10 +16,10 @@ import { SiteAddRequestDto, SiteDto } from "@/lib/types/site/site.dto";
 import FileFormItem from "@/components/common/file-form-item";
 import { FileUploadResponseDto } from "@/lib/types/file/file.dto";
 
-const siteAddFormSchema = z.object({
-  name: z.string().min(2, {
-    message: "이름은 최소 2자 이상이어야 합니다.",
-  }),
+const siteDefaultFormSchema = {
+  name: z.string()
+    .min(2, {message: "이름은 최소 2자 이상이어야 합니다.",})
+    .max(50,  {message: "이름은 50자 이하여야 합니다.",}),
   address: z.object({
     zipCode: z.string()
       .nonempty({ message: "주소를 선택해 주세요." })
@@ -32,26 +32,16 @@ const siteAddFormSchema = z.object({
       .nonempty({ message: "상세주소를 입력해 주세요." })
       .max(150, { message: "올바른 상세주소를 입력해 주세요 ." })
   }),
+}
+
+const siteAddFormSchema = z.object({
+  ...siteDefaultFormSchema,
   seatingMapFileId: z.string()
     .nonempty({ message: "좌석 배치도를 업로드해주세요." })
 });
 
 const siteEditFormSchema = z.object({
-  name: z.string().min(2, {
-    message: "이름은 최소 2자 이상이어야 합니다.",
-  }),
-  address: z.object({
-    zipCode: z.string()
-      .nonempty({ message: "주소를 선택해 주세요." })
-      .length(5, { message: "정확한 우편번호를 입력해 주세요." })
-      .regex(/^[0-9]{5}$/, { message: "정확한 우편번호를 입력해 주세요." }),
-    mainAddress: z.string()
-      .nonempty({ message: "주소를 선택해 주세요." })
-      .max(150, { message: "올바른 주소를 선택해 주세요." }),
-    detailAddress: z.string()
-      .nonempty({ message: "상세주소를 입력해 주세요." })
-      .max(150, { message: "올바른 상세주소를 입력해 주세요 ." })
-  }),
+  ...siteDefaultFormSchema,
   seatingMapFileId: z.string()
 });
 

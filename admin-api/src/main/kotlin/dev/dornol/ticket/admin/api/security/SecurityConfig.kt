@@ -76,6 +76,8 @@ class SecurityConfig(
 
             it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))
 
+            it.requestMatchers("/actuator/**").permitAll()
+
             it.anyRequest().denyAll()
         }
         exceptionHandling {

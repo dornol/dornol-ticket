@@ -52,15 +52,14 @@ export const menus: Menus = {
               title: 'Edit site',
               url: '/sites/.*/edit',
               isActive: false,
+            },
+            {
+              title: 'Seats',
+              url: '/sites/.*/seats',
+              isActive: false
             }
           ],
         },
-        {
-          title: "Seats",
-          url: "/seats",
-          isActive: false,
-          items: [],
-        }
       ]
     },
   ],

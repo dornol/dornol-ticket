@@ -23,6 +23,10 @@ export default function SiteListPage() {
     router.push(`/sites/${data.id}/edit`);
   }
 
+  const onSeatsClick = (data: SiteListDto) => {
+    router.push(`/sites/${data.id}/seats`);
+  }
+
   return (
     <>
       <SearchBox searchOptions={searchOptions} onSearch={setSearch} />
@@ -30,7 +34,7 @@ export default function SiteListPage() {
         <Button onClick={() => router.push('/sites/new')}>Add</Button>
       </div>
       <div className="container mx-auto py-10">
-        <DataTable columns={getColumns({onEditClick})} queryKey={queryKey} queryFn={siteService.list} search={search} />
+        <DataTable columns={getColumns({onSeatsClick, onEditClick})} queryKey={queryKey} queryFn={siteService.list} search={search} />
       </div>
     </>
   )

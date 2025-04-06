@@ -48,4 +48,19 @@ dornol:
       refresh-token:
         expiry-seconds: 1209600
 
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    metrics:
+      access: read_only
+  metrics:
+    enable:
+      all: true
+
+
 node-id: 0

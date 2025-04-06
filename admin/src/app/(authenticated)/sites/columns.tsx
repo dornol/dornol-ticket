@@ -4,8 +4,10 @@ import { SiteListDto } from "@/lib/types/site/site.dto";
 import { Button } from "@/components/ui/button";
 
 export function getColumns({
+  onSeatsClick,
   onEditClick
 }: {
+  onSeatsClick: (site: SiteListDto) => void;
   onEditClick: (site: SiteListDto) => void;
 }): ColumnDef<SiteListDto>[] {
   return [
@@ -36,7 +38,12 @@ export function getColumns({
       id: 'actions',
       accessorFn: originalRow => originalRow.id,
       cell: ({ row }) => {
-        return <Button type="button" variant="outline" onClick={() => onEditClick(row.original)}>Edit</Button>
+        return (
+          <>
+            <Button type="button" variant="outline" onClick={() => onSeatsClick(row.original)}>Seats</Button>
+            <Button type="button" variant="outline" onClick={() => onEditClick(row.original)}>Edit</Button>
+          </>
+        )
       },
       header: 'Actions',
     },

@@ -1,12 +1,12 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    kotlin("plugin.spring") version "2.1.20"
-    id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.jpa") version "2.1.20"
-    kotlin("kapt") version "2.1.20"
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+    kotlin("plugin.jpa")
+    kotlin("kapt")
 }
 
 java {
@@ -31,8 +31,8 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.oshai/kotlin-logging-jvm
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.4")
 
-    implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.10.1")
-    kapt("io.github.openfeign.querydsl:querydsl-apt:6.10.1")
+    implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.11")
+    kapt("io.github.openfeign.querydsl:querydsl-apt:6.11")
 }
 
 kotlin {
