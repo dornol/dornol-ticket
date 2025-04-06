@@ -32,3 +32,6 @@ dornol:
         expiry-seconds: 900
       refresh-token:
         expiry-seconds: 1209600
+
+logging:
+  config: classpath:logback-json-config.xml

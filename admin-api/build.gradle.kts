@@ -49,6 +49,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.tika/tika-core
     implementation("org.apache.tika:tika-core:3.1.0")
 
+    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+
     implementation(project(":domain"))
 }
 

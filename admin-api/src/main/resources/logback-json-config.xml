@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!-- 운영/스테이징 환경 -->
+    <springProfile name="local,dev,stage,prod">
+        <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+        <springProperty scope="context" name="springProfile" source="spring.profiles.active"/>
+
+        <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <customFields>{"appName":"${springAppName}","profile":"${springProfile}"}</customFields>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="JSON_CONSOLE" />
+        </root>
+    </springProfile>
+
+</configuration>
