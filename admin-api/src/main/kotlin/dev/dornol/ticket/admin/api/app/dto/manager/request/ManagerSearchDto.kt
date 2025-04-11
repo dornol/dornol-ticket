@@ -4,7 +4,7 @@ import dev.dornol.ticket.admin.api.app.dto.common.request.DefaultSearchDto
 import dev.dornol.ticket.domain.entity.manager.ManagerRole
 
 class ManagerSearchDto(
-    searchFields: Set<ManagerSearchField>,
+    searchFields: Set<ManagerSearchField> = hashSetOf(),
     searchText: String = "",
     val approved: Boolean? = null,
     val managerRole: ManagerRole? = null

@@ -29,7 +29,7 @@ class AccessTokenGenerator(
         val scope = authorities.stream().map { it.authority }.collect(Collectors.joining(" "))
         val expiresAt = now.plus(expires, ChronoUnit.SECONDS)
         val claims = JwtClaimsSet.builder()
-            .issuer("https://ticket.dornol.dev")
+            .issuer("https://admin.ticket.dornol.dev")
             .issuedAt(now)
             .expiresAt(expiresAt)
             .subject(user.userId.toString())

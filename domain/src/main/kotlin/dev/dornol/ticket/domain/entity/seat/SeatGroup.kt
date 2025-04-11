@@ -11,15 +11,29 @@ import jakarta.persistence.ManyToOne
 @Entity
 class SeatGroup(
     name: String,
-    site: Site
+    site: Site,
+    color: String,
+    displayOrder: Long = 0,
 ) : BaseEntity() {
 
     @Column(length = 30, nullable = false)
     var name: String = name
         protected set
 
+    @Column(nullable = false)
+    var displayOrder: Long = displayOrder
+
+    @Column(length = 7, nullable = false)
+    var color: String = color
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id", nullable = false, updatable = false)
     val site: Site = site
+
+
+    fun update(name: String, color: String) {
+        this.name = name
+        this.color = color
+    }
 
 }

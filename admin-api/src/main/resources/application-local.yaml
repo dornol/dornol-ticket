@@ -30,7 +30,7 @@ dornol:
       access-token:
         expiry-seconds: 10
       refresh-token:
-        expiry-seconds: 120
+        expiry-seconds: 3600
 
 
 node-id: 0

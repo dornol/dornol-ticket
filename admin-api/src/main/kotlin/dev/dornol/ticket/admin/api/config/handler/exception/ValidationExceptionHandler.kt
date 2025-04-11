@@ -1,6 +1,7 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import dev.dornol.ticket.admin.api.app.constants.ERRORS_VALIDATION
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorResponse
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorResponseDetail
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorScope
@@ -30,7 +31,7 @@ class ValidationExceptionHandler(
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleValidationException(e: ConstraintViolationException) =
-        errorResponse("errors.validation").apply {
+        errorResponse(ERRORS_VALIDATION).apply {
             errors.addAll(e.constraintViolations.map {
                 ErrorResponseDetail(
                     it.propertyPath.last().name,
@@ -41,7 +42,7 @@ class ValidationExceptionHandler(
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException) =
-        errorResponse("errors.validation").apply {
+        errorResponse(ERRORS_VALIDATION).apply {
             errors.addAll(e.bindingResult.globalErrors.map {
                 errorResponseDetail(it, e.parameter.parameterName)
             })
@@ -56,7 +57,7 @@ class ValidationExceptionHandler(
 
     @ExceptionHandler(ValidationException::class)
     fun handleValidationException(e: ValidationException): ErrorResponse =
-        errorResponse("errors.validation").also {
+        errorResponse(ERRORS_VALIDATION).also {
             log.warn(e) { "resolved validation exception : $e" }
         }
 
@@ -64,7 +65,7 @@ class ValidationExceptionHandler(
     fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ErrorResponse {
         return when (val cause = e.cause) {
             is MismatchedInputException -> {
-                errorResponse("errors.validation").apply {
+                errorResponse(ERRORS_VALIDATION).apply {
                     errors.add(ErrorResponseDetail(
                         cause.path.joinToString(".") { it.fieldName },
                         messageResolver.getMessage("NotBlank"),
@@ -73,7 +74,7 @@ class ValidationExceptionHandler(
                 }
             }
 
-            else -> errorResponse("errors.validation")
+            else -> errorResponse(ERRORS_VALIDATION)
         }
     }
 
@@ -84,7 +85,7 @@ class ValidationExceptionHandler(
         if (error.codes != null && error.codes!!.isNotEmpty()) {
             return messageResolver.getMessage(error.codes, error.arguments)
         }
-        return messageResolver.getMessage("errors.validation")
+        return messageResolver.getMessage(ERRORS_VALIDATION)
     }
 
     fun errorResponseDetail(error: ObjectError, parameterName: String?): ErrorResponseDetail {
@@ -92,13 +93,13 @@ class ValidationExceptionHandler(
             log.info { "error: $error" }
             errorResponseDetail(
                 parameterName ?: error.objectName,
-                error.defaultMessage ?: messageResolver.getMessage("errors.validation")
+                error.defaultMessage ?: messageResolver.getMessage(ERRORS_VALIDATION)
             )
         } else {
             log.info { "error: $error" }
             errorResponseDetail(
                 parameterName ?: error.objectName,
-                messageResolver.getMessage("errors.validation")
+                messageResolver.getMessage(ERRORS_VALIDATION)
             )
         }
     }

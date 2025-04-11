@@ -67,6 +67,8 @@ class SecurityConfig(
             it.requestMatchers(LOGIN_URL).permitAll()
             it.requestMatchers(LOGOUT_URL).permitAll()
 
+            it.requestMatchers("/.well-known/openid-configuration").permitAll()
+
             it.requestMatchers("/join/**").permitAll()
             it.requestMatchers("/auth/**").permitAll()
             it.requestMatchers("/user/**").authenticated()

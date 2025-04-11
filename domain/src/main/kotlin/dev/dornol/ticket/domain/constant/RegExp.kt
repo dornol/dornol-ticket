@@ -6,3 +6,5 @@ const val PHONE_NUMBER_PATTERN = "(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})"
 
 const val BUSINESS_NAME_PATTERN = "^[a-zA-Z0-9가-힣\\s]{2,20}$"
 const val BUSINESS_NUMBER_PATTERN = "^[0-9]{10}$"
+
+const val COLOR_REGEXP_PATTERN = "^#[0-9a-fA-F]{6}$"
