@@ -48,7 +48,7 @@ export default function SeatsPage() {
   const [open, setOpen] = useState(false);
   const [editOpenId, setEditOpenId] = useState<string | null>(null);
 
-  const { data, refetch } = useQuery<SiteDto>({
+  const { data } = useQuery<SiteDto>({
     queryKey: [queryKey, siteId],
     queryFn: () => siteService.get(siteId)
   })
@@ -75,6 +75,14 @@ export default function SeatsPage() {
         color: payload.color
       })
     },
+    onSuccess: () => {
+      refetchSeatGroups()
+        .then(() => setEditOpenId(null));
+    }
+  })
+
+  const { mutate: seatGroupDeleteMutate } = useMutation({
+    mutationFn: (seatGroupId: string) => seatService.deleteSeatGroup(siteId, seatGroupId),
     onSuccess: () => {
       refetchSeatGroups()
         .then(() => setEditOpenId(null));
@@ -128,9 +136,7 @@ export default function SeatsPage() {
                     onSubmit={(data) => {
                       seatGroupEditMutate({ ...data, id: seatGroup.id })
                     }}
-                    onDelete={() => {
-
-                    }}
+                    onDelete={seatGroupDeleteMutate}
                     defaultValues={seatGroup}
                   >
                     <button

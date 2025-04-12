@@ -6,9 +6,13 @@ import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.core.types.dsl.StringPath
 import dev.dornol.ticket.admin.api.app.dto.common.request.DefaultSearchDto
+import dev.dornol.ticket.domain.entity.BaseEntity
 import org.springframework.data.domain.Sort
 
+/* JPA */
+inline fun <reified T : BaseEntity> T.alive(): T? = if (!deleted) this else null
 
+/* QueryDSL */
 fun Sort.Direction.toOrder() = if (this.isAscending) Order.ASC else Order.DESC
 fun Expression<out Comparable<*>>.sort(order: Sort.Order): OrderSpecifier<out Comparable<*>> = OrderSpecifier(order.direction.toOrder(), this)
 fun Sort.toOrderBy(orderSpecifierSupplier: (sort: Sort.Order) -> OrderSpecifier<out Comparable<*>>) = this.map { orderSpecifierSupplier(it) }.toList().toTypedArray()
