@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import {
-  Dialog, DialogClose,
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -33,7 +33,7 @@ export default function SeatGroupAddDialog({
   open: boolean,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   onSubmit: (data: SeatGroupAddRequest) => void,
-  onDelete?: () => void,
+  onDelete?: (seatGroupId: string) => void,
   defaultValues?: {
     id?: string;
     name: string;
@@ -45,7 +45,7 @@ export default function SeatGroupAddDialog({
   const [name, setName] = useState(defaultValues.name);
 
   const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
-    // ev.preventDefault();
+    ev.preventDefault();
     if (!name) {
       AlertDialog.alert("이름을 입력해 주세요.");
       return;
@@ -57,6 +57,19 @@ export default function SeatGroupAddDialog({
     });
   }
 
+  const handleDelete = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    ev.preventDefault();
+
+    AlertDialog.confirm("삭제하시겠습니까?")
+      .then(confirmed => {
+        if (confirmed) {
+          if (defaultValues?.id !== undefined && !!onDelete) {
+            onDelete(defaultValues?.id);
+          }
+        }
+      })
+  }
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -65,9 +78,9 @@ export default function SeatGroupAddDialog({
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Seat group</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Edit your seat group
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -102,7 +115,7 @@ export default function SeatGroupAddDialog({
           <DialogFooter>
             <Button type="button" onClick={handleSubmit}>Save</Button>
             {
-              !!onDelete && <Button type="button" variant="destructive" onClick={handleSubmit}>Delete</Button>
+              !!onDelete && <Button type="button" variant="destructive" onClick={handleDelete}>Delete</Button>
             }
           </DialogFooter>
         </DialogContent>

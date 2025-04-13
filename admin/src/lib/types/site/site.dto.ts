@@ -23,3 +23,8 @@ export interface SiteDto {
   address: Address;
   seatingMapLocation: string;
 }
+
+export interface SeatEditRequestDto {
+  name: string;
+  groupId: string;
+}

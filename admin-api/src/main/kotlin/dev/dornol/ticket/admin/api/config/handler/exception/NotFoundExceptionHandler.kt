@@ -1,6 +1,5 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
-import dev.dornol.ticket.admin.api.app.constants.ERRORS_DEFAULT
 import dev.dornol.ticket.admin.api.app.constants.ERRORS_NOT_FOUND
 import dev.dornol.ticket.admin.api.config.message.MessageResolver
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -18,7 +17,7 @@ private val log = KotlinLogging.logger {}
 @Order(Ordered.HIGHEST_PRECEDENCE + 2000)
 @ResponseStatus(HttpStatus.NOT_FOUND)
 class NotFoundExceptionHandler(
-    private val messageResolver: MessageResolver
+    messageResolver: MessageResolver
 ) : AbstractExceptionHandler(messageResolver) {
 
     @ExceptionHandler(NoResourceFoundException::class)

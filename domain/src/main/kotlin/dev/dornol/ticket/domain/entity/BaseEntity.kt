@@ -20,12 +20,11 @@ abstract class BaseEntity : BaseCreationEntity() {
 
     fun delete(loginUserId: Long? = null) {
         if (this.deleted) {
-            log.warn { "data already deleted at $deletedDate by id: $deletedBy" };
+            log.warn { "data already deleted at $deletedDate by id: $deletedBy" }
             return
         }
         this.deleted = true
         this.deletedDate = LocalDateTime.now()
         this.deletedBy = loginUserId
     }
-
 }

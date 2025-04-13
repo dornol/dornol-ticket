@@ -4,13 +4,7 @@ import dev.dornol.ticket.domain.entity.BaseEntity
 import dev.dornol.ticket.domain.entity.company.Company
 import dev.dornol.ticket.domain.entity.file.CommonFile
 import dev.dornol.ticket.domain.entity.site.address.Address
-import jakarta.persistence.Column
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 
 @Entity
 class Site(
