@@ -2,12 +2,12 @@ package dev.dornol.ticket.domain.entity.seat
 
 import dev.dornol.ticket.domain.entity.BaseEntity
 import dev.dornol.ticket.domain.entity.site.Site
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
+private const val TABLE_NAME = "seat_group"
+private const val SITE_ID = "site_id"
+
+@Table(name = TABLE_NAME)
 @Entity
 class SeatGroup(
     name: String,
@@ -27,7 +27,7 @@ class SeatGroup(
     var color: String = color
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id", nullable = false, updatable = false)
+    @JoinColumn(name = SITE_ID, nullable = false, updatable = false)
     val site: Site = site
 
 

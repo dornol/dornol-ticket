@@ -18,4 +18,12 @@ interface SeatRepository : JpaRepository<Seat, Long> {
     """)
     fun findAllByGroupId(@Param("groupId") seatGroupId: Long): List<Seat>
 
+    @Query("""
+        select max(s.displayOrder)
+        from Seat s
+        where s.group.id = :groupId
+          and s.deleted is false
+    """)
+    fun maxDisplayOrderByGroupId(@Param("groupId") groupId: Long): Long?
+
 }
