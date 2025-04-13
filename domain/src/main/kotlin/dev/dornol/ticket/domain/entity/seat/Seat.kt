@@ -10,7 +10,6 @@ private const val DISPLAY_ORDER = "display_order"
 private const val IMAGE_AREA_SIZE = 600.0
 private const val BOX_SIZE = 40.0
 
-@Table(uniqueConstraints = [UniqueConstraint(name = DISPLAY_ORDER, columnNames = [SEAT_GROUP_ID, DISPLAY_ORDER])])
 @Entity
 class Seat(
     name: String,

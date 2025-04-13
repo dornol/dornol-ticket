@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
+@EnableJpaRepositories(basePackages = ["dev.dornol.ticket.admin.api.app.repository"])
 @EntityScan(basePackages = ["dev.dornol.ticket"])
 @EnableJpaAuditing
 class JpaConfig(

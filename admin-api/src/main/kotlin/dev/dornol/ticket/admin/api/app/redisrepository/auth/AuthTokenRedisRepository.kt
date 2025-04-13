@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.security.repository
+package dev.dornol.ticket.admin.api.app.redisrepository.auth
 
 import dev.dornol.ticket.admin.api.app.dto.auth.TokenBundle
 import org.springframework.data.repository.CrudRepository
