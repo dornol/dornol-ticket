@@ -66,6 +66,3 @@ management:
   metrics:
     enable:
       all: true
-
-
-node-id: 0

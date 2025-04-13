@@ -2,6 +2,7 @@ spring:
   application:
     name: admin-api
 
+
   data:
     redis:
       host: redis
@@ -15,6 +16,9 @@ spring:
     url: "****"
     username: "****"
     password: "****"
+    hikari:
+      data-source-properties:
+        ApplicationName: AdminApi${NODE-ID}
 
 dornol:
   properties:
