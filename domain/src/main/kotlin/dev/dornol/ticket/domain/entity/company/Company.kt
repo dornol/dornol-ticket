@@ -3,7 +3,13 @@ package dev.dornol.ticket.domain.entity.company
 import dev.dornol.ticket.domain.entity.BaseCreationEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.Table
 
+private const val TABLE_NAME = "company"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class Company(
     name: String,

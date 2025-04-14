@@ -6,6 +6,14 @@ import dev.dornol.ticket.domain.entity.file.CommonFile
 import dev.dornol.ticket.domain.entity.site.address.Address
 import jakarta.persistence.*
 
+private const val TABLE_NAME = "site"
+private const val NAME = "name"
+private const val COMPANY_ID = "company_id"
+private const val SEATING_MAP_FILE_ID = "seating_map_file_id"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class Site(
     name: String,
@@ -14,7 +22,7 @@ class Site(
     seatingMapFile: CommonFile,
 ) : BaseEntity() {
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = NAME, length = 100, nullable = false)
     var name: String = name
         protected set
 
@@ -23,11 +31,11 @@ class Site(
         protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false, updatable = false)
+    @JoinColumn(name = COMPANY_ID, nullable = false, updatable = false)
     val company: Company = company
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seating_map_file_id", nullable = false)
+    @JoinColumn(name = SEATING_MAP_FILE_ID, nullable = false)
     var seatingMapFile: CommonFile = seatingMapFile
         protected set
 

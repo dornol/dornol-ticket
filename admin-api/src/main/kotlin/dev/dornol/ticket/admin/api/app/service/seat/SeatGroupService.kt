@@ -8,7 +8,7 @@ import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
-import dev.dornol.ticket.admin.api.util.assert
+import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.domain.entity.seat.SeatGroup
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -26,7 +26,7 @@ class SeatGroupService(
     fun getSeatGroups(userId: Long, siteId: Long): List<SeatGroupDto> {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assert(manager.company.id == site.company.id)
+        assertAccess(manager.company.id == site.company.id)
 
         val (seatGroups, seats) = seatGroupRepository.getSeatGroupsAndSeats(siteId)
 
@@ -43,7 +43,7 @@ class SeatGroupService(
     fun add(userId: Long, siteId: Long, name: String, color: String): SeatGroup {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assert(manager.company.id == site.company.id)
+        assertAccess(manager.company.id == site.company.id)
 
         val maxDisplayOrder = seatGroupRepository.findMaxDisplayOrderBySiteId(siteId) ?: 0L
         val seatGroup = SeatGroup(name, site, color, maxDisplayOrder + 1L).also { seatGroupRepository.save(it) }
@@ -54,7 +54,7 @@ class SeatGroupService(
     fun edit(userId: Long, siteId: Long, seatGroupId: Long, name: String, color: String) {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assert(manager.company.id == site.company.id)
+        assertAccess(manager.company.id == site.company.id)
 
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId) ?: throw BadRequestException()
         Assert.isTrue(site.id == seatGroup.site.id, "Site with id $seatGroupId not found")
@@ -65,7 +65,7 @@ class SeatGroupService(
     fun delete(userId: Long, siteId: Long, seatGroupId: Long) {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assert(manager.company.id == site.company.id)
+        assertAccess(manager.company.id == site.company.id)
 
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId) ?: throw BadRequestException()
         val seats = seatRepository.findAllByGroupId(seatGroupId)

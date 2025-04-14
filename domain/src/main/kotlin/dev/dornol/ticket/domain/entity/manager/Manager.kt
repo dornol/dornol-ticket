@@ -5,6 +5,12 @@ import dev.dornol.ticket.domain.entity.company.Company
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+private const val TABLE_NAME = "manager"
+private const val COMPANY_ID = "company_id"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class Manager(
     username: String,
@@ -44,7 +50,7 @@ class Manager(
     var managerRole: ManagerRole = role
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false, updatable = false)
+    @JoinColumn(name = COMPANY_ID, nullable = false, updatable = false)
     val company: Company = company
 
     fun approve(approvedBy: Long, approvedDate: LocalDateTime) {

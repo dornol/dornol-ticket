@@ -14,15 +14,11 @@ import dev.dornol.ticket.admin.api.util.toOrderBy
 import dev.dornol.ticket.domain.entity.company.QCompany.company
 import dev.dornol.ticket.domain.entity.manager.ManagerRole
 import dev.dornol.ticket.domain.entity.manager.QManager.manager
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
-import org.springframework.util.StringUtils
-
-private val log = KotlinLogging.logger {}
 
 @Repository
 class ManagerRepositoryImpl(
@@ -71,28 +67,11 @@ class ManagerRepositoryImpl(
     private fun managerListCondition(search: ManagerSearchDto) = arrayOf(
         approved(search.approved) and manager.deleted.isFalse and role(search.managerRole),
         search.textSearch(mapper),
-        text(search.searchFields, search.searchText)
     )
 
     private fun approved(approved: Boolean?): BooleanExpression? {
         return approved?.let { manager.approval.approved.eq(it) }
     }
-
-    private fun text(searchFields: Set<ManagerSearchField>?, searchText: String?): BooleanExpression? =
-        searchText?.takeIf { StringUtils.hasText(it) }?.let {
-            val flatten = searchFields?.map { type ->
-                when (type) {
-                    ManagerSearchField.NAME -> listOf(manager.name)
-                    ManagerSearchField.EMAIL -> listOf(manager.email)
-                    ManagerSearchField.PHONE -> listOf(manager.phone)
-                    ManagerSearchField.USERNAME -> listOf(manager.username)
-                    ManagerSearchField.COMPANY_NAME -> listOf(manager.company.name)
-                }
-            }?.flatten()
-            var expression: BooleanExpression? = null
-            flatten?.forEach { path -> expression = if (expression == null) path.contains(searchText) else expression!!.or(path.contains(searchText)) }
-            expression
-        }
 
     private fun role(role: ManagerRole?): BooleanExpression? {
         return role?.let { manager.managerRole.eq(it) }
