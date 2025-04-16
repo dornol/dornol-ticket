@@ -52,7 +52,7 @@ class ManagerRepositoryImpl(
             .from(manager)
             .leftJoin(manager.company, company)
             .where(*condition)
-            .orderBy(*sort(pageable.sort))
+            .orderBy(*sort(pageable.sort), manager.id.desc())
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
 
@@ -84,7 +84,7 @@ class ManagerRepositoryImpl(
             "email" -> manager.email.sort(it)
             "businessName" -> company.name.sort(it)
             "businessNumber" -> company.businessNumber.sort(it)
-            else -> manager.id.sort(it)
+            else -> null
         }
     }
 

@@ -10,10 +10,108 @@ services:
     ports:
       - "5432:5432"
 
-  redis:
-    image: redis:latest
+  redis-node-0:
+    image: bitnami/redis-cluster:7.4.2
     restart: always
     environment:
       TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32000
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32010
+      REDIS_CLUSTER_REPLICAS: 1
+      REDIS_CLUSTER_CREATOR: yes
+      REDISCLI_AUTH: redis1234@
     ports:
-      - "6379:6379"
+      - "32000:6379"
+      - "32010:16379"
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+
+
+  redis-node-1:
+    image: bitnami/redis-cluster:7.4.2
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32001
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32011
+    ports:
+      - "32001:6379"
+      - "32011:16379"
+
+  redis-node-2:
+    image: bitnami/redis-cluster:7.4.2
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32002
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32012
+    ports:
+      - "32002:6379"
+      - "32012:16379"
+
+  redis-node-3:
+    image: bitnami/redis-cluster:7.4.2
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32003
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32013
+    ports:
+      - "32003:6379"
+      - "32013:16379"
+
+  redis-node-4:
+    image: bitnami/redis-cluster:7.4.2
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32004
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32014
+    ports:
+      - "32004:6379"
+      - "32014:16379"
+
+  redis-node-5:
+    image: bitnami/redis-cluster:7.4.2
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+      REDIS_PASSWORD: redis1234@
+      REDIS_NODES: 172.30.0.246:32000, 172.30.0.246:32001, 172.30.0.246:32002, 172.30.0.246:32003, 172.30.0.246:32004, 172.30.0.246:32005
+      REDIS_CLUSTER_DYNAMIC_IPS: no
+      REDIS_CLUSTER_ANNOUNCE_IP: 172.30.0.246
+      REDIS_CLUSTER_ANNOUNCE_PORT: 32005
+      REDIS_CLUSTER_ANNOUNCE_BUS_PORT: 32015
+    ports:
+      - "32005:6379"
+      - "32015:16379"
+
+
+
+
+
+

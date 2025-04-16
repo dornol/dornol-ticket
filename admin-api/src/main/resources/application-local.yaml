@@ -12,8 +12,16 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      cluster:
+        max-redirects: 3
+        nodes:
+          - 172.30.0.246:32000
+          - 172.30.0.246:32001
+          - 172.30.0.246:32002
+          - 172.30.0.246:32003
+          - 172.30.0.246:32004
+          - 172.30.0.246:32005
+      password: redis1234@
 
 
 server:

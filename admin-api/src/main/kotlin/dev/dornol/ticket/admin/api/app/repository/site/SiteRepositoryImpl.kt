@@ -41,7 +41,7 @@ class SiteRepositoryImpl(
             .from(site)
             .join(site.company)
             .where(*condition)
-            .orderBy(*sort(pageable.sort))
+            .orderBy(*sort(pageable.sort), site.id.desc())
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
             .fetch()
@@ -68,7 +68,7 @@ class SiteRepositoryImpl(
             "name" -> site.name.sort(it)
             "address" -> site.address.mainAddress.sort(it)
             "company_name" -> site.company.name.sort(it)
-            else -> site.id.sort(it)
+            else -> null
         }
     }
 

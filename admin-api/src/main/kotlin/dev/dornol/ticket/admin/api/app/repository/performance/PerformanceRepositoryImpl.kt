@@ -41,7 +41,7 @@ class PerformanceRepositoryImpl(
             .from(performance)
             .join(performance.site)
             .where(*condition)
-            .orderBy(*sort(pageable.sort))
+            .orderBy(*sort(pageable.sort), performance.id.desc())
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
 
@@ -65,8 +65,8 @@ class PerformanceRepositoryImpl(
         when (it.property) {
             "name" -> performance.name.sort(it)
             "type" -> performance.type.sort(it)
-            "siteName" -> performance.site.name.sort(it)
-            else -> performance.id.sort(it)
+            "site.name" -> performance.site.name.sort(it)
+            else -> null
         }
     }
 }

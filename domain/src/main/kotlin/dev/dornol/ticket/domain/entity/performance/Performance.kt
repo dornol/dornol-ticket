@@ -28,4 +28,9 @@ class Performance(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = SITE_ID, nullable = false, updatable = false)
     val site: Site = site
+
+    fun edit(name: String, type: PerformanceType) {
+        this.name = name
+        this.type = type
+    }
 }

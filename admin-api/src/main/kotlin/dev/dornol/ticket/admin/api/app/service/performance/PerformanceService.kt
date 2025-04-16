@@ -31,7 +31,7 @@ class PerformanceService(
     @Transactional
     fun add(userId: Long, name: String, type: PerformanceType, siteId: Long): Performance {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
-        val manager = managerRepository.findByIdOrNull(siteId)?.alive() ?: throw AccessDeniedException()
+        val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         assertAccess(site.company.id == manager.company.id)
 
         return Performance(
@@ -39,6 +39,26 @@ class PerformanceService(
             type = type,
             site = site,
         ).also { performanceRepository.save(it) }
+    }
+
+    @Transactional
+    fun edit(userId: Long, id: Long, name: String, type: PerformanceType) {
+        val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
+        val site = siteRepository.findByIdOrNull(performance.site.id)?.alive() ?: throw BadRequestException()
+        val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
+        assertAccess(site.company.id == manager.company.id)
+
+        performance.edit(name, type)
+    }
+
+    @Transactional
+    fun delete(userId: Long, id: Long) {
+        val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
+        val site = siteRepository.findByIdOrNull(performance.site.id)?.alive() ?: throw BadRequestException()
+        val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
+        assertAccess(site.company.id == manager.company.id)
+
+        performance.delete(userId)
     }
 
 }
