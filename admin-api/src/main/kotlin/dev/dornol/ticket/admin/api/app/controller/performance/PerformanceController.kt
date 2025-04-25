@@ -9,6 +9,7 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
 
@@ -23,6 +24,12 @@ class PerformanceController(
         search: PerformanceSearchDto,
         @PageableDefault(sort = [DEFAULT_SORT_ORDER]) page: Pageable
     ) = performanceService.search(search, page)
+
+    @GetMapping("/{id}")
+    fun get(
+        @PathVariable id: Long,
+        @AuthenticationPrincipal jwt: Jwt
+    ) = performanceService.get(jwt.subject.toLong(), id)
 
     @PostMapping
     fun add(

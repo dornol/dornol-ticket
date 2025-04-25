@@ -1,6 +1,7 @@
 package dev.dornol.ticket.admin.api.app.service.performance
 
 import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceSearchDto
+import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceDetailDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceListDto
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceRepository
@@ -43,22 +44,28 @@ class PerformanceService(
 
     @Transactional
     fun edit(userId: Long, id: Long, name: String, type: PerformanceType) {
-        val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
-        val site = siteRepository.findByIdOrNull(performance.site.id)?.alive() ?: throw BadRequestException()
-        val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assertAccess(site.company.id == manager.company.id)
-
+        val performance = assertAndGetPerformance(userId, id)
         performance.edit(name, type)
     }
 
     @Transactional
     fun delete(userId: Long, id: Long) {
+        val performance = assertAndGetPerformance(userId, id)
+        performance.delete(userId)
+    }
+
+    fun get(userId: Long, id: Long): Any {
+        val performance = assertAndGetPerformance(userId, id)
+        return PerformanceDetailDto(performance)
+    }
+
+    private fun assertAndGetPerformance(userId: Long, id: Long): Performance {
         val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
         val site = siteRepository.findByIdOrNull(performance.site.id)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         assertAccess(site.company.id == manager.company.id)
 
-        performance.delete(userId)
+        return performance
     }
 
 }
