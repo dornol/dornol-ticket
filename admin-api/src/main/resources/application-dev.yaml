@@ -5,8 +5,15 @@ spring:
 
   data:
     redis:
-      host: redis
-      port: 6379
+      cluster:
+        max-redirects: 3
+        nodes:
+          - redis-node-0:6379
+          - redis-node-1:6379
+          - redis-node-2:6379
+          - redis-node-3:6379
+          - redis-node-4:6379
+          - redis-node-5:6379
 
   jpa:
     hibernate:
@@ -17,11 +24,9 @@ spring:
     username: "****"
     password: "****"
     hikari:
-      maxLifetime: 1495000
-      idleTimeout: 595000
-      leakDetectionThreshold: 5000
       data-source-properties:
         ApplicationName: AdminApi${NODE-ID}
+      keepalive-time: 600000
 
 dornol:
   properties:

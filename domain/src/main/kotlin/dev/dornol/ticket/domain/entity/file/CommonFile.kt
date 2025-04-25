@@ -4,8 +4,15 @@ import dev.dornol.ticket.domain.entity.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.Table
 import java.util.*
 
+private const val TABLE_NAME = "common_file"
+private const val FILE_HASH = "file_hash"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class CommonFile(
     uuid: UUID = UUID.randomUUID(),
@@ -31,7 +38,7 @@ class CommonFile(
     @Embedded
     val fileType: FileType = fileType
 
-    @Column(name = "file_hash", nullable = false, updatable = false, unique = true)
+    @Column(name = FILE_HASH, nullable = false, updatable = false, unique = true)
     val hash: String = hash
 
 }

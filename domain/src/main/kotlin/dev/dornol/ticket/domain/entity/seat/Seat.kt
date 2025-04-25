@@ -10,6 +10,11 @@ private const val DISPLAY_ORDER = "display_order"
 private const val IMAGE_AREA_SIZE = 600.0
 private const val BOX_SIZE = 40.0
 
+private const val TABLE_NAME = "seat"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class Seat(
     name: String,

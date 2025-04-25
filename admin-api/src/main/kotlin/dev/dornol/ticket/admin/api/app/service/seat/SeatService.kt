@@ -7,7 +7,7 @@ import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
-import dev.dornol.ticket.admin.api.util.assert
+import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.domain.entity.seat.Seat
 import dev.dornol.ticket.domain.entity.seat.SeatOffset
 import org.springframework.data.repository.findByIdOrNull
@@ -27,7 +27,7 @@ class SeatService(
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId)?.alive() ?: throw BadRequestException()
         val maxDisplayOrder = seatRepository.maxDisplayOrderByGroupId(seatGroupId) ?: 0L
-        assert(site.id == seatGroup.site.id)
+        assertAccess(site.id == seatGroup.site.id)
 
         return Seat("new seat", seatGroup, SeatOffset(x, y), maxDisplayOrder + 1).also { seatRepository.save(it) }
     }
@@ -49,7 +49,7 @@ class SeatService(
     fun edit(userId: Long, siteId: Long, seatGroupId: Long, seatId: Long, name: String, groupId: Long) {
         val seat = this.validateAndGetSeat(userId, siteId, seatGroupId, seatId)
         val group = seatGroupRepository.findByIdOrNull(groupId)?.alive() ?: throw AccessDeniedException()
-        assert(siteId == group.site.id)
+        assertAccess(siteId == group.site.id)
         seat.edit(name, group)
     }
 
@@ -64,9 +64,9 @@ class SeatService(
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId)?.alive() ?: throw BadRequestException()
         val seat = seatRepository.findByIdOrNull(seatId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assert(site.id == seatGroup.site.id)
-        assert(seatGroup.id == seat.group.id)
-        assert(manager.company.id == site.company.id)
+        assertAccess(site.id == seatGroup.site.id)
+        assertAccess(seatGroup.id == seat.group.id)
+        assertAccess(manager.company.id == site.company.id)
 
         return seat
     }

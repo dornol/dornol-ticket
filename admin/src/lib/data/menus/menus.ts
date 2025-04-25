@@ -62,6 +62,23 @@ export const menus: Menus = {
         },
       ]
     },
+    {
+      title: 'Performances',
+      url: '#',
+      icon: DatabaseIcon,
+      scopes: [
+        ManagerRole.SCOPE_SYSTEM_ADMIN,
+        ManagerRole.SCOPE_BUSINESS_ADMIN,
+      ],
+      isActive: false,
+      items: [
+        {
+          title: "Performances",
+          url: "/performances",
+          isActive: false,
+        }
+      ]
+    }
   ],
   secondary: [
     {

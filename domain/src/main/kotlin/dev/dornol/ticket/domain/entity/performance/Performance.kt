@@ -4,6 +4,12 @@ import dev.dornol.ticket.domain.entity.BaseEntity
 import dev.dornol.ticket.domain.entity.site.Site
 import jakarta.persistence.*
 
+private const val TABLE_NAME = "performance"
+private const val SITE_ID = "site_id"
+
+@Table(
+    name = TABLE_NAME,
+)
 @Entity
 class Performance(
     name: String,
@@ -20,6 +26,11 @@ class Performance(
         protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id", nullable = false, updatable = false)
+    @JoinColumn(name = SITE_ID, nullable = false, updatable = false)
     val site: Site = site
+
+    fun edit(name: String, type: PerformanceType) {
+        this.name = name
+        this.type = type
+    }
 }
