@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/dornol_ticket
+    url: jdbc:postgresql://db:5432/dornol_ticket
     username: postgres
     password: postgres
 
@@ -12,13 +12,18 @@ spring:
 
   data:
     redis:
+      lettuce:
+        cluster:
+          refresh:
+            adaptive: true
+            period: 30s
+            dynamic-refresh-sources: true
       sentinel:
         master: mymaster
         nodes:
-          - 127.0.0.1:33310
-          - 127.0.0.1:33311
-          - 127.0.0.1:33312
-
+          - redis-sentinel-1:26379
+          - redis-sentinel-2:26379
+          - redis-sentinel-3:26379
 
 server:
   servlet:
@@ -26,7 +31,8 @@ server:
 logging:
   level:
     dev.dornol: debug
-
+    io.lettuce.core: DEBUG
+    org.springframework.data.redis.connection.lettuce: DEBUG
 
 dornol:
   security:
