@@ -31,7 +31,7 @@ export default function Page() {
 
   return (
     <>
-      <PerformanceForm mode='add' onSubmit={onSubmit} onCancel={goBack} />
+      <PerformanceForm onSubmit={onSubmit} onCancel={goBack} />
     </>
   )
 }

@@ -6,7 +6,6 @@ import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceSearch
 import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceSearchField
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceListDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.QPerformanceListDto
-import dev.dornol.ticket.admin.api.util.and
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
@@ -23,9 +22,7 @@ class PerformanceRepositoryImpl(
 ) : PerformanceQueryRepository {
 
     val mapper: Map<PerformanceSearchField, List<StringPath>> = mapOf(
-        PerformanceSearchField.NAME to listOf(performance.name),
-        PerformanceSearchField.SITE_NAME to listOf(performance.site.name),
-        PerformanceSearchField.SITE_ADDRESS to listOf(performance.site.address.mainAddress, performance.site.address.detailAddress),
+        PerformanceSearchField.NAME to listOf(performance.name)
     )
 
     override fun search(search: PerformanceSearchDto, pageable: Pageable): Page<PerformanceListDto> {
@@ -35,11 +32,9 @@ class PerformanceRepositoryImpl(
             .select(QPerformanceListDto(
                 performance.id,
                 performance.name,
-                performance.type,
-                performance.site,
+                performance.type
             ))
             .from(performance)
-            .join(performance.site)
             .where(*condition)
             .orderBy(*sort(pageable.sort), performance.id.desc())
             .offset(pageable.offset)
@@ -48,24 +43,20 @@ class PerformanceRepositoryImpl(
         val countQuery = query
             .select(performance.count())
             .from(performance)
-            .join(performance.site)
             .where(*condition)
 
         return PageableExecutionUtils.getPage(listQuery.fetch(), pageable) { countQuery.fetchOne() ?: 0 }
     }
 
     private fun performanceListCondition(search: PerformanceSearchDto) = arrayOf(
-        performance.deleted.isFalse and siteId(search.siteId),
+        performance.deleted.isFalse,
         search.textSearch(mapper),
     )
-
-    private fun siteId(siteId: Long?) = siteId?.let { performance.site.id.eq(it) }
 
     private fun sort(sort: Sort) = sort.toOrderBy {
         when (it.property) {
             "name" -> performance.name.sort(it)
             "type" -> performance.type.sort(it)
-            "site.name" -> performance.site.name.sort(it)
             else -> null
         }
     }

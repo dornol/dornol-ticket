@@ -1,7 +1,6 @@
-import { SearchOptions } from "@/lib/types/search/search.dto";
-import { SiteListDto } from "@/lib/types/site/site.dto";
+import {SearchOptions} from "@/lib/types/search/search.dto";
 
-export const getSearchOptions: (sites: SiteListDto[]) => SearchOptions = (sites) => ({
+export const getSearchOptions: () => SearchOptions = () => ({
   searchFields: [
     {
       title: 'Name',
@@ -16,15 +15,5 @@ export const getSearchOptions: (sites: SiteListDto[]) => SearchOptions = (sites)
       value: 'SITE_ADDRESS',
     },
   ],
-  searchOptions: [
-    {
-      title: "Site",
-      name: "siteId",
-      type: "select",
-      options: sites.map(it => ({
-        title: it.name,
-        value: it.id
-      }))
-    },
-  ]
+  searchOptions: []
 })
