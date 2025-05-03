@@ -1,7 +1,7 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import {ColumnDef} from "@tanstack/react-table";
+import {Button} from "@/components/ui/button";
 import SortableHeader from "@/components/table/sortable-header";
-import { PerformanceListDto } from "@/lib/types/performance/performance.dto";
+import {PerformanceListDto} from "@/lib/types/performance/performance.dto";
 
 export function getColumns(
   onEditClick: (performances: PerformanceListDto) => void,
@@ -23,28 +23,6 @@ export function getColumns(
         return (
           <SortableHeader context={context}>
             Type
-          </SortableHeader>
-        )
-      },
-    },
-    {
-      accessorKey: "site.name",
-      header: (context) => {
-        return (
-          <SortableHeader context={context}>
-            Site
-          </SortableHeader>
-        )
-      },
-    },
-    {
-      id: "site.address.zipCode",
-      accessorFn: originalRow => originalRow.site.address.zipCode,
-      cell: ({ row }) => `(${row.original.site.address.zipCode}) ${row.original.site.address.mainAddress} ${row.original.site.address.detailAddress}`,
-      header: (context) => {
-        return (
-          <SortableHeader context={context}>
-            Site address
           </SortableHeader>
         )
       },

@@ -11,7 +11,5 @@ data class PerformanceAddRequestDto(
     @field:Size(min = 3, max = 255)
     val name: String,
     @field:NotNull
-    val type: PerformanceType,
-    @field:Min(0)
-    val siteId: Long,
+    val type: PerformanceType
 )

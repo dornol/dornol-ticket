@@ -9,9 +9,7 @@ data class PerformanceDetailDto(
     @JsonSerialize(using = ToStringSerializer::class)
     val id: Long,
     val name: String,
-    val type: PerformanceType,
-    @JsonSerialize(using = ToStringSerializer::class)
-    val siteId: Long,
+    val type: PerformanceType
 ) {
-    constructor(performance: Performance) : this(performance.id!!, performance.name, performance.type, performance.site.id!!)
+    constructor(performance: Performance) : this(performance.id!!, performance.name, performance.type)
 }

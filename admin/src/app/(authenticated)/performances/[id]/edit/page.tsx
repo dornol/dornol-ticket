@@ -44,7 +44,7 @@ export default function Page() {
 
   return (
     <>
-      <PerformanceForm mode='edit' performance={data} onSubmit={onSubmit} onCancel={goBack} />
+      <PerformanceForm performance={data} onSubmit={onSubmit} onCancel={goBack} />
     </>
   )
 }

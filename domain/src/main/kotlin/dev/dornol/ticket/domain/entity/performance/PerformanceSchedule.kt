@@ -6,18 +6,18 @@ import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalTime
 
-private const val TABLE_NAME = "performance_site"
+private const val TABLE_NAME = "performance_schedule"
 private const val PERFORMANCE_ID = "performance_id"
 private const val SITE_ID = "site_id"
 
-private const val PERFORMANCE_SITE_INDEX = "performance_site_index"
+private const val PERFORMANCE_SCHEDULE_INDEX = "performance_schedule_index"
 
 @Entity
 @Table(
     name = TABLE_NAME,
-    indexes = [Index(name = PERFORMANCE_SITE_INDEX, columnList = "$PERFORMANCE_ID, $SITE_ID")]
+    indexes = [Index(name = PERFORMANCE_SCHEDULE_INDEX, columnList = "$PERFORMANCE_ID, $SITE_ID")]
 )
-class PerformanceSite(
+class PerformanceSchedule(
     performance: Performance,
     site: Site,
     performanceDate: LocalDate,

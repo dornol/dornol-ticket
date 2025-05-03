@@ -5,7 +5,6 @@ import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceDetai
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceListDto
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceRepository
-import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class PerformanceService(
     private val performanceRepository: PerformanceRepository,
-    private val siteRepository: SiteRepository,
     private val managerRepository: ManagerRepository
 ) {
 
@@ -30,15 +28,12 @@ class PerformanceService(
         performanceRepository.search(search, pageable)
 
     @Transactional
-    fun add(userId: Long, name: String, type: PerformanceType, siteId: Long): Performance {
-        val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
+    fun add(userId: Long, name: String, type: PerformanceType): Performance {
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assertAccess(site.company.id == manager.company.id)
-
         return Performance(
             name = name,
             type = type,
-            site = site,
+            company = manager.company,
         ).also { performanceRepository.save(it) }
     }
 
@@ -61,9 +56,8 @@ class PerformanceService(
 
     private fun assertAndGetPerformance(userId: Long, id: Long): Performance {
         val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
-        val site = siteRepository.findByIdOrNull(performance.site.id)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        assertAccess(site.company.id == manager.company.id)
+        assertAccess(performance.company.id == manager.company.id)
 
         return performance
     }

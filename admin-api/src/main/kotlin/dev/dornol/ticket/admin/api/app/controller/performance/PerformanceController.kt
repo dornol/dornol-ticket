@@ -9,7 +9,6 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
 
@@ -35,7 +34,7 @@ class PerformanceController(
     fun add(
         @Valid @RequestBody dto: PerformanceAddRequestDto,
         @AuthenticationPrincipal jwt: Jwt,
-    ) = performanceService.add(jwt.subject.toLong(), dto.name, dto.type, dto.siteId).id
+    ) = performanceService.add(jwt.subject.toLong(), dto.name, dto.type).id
 
     @PutMapping("/{id}")
     fun edit(
