@@ -5,15 +5,8 @@ spring:
 
   data:
     redis:
-      cluster:
-        max-redirects: 3
-        nodes:
-          - redis-node-0:6379
-          - redis-node-1:6379
-          - redis-node-2:6379
-          - redis-node-3:6379
-          - redis-node-4:6379
-          - redis-node-5:6379
+      host: redis
+      port: 6379
 
   jpa:
     hibernate:
