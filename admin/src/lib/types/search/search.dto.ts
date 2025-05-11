@@ -11,7 +11,7 @@ export interface SelectOption {
 export interface SearchOption {
   title: string;
   name: string;
-  type: "select" | "checkbox";
+  type: "select" | "checkbox" | "range";
   options?: SelectOption[];
 }
 

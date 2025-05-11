@@ -35,7 +35,7 @@ class SiteService(
         return siteRepository.findWithSeatingMapById(id)?.takeIf { it.company.id == manager.company.id }
             ?.let {
                 SiteDto(
-                    it.id.toString(),
+                    it.id!!,
                     it.name,
                     AddressDto(it.address.zipCode, it.address.mainAddress, it.address.detailAddress),
                     it.seatingMapFile.location

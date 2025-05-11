@@ -25,10 +25,12 @@ class PerformanceSchedule(
 ) : BaseEntity() {
 
     @Column(nullable = false, updatable = false)
-    val performanceDate: LocalDate = performanceDate
+    var performanceDate: LocalDate = performanceDate
+        protected set
 
     @Column(nullable = false, updatable = false)
-    val performanceTime: LocalTime = performanceTime
+    var performanceTime: LocalTime = performanceTime
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = PERFORMANCE_ID, nullable = false, updatable = false)
@@ -38,4 +40,8 @@ class PerformanceSchedule(
     @JoinColumn(name = SITE_ID, nullable = false, updatable = false)
     val site: Site = site
 
+    fun edit(performanceDate: LocalDate, performanceTime: LocalTime) {
+        this.performanceDate = performanceDate
+        this.performanceTime = performanceTime
+    }
 }

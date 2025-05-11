@@ -1,5 +1,3 @@
-"use client";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchOption, SearchOptions } from "@/lib/types/search/search.dto";
@@ -14,12 +12,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import SearchRangePicker from "@/components/table/searchbox/search-range-picker";
 
 function SearchOptionBox({ searchOption }: { searchOption: SearchOption }) {
   return (
     <div>
       {searchOption.type === "select" && SearchSelectBox(searchOption)}
       {searchOption.type === "checkbox" && SearchCheckbox(searchOption)}
+      {searchOption.type === "range" && SearchRangePicker(searchOption)}
     </div>
   )
 }

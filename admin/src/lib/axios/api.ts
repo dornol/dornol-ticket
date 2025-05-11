@@ -37,7 +37,7 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    switch (error.response.status) {
+    switch (error.response?.status) {
       case 400:
         // alert('' + error.response.data.message);
         break;

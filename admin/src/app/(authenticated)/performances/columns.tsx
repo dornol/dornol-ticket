@@ -4,7 +4,7 @@ import SortableHeader from "@/components/table/sortable-header";
 import {PerformanceListDto} from "@/lib/types/performance/performance.dto";
 
 export function getColumns(
-  onEditClick: (performances: PerformanceListDto) => void,
+  onEditClick: (performance: PerformanceListDto) => void,
 ): ColumnDef<PerformanceListDto>[] {
   return [
     {
