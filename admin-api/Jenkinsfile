@@ -10,7 +10,7 @@ pipeline {
         DOCKER_REPOSITORY = "dornol-ticket-$MODULE"
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
-        DOCKER_SWARM_SERVICE = "dornol_$MODULE"
+        DOCKER_SWARM_SERVICE = "dornol-ticket_$MODULE"
         ENV_VERSION_NAME = "ADMIN_API_VERSION"
     }
 
