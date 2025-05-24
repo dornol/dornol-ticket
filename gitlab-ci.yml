@@ -1,0 +1,32 @@
+stages:
+  - build
+
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+
+image: docker:24.0.2-cli
+
+services:
+  - name: docker:24.0.2-dind
+    command: ["--experimental", "--insecure-registry=registry.gitlab.com"]
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  - docker buildx create --use || echo "buildx already exists"
+
+build-admin-api:
+  stage: build
+  script:
+    - docker buildx build --platform linux/arm64 \
+      -t $CI_REGISTRY_IMAGE/admin-api:$CI_COMMIT_SHORT_SHA \
+      -t $CI_REGISTRY_IMAGE/admin-api:latest \
+      --push ./admin-api
+
+build-admin:
+  stage: build
+  script:
+    - docker buildx build --platform linux/arm64 \
+      -t $CI_REGISTRY_IMAGE/admin:$CI_COMMIT_SHORT_SHA \
+      -t $CI_REGISTRY_IMAGE/admin:latest \
+      --push ./admin
