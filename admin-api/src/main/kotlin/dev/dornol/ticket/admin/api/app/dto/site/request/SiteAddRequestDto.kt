@@ -13,5 +13,7 @@ data class SiteAddRequestDto(
     @field:Valid
     @field:NotNull
     val address: AddressDto,
-    val seatingMapFileId: Long?
+    @field:NotNull
+    @field:NotBlank
+    val seatingMapFileId: Long
 )

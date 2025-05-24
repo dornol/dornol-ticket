@@ -1,10 +1,10 @@
-import {ColumnDef} from "@tanstack/react-table";
-import {Button} from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import SortableHeader from "@/components/table/sortable-header";
-import {PerformanceListDto} from "@/lib/types/performance/performance.dto";
+import { PerformanceListDto } from "@/lib/types/performance/performance.dto";
 
 export function getColumns(
-  onEditClick: (performances: PerformanceListDto) => void,
+  onEditClick: (performance: PerformanceListDto) => void,
 ): ColumnDef<PerformanceListDto>[] {
   return [
     {

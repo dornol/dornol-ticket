@@ -10,7 +10,7 @@ pipeline {
         DOCKER_REPOSITORY = "dornol-ticket-$MODULE"
         DOCKER_HUB_CREDENTIAL_ID = 'DockerHub_kkkqwerasdf123'
 
-        DOCKER_SWARM_SERVICE = "dornol_$MODULE"
+        DOCKER_SWARM_SERVICE = "dornol-ticket_$MODULE"
         ENV_VERSION_NAME = "ADMIN_API_VERSION"
     }
 
@@ -91,7 +91,7 @@ pipeline {
                 script {
                     // Update the DORNOL_TICKET_ADMIN_VERSION in the .env file
                     sh """
-                        sed -i 's/^DORNOL_TICKET_ADMIN_API_VERSION=[^ ]*/DORNOL_TICKET_ADMIN_API_VERSION=$TAG_NAME/' /home/ubuntu/docker/env/.env
+                        sed -i 's/^DORNOL_TICKET_ADMIN_API_VERSION=[^ ]*/DORNOL_TICKET_ADMIN_API_VERSION=$TAG_NAME/' /home/ubuntu/docker/env/.dornol-ticket.env
                     """
                 }
             }

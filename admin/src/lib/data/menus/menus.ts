@@ -76,7 +76,12 @@ export const menus: Menus = {
           title: "Performances",
           url: "/performances",
           isActive: false,
-        }
+        },
+        {
+          title: "Performance schedules",
+          url: "/performance-schedules",
+          isActive: false,
+        },
       ]
     }
   ],

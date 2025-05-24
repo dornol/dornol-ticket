@@ -27,10 +27,10 @@ export default function SearchSelectBox({
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={unSelectedValue} >ALL</SelectItem>
+        <SelectItem value={unSelectedValue}>ALL</SelectItem>
         {
           options?.map(option => (
-            <SelectItem key={`${name}-${option.value}`} value={option.value ?? ""} >{option.title}</SelectItem>)
+            <SelectItem key={`${name}-${option.value}`} value={option.value ?? ""}>{option.title}</SelectItem>)
           )
         }
       </SelectContent>

@@ -37,7 +37,7 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    switch (error.response.status) {
+    switch (error.response?.status) {
       case 400:
         // alert('' + error.response.data.message);
         break;
@@ -48,8 +48,10 @@ apiClient.interceptors.response.use(
             .then(() => apiClient(originalRequest))
             .catch(() => {
               tokenProvider.clearAccessToken();
+              return Promise.reject(error);
             })
         }
+        break;
       case 403:
         // alert('권한이 없습니다.');
         break;

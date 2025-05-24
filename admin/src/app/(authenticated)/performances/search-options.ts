@@ -1,4 +1,4 @@
-import {SearchOptions} from "@/lib/types/search/search.dto";
+import { SearchOptions } from "@/lib/types/search/search.dto";
 
 export const getSearchOptions: () => SearchOptions = () => ({
   searchFields: [
