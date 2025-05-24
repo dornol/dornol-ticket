@@ -1,13 +1,13 @@
 "use client";
 
-import {z} from "zod";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {PerformanceAddRequestDto, PerformanceDetailDto} from "@/lib/types/performance/performance.dto";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { PerformanceAddRequestDto, PerformanceDetailDto } from "@/lib/types/performance/performance.dto";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const schema = z.object({
   name: z.string()
@@ -19,12 +19,12 @@ const schema = z.object({
 
 export default function PerformanceForm({
   performance,
-  onSubmit,
-  onCancel,
+  onSubmitAction,
+  onCancelAction,
 }: {
   performance?: PerformanceDetailDto
-  onSubmit: (data: PerformanceAddRequestDto) => void;
-  onCancel: () => void;
+  onSubmitAction: (data: PerformanceAddRequestDto) => void;
+  onCancelAction: () => void;
 }) {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -38,7 +38,7 @@ export default function PerformanceForm({
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmitAction)} className="space-y-8">
           <FormField
             control={form.control}
             name="name"
@@ -81,7 +81,7 @@ export default function PerformanceForm({
 
           {/* 제출 버튼 */}
           <Button type="submit">Save</Button>
-          <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
+          <Button type="button" variant="secondary" onClick={onCancelAction}>Cancel</Button>
         </form>
       </Form>
     </>

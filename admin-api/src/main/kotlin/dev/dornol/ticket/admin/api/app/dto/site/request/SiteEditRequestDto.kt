@@ -6,14 +6,12 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
-data class SiteAddRequestDto(
+data class SiteEditRequestDto(
     @field:NotBlank
     @field:Size(max = 50)
     val name: String,
     @field:Valid
     @field:NotNull
     val address: AddressDto,
-    @field:NotNull
-    @field:NotBlank
-    val seatingMapFileId: Long
+    val seatingMapFileId: Long?
 )

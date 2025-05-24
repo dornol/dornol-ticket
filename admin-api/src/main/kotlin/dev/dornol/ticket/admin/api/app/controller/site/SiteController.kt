@@ -2,6 +2,7 @@ package dev.dornol.ticket.admin.api.app.controller.site
 
 import dev.dornol.ticket.admin.api.app.dto.common.request.toContext
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteAddRequestDto
+import dev.dornol.ticket.admin.api.app.dto.site.request.SiteEditRequestDto
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchDto
 import dev.dornol.ticket.admin.api.app.service.site.SiteService
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -44,7 +45,7 @@ class SiteController(
     @PutMapping("/{id}/edit")
     fun editSite(
         @PathVariable id: Long,
-        @RequestBody @Validated request: SiteAddRequestDto,
+        @RequestBody @Validated request: SiteEditRequestDto,
         @AuthenticationPrincipal jwt: Jwt
     ) = siteService.edit(jwt.subject.toLong(), id, request).id.toString()
 

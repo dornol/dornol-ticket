@@ -1,20 +1,20 @@
 "use client";
 
-import PerformanceForm from "@/app/(authenticated)/performances/performance-form";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { Dialog } from "@/lib/dialog/dialog";
 import { ApiError } from "@/lib/types/common/api-error";
-import performanceService from "@/lib/service/performance/performance-service";
-import { PerformanceAddRequestDto } from "@/lib/types/performance/performance.dto";
+import PerformanceScheduleAddForm from "@/app/(authenticated)/performance-schedules/performance-schedule-add-form";
+import { PerformanceScheduleAddRequestDto } from "@/lib/types/performance-schedule/performance-schedule.dto";
+import performanceScheduleService from "@/lib/service/performance-schedule/performance-schedule-service";
 
 export default function Page() {
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: performanceService.add,
+    mutationFn: performanceScheduleService.add,
     onSuccess: async () => {
       await Dialog.alert("저장되었습니다.");
-      router.push('/performances');
+      router.push('/performance-schedules');
     },
     onError: (error: ApiError) => {
       console.log(error);
@@ -25,13 +25,13 @@ export default function Page() {
     router.back();
   }
 
-  const onSubmit = (data: PerformanceAddRequestDto) => {
+  const onSubmit = (data: PerformanceScheduleAddRequestDto) => {
     mutation.mutate(data);
   }
 
   return (
     <>
-      <PerformanceForm onSubmitAction={onSubmit} onCancelAction={goBack} />
+      <PerformanceScheduleAddForm onSubmitAction={onSubmit} onCancelAction={goBack} />
     </>
   )
 }

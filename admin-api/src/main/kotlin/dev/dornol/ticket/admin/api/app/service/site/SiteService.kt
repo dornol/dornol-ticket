@@ -2,6 +2,7 @@ package dev.dornol.ticket.admin.api.app.service.site
 
 import dev.dornol.ticket.admin.api.app.dto.common.SearchContext
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteAddRequestDto
+import dev.dornol.ticket.admin.api.app.dto.site.request.SiteEditRequestDto
 import dev.dornol.ticket.admin.api.app.dto.site.request.SiteSearchDto
 import dev.dornol.ticket.admin.api.app.dto.site.response.AddressDto
 import dev.dornol.ticket.admin.api.app.dto.site.response.SiteDto
@@ -52,7 +53,7 @@ class SiteService(
     }
 
     @Transactional
-    fun edit(userId: Long, id: Long, newSite: SiteAddRequestDto): Site {
+    fun edit(userId: Long, id: Long, newSite: SiteEditRequestDto): Site {
         val manager = managerRepository.findByIdOrNull(userId) ?: throw BadRequestException()
         val seatingMapFile = newSite.seatingMapFileId?.let { commonFileRepository.findByIdOrNull(it) }
         val site = siteRepository.findByIdOrNull(id)?.takeIf { it.company.id == manager.company.id }

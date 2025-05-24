@@ -48,8 +48,10 @@ apiClient.interceptors.response.use(
             .then(() => apiClient(originalRequest))
             .catch(() => {
               tokenProvider.clearAccessToken();
+              return Promise.reject(error);
             })
         }
+        break;
       case 403:
         // alert('권한이 없습니다.');
         break;

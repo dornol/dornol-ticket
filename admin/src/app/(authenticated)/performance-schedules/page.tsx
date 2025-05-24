@@ -8,7 +8,7 @@ import DataTable from "@/components/table/data-table";
 import { searchOptions } from "@/app/(authenticated)/performance-schedules/search-options";
 import performanceScheduleService from "@/lib/service/performance-schedule/performance-schedule-service";
 import { getColumns } from "@/app/(authenticated)/performance-schedules/columns";
-import { PerformanceScheduleDTO } from "@/lib/types/performance-schedule/performance-schedule.dto";
+import { PerformanceScheduleDto } from "@/lib/types/performance-schedule/performance-schedule.dto";
 
 const queryKey = 'performance-schedules';
 
@@ -21,7 +21,7 @@ export default function Page() {
     searchFields: ""
   })
 
-  const onEditClick = (data: PerformanceScheduleDTO) => {
+  const onEditClick = (data: PerformanceScheduleDto) => {
     router.push(`/performance-schedules/${data.id}/edit`);
   }
 
@@ -29,7 +29,7 @@ export default function Page() {
     <>
       <SearchBox searchOptions={searchOptions} onSearch={setSearch} />
       <div>
-        <Button onClick={() => router.push('/performances-schedules/new')}>Add</Button>
+        <Button onClick={() => router.push('/performance-schedules/new')}>Add</Button>
       </div>
       <div className="container mx-auto py-10">
         <DataTable columns={getColumns(onEditClick)} queryKey={queryKey} queryFn={performanceScheduleService.list}

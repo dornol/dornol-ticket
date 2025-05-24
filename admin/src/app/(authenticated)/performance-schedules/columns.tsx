@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import SortableHeader from "@/components/table/sortable-header";
-import { PerformanceScheduleDTO } from "@/lib/types/performance-schedule/performance-schedule.dto";
+import { PerformanceScheduleDto } from "@/lib/types/performance-schedule/performance-schedule.dto";
 
 export function getColumns(
-  onEditClick: (schedule: PerformanceScheduleDTO) => void,
-): ColumnDef<PerformanceScheduleDTO>[] {
+  onEditClick: (schedule: PerformanceScheduleDto) => void,
+): ColumnDef<PerformanceScheduleDto>[] {
   return [
     {
       accessorKey: "performance.name",
@@ -26,12 +26,13 @@ export function getColumns(
       header: "Type"
     },
     {
-      accessorKey: "performanceDate",
+      accessorKey: "date",
       header: "Date"
     },
     {
-      accessorKey: "performanceTime",
-      header: "Time"
+      accessorKey: "time",
+      header: "Time",
+      cell: ({row}) => row.original.time?.substring(0, 5)
     },
     {
       id: 'actions',

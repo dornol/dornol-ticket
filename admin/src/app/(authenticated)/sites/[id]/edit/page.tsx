@@ -41,7 +41,7 @@ export default function SiteEditPage() {
 
   return (
     <>
-      {data && <SiteForm onSubmit={onSubmit} onCancel={goBack} site={data} mode="edit" />}
+      {data && <SiteForm onSubmitAction={onSubmit} onCancelAction={goBack} site={data} mode="edit" />}
     </>
   )
 }

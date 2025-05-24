@@ -6,11 +6,11 @@ import dev.dornol.ticket.domain.entity.performance.PerformanceSchedule
 import java.time.LocalDate
 import java.time.LocalTime
 
-class PerformanceScheduleDetailDto(
+data class PerformanceScheduleDetailDto(
     val performance: PerformanceDetailDto,
     val site: SiteDto,
-    val performanceDate: LocalDate,
-    val performanceTime: LocalTime,
+    val date: LocalDate,
+    val time: LocalTime,
 ) {
 
     constructor(schedule: PerformanceSchedule) : this(
@@ -25,8 +25,8 @@ class PerformanceScheduleDetailDto(
             ),
             schedule.site.seatingMapFile.uuid.toString()
         ),
-        performanceDate = schedule.performanceDate,
-        performanceTime = schedule.performanceTime,
+        date = schedule.performanceDate,
+        time = schedule.performanceTime,
     )
 
 

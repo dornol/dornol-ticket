@@ -24,11 +24,11 @@ class PerformanceSchedule(
     performanceTime: LocalTime
 ) : BaseEntity() {
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     var performanceDate: LocalDate = performanceDate
         protected set
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     var performanceTime: LocalTime = performanceTime
         protected set
 

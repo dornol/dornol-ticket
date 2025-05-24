@@ -1,14 +1,14 @@
 "use client";
 
 import SearchBox from "@/components/table/searchbox/search-box";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import DataTable from "@/components/table/data-table";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
-import {PerformanceListDto} from "@/lib/types/performance/performance.dto";
-import {getColumns} from "@/app/(authenticated)/performances/columns";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { PerformanceListDto } from "@/lib/types/performance/performance.dto";
+import { getColumns } from "@/app/(authenticated)/performances/columns";
 import performanceService from "@/lib/service/performance/performance-service";
-import {getSearchOptions} from "@/app/(authenticated)/performances/search-options";
+import { getSearchOptions } from "@/app/(authenticated)/performances/search-options";
 
 const queryKey = 'performances';
 

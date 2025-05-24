@@ -22,14 +22,20 @@ class PerformanceScheduleController(
         @PageableDefault(sort = [DEFAULT_SORT_ORDER]) pageable: Pageable
     ) = performanceScheduleService.search(search, pageable)
 
+    @GetMapping("/{id}")
+    fun findOne(
+        @PathVariable id: Long,
+    ) = performanceScheduleService.findWithDetailsById(id)
+
     @PostMapping
-    fun add(@Valid @RequestBody request: PerformanceScheduleAddRequestDto) =
+    fun add(@Valid @RequestBody request: PerformanceScheduleAddRequestDto) {
         performanceScheduleService.add(
             request.performanceId,
             request.siteId,
             request.performanceDate,
             request.performanceTime
         )
+    }
 
     @PatchMapping("/{id}")
     fun edit(

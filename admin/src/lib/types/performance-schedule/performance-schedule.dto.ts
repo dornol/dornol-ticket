@@ -1,6 +1,6 @@
 import { Address } from "@/lib/types/site/site.dto";
 
-export interface PerformanceScheduleDTO {
+export interface PerformanceScheduleDto {
   id: string;
   performance: {
     id: string;
@@ -14,4 +14,28 @@ export interface PerformanceScheduleDTO {
   };
   date: string;
   time: string;
+}
+
+export interface PerformanceScheduleAddRequestDto {
+  siteId: string;
+  performanceId: string;
+  /**
+   * yyyy-MM-dd
+   */
+  performanceDate: string;
+  /**
+   * HH:mm
+   */
+  performanceTime: string;
+}
+
+export interface PerformanceScheduleEditRequestDto {
+  /**
+   * yyyy-MM-dd
+   */
+  performanceDate: string;
+  /**
+   * HH:mm
+   */
+  performanceTime: string;
 }
