@@ -33,7 +33,7 @@ push-admin-api:
     - cd admin-api
     - ls -l build/libs
     - |
-      docker buildx build --platform linux/arm64 \
+      docker buildx build --platform linux/arm64,linux/amd64 \
       -t $CI_REGISTRY_IMAGE/admin-api:$CI_COMMIT_SHORT_SHA \
       -t $CI_REGISTRY_IMAGE/admin-api:latest \
       --push .
@@ -51,7 +51,7 @@ build-admin:
   script:
     - cd admin
     - |
-      docker buildx build --platform linux/arm64 \
+      docker buildx build --platform linux/arm64,linux/amd64 \
       -t $CI_REGISTRY_IMAGE/admin:$CI_COMMIT_SHORT_SHA \
       -t $CI_REGISTRY_IMAGE/admin:latest \
       --push .
