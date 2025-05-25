@@ -12,6 +12,7 @@ build-admin-api:
   stage: build
   image: eclipse-temurin:21-alpine
   script:
+    - chmod +x ./gradlew
     - ./gradlew :admin-api:build
   artifacts:
     paths:
