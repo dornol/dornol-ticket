@@ -2,10 +2,10 @@ stages:
   - build
 
 default:
-  image: docker:24.0.2-cli
+  image: docker:24.0.5
 
   services:
-    - name: docker:24.0.2-dind
+    - name: docker:24.0.5-dind
       variables:
         HEALTHCHECK_TCP_PORT: "2375"
 
