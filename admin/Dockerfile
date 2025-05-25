@@ -2,7 +2,8 @@ FROM node:22-alpine AS deps
 WORKDIR /app
 ENV NODE_ENV=production
 
-COPY package*.json .
+COPY package.json .
+COPY pnpm-lock.yaml .
 
 RUN npm install pnpm -g
 RUN pnpm install --frozen-lockfile
