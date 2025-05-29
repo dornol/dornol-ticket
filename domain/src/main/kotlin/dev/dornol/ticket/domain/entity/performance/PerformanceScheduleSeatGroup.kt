@@ -5,13 +5,13 @@ import dev.dornol.ticket.domain.entity.common.Money
 import dev.dornol.ticket.domain.entity.seat.SeatGroup
 import jakarta.persistence.*
 
-private const val TABLE_NAME = "performance_schedule_seat_group_price"
+private const val TABLE_NAME = "performance_schedule_seat_group"
 private const val PERFORMANCE_SCHEDULE_ID = "performance_schedule_id"
 private const val SEAT_GROUP_ID = "seat_group_id"
 
 @Entity
 @Table(name = TABLE_NAME)
-class PerformanceScheduleSeatGroupPrice(
+class PerformanceScheduleSeatGroup(
     performanceSchedule: PerformanceSchedule,
     seatGroup: SeatGroup,
     price: Money
