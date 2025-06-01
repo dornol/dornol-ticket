@@ -2,7 +2,7 @@ package dev.dornol.ticket.domain.entity.performance
 
 import dev.dornol.ticket.domain.converter.enums.PerformanceTypeConverter
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.performance.domain.PerformanceType
 import jakarta.persistence.*
 

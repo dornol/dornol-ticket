@@ -11,8 +11,8 @@ import dev.dornol.ticket.admin.api.util.and
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.manager.QCompanyEntity.companyEntity as company
-import dev.dornol.ticket.domain.entity.manager.QManagerEntity.managerEntity as manager
+import dev.dornol.ticket.manager.adapter.out.jpa.QCompanyEntity.companyEntity as company
+import dev.dornol.ticket.manager.adapter.out.jpa.QManagerEntity.managerEntity as manager
 import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -35,7 +35,7 @@ class ManagerRepositoryImpl(
 
     override fun searchManagers(search: ManagerSearchDto, pageable: Pageable): Page<ManagerListDto> {
         val condition = managerListCondition(search)
-
+        pageable.sort
         val listQuery = query
             .select(
                 QManagerListDto(

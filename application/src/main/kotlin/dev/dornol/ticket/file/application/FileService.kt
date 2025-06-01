@@ -1,5 +1,6 @@
 package dev.dornol.ticket.file.application
 
+import dev.dornol.ticket.file.application.infra.FileMetadataIdGenerator
 import dev.dornol.ticket.file.application.port.`in`.ResolveFileUriUseCase
 import dev.dornol.ticket.file.domain.FileMetadata
 import dev.dornol.ticket.file.domain.StorageType

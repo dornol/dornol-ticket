@@ -1,4 +1,4 @@
-package dev.dornol.ticket.domain.entity.manager
+package dev.dornol.ticket.manager.adapter.out.jpa
 
 import dev.dornol.ticket.domain.converter.enums.ManagerRoleConverter
 import dev.dornol.ticket.domain.entity.BaseEntity

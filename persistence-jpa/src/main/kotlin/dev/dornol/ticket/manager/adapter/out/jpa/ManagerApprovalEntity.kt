@@ -1,4 +1,4 @@
-package dev.dornol.ticket.domain.entity.manager
+package dev.dornol.ticket.manager.adapter.out.jpa
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable

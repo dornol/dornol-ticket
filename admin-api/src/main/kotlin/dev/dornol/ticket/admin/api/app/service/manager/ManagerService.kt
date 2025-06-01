@@ -7,8 +7,8 @@ import dev.dornol.ticket.admin.api.app.repository.company.CompanyRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.config.exception.join.UsernameExistsException
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
-import dev.dornol.ticket.domain.entity.manager.ManagerEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerEntity
 import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull

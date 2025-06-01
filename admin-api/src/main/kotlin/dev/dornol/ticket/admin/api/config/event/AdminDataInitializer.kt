@@ -2,9 +2,9 @@ package dev.dornol.ticket.admin.api.config.event
 
 import dev.dornol.ticket.admin.api.app.repository.company.CompanyRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
-import dev.dornol.ticket.domain.entity.manager.ManagerApprovalEntity
-import dev.dornol.ticket.domain.entity.manager.ManagerEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerApprovalEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerEntity
 import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.ApplicationListener

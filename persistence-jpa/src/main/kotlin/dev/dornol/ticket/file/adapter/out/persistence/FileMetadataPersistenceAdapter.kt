@@ -7,7 +7,7 @@ import dev.dornol.ticket.file.domain.FileMetadata
 import org.springframework.stereotype.Repository
 
 @Repository
-class FindMetadataPersistenceAdapter(
+class FileMetadataPersistenceAdapter(
     private val entityRepository: FileMetadataEntityRepository,
     private val fileMetadataMapper: FileMetadataMapper
 ) : FindMetadataPort, SaveFileMetadataPort {

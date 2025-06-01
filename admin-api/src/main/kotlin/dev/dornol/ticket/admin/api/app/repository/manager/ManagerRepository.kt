@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.repository.manager
 
-import dev.dornol.ticket.domain.entity.manager.ManagerEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ManagerRepository : JpaRepository<ManagerEntity, Long>, ManagerQueryRepository {

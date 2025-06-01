@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.security.userdetails
 
-import dev.dornol.ticket.domain.entity.manager.ManagerEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerEntity
 import org.springframework.security.core.CredentialsContainer
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

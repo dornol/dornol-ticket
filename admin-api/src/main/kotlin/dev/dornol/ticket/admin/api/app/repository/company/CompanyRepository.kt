@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.repository.company
 
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

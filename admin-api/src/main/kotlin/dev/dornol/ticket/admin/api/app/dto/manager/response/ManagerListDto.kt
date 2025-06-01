@@ -1,8 +1,8 @@
 package dev.dornol.ticket.admin.api.app.dto.manager.response
 
 import com.querydsl.core.annotations.QueryProjection
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
-import dev.dornol.ticket.domain.entity.manager.ManagerApprovalEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.ManagerApprovalEntity
 import dev.dornol.ticket.manager.domain.ManagerRole
 
 data class ManagerListDto(

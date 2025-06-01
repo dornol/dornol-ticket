@@ -1,7 +1,7 @@
 package dev.dornol.ticket.domain.entity.site
 
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.manager.CompanyEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.file.adapter.out.jpa.FileMetadataEntity
 import dev.dornol.ticket.domain.entity.site.address.AddressEntity
 import jakarta.persistence.*
