@@ -1,9 +1,9 @@
 package dev.dornol.ticket.admin.api.app.dto.manager.response
 
 import com.querydsl.core.annotations.QueryProjection
-import dev.dornol.ticket.domain.entity.company.Company
-import dev.dornol.ticket.domain.entity.manager.ManagerApproval
-import dev.dornol.ticket.domain.entity.manager.ManagerRole
+import dev.dornol.ticket.domain.entity.manager.CompanyEntity
+import dev.dornol.ticket.domain.entity.manager.ManagerApprovalEntity
+import dev.dornol.ticket.manager.domain.ManagerRole
 
 data class ManagerListDto(
     val id: String,
@@ -12,7 +12,7 @@ data class ManagerListDto(
     val phone: String,
     val email: String,
     val managerRole: ManagerRole,
-    val approval: ManagerApproval,
+    val approval: ManagerApprovalEntity,
     val company: CompanyDto?
 ) {
 
@@ -24,8 +24,8 @@ data class ManagerListDto(
         phone: String,
         email: String,
         managerRole: ManagerRole,
-        approval: ManagerApproval,
-        company: Company?
+        approval: ManagerApprovalEntity,
+        company: CompanyEntity?
     ) : this(
         id.toString(),
         username,

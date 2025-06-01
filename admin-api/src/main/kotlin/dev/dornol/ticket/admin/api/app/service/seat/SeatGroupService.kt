@@ -9,7 +9,7 @@ import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
-import dev.dornol.ticket.domain.entity.seat.SeatGroup
+import dev.dornol.ticket.domain.entity.seat.SeatGroupEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -40,13 +40,13 @@ class SeatGroupService(
     }
 
     @Transactional
-    fun add(userId: Long, siteId: Long, name: String, color: String): SeatGroup {
+    fun add(userId: Long, siteId: Long, name: String, color: String): SeatGroupEntity {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         assertAccess(manager.company.id == site.company.id)
 
         val maxDisplayOrder = seatGroupRepository.findMaxDisplayOrderBySiteId(siteId) ?: 0L
-        val seatGroup = SeatGroup(name, site, color, maxDisplayOrder + 1L).also { seatGroupRepository.save(it) }
+        val seatGroup = SeatGroupEntity(name, site, color, maxDisplayOrder + 1L).also { seatGroupRepository.save(it) }
         return seatGroup
     }
 

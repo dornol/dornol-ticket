@@ -8,7 +8,7 @@ import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.app.service.common.SecurityService
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
-import dev.dornol.ticket.domain.entity.performance.PerformanceSchedule
+import dev.dornol.ticket.domain.entity.performance.PerformanceScheduleEntity
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -43,13 +43,13 @@ class PerformanceScheduleService(
         siteId: Long,
         performanceDate: LocalDate,
         performanceTime: LocalTime
-    ): PerformanceSchedule {
+    ): PerformanceScheduleEntity {
         val performance = performanceRepository.findByIdOrNull(performanceId)?.alive() ?: throw BadRequestException()
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         securityService.assertCompanyId(performance.company.id!!)
         securityService.assertCompanyId(site.company.id!!)
 
-        return PerformanceSchedule(
+        return PerformanceScheduleEntity(
             performance = performance,
             site = site,
             performanceDate = performanceDate,
@@ -78,7 +78,7 @@ class PerformanceScheduleService(
 
     private fun findValidSchedule(
         performanceScheduleId: Long,
-    ): PerformanceSchedule {
+    ): PerformanceScheduleEntity {
         val schedule =
             performanceScheduleRepository.findByIdOrNull(performanceScheduleId)?.alive() ?: throw BadRequestException()
         securityService.assertCompanyId(schedule.performance.company.id!!)

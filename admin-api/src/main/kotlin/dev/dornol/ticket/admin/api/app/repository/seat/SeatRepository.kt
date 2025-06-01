@@ -1,29 +1,33 @@
 package dev.dornol.ticket.admin.api.app.repository.seat
 
-import dev.dornol.ticket.domain.entity.seat.Seat
+import dev.dornol.ticket.domain.entity.seat.SeatEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SeatRepository : JpaRepository<Seat, Long> {
+interface SeatRepository : JpaRepository<SeatEntity, Long> {
 
-    @Query("""
+    @Query(
+        """
         select s
-        from Seat s
-        where s.group.id = :groupId
+        from SeatEntity s
+        where s.seatGroup.id = :groupId
           and s.deleted is false
         order by s.displayOrder
-    """)
-    fun findAllByGroupId(@Param("groupId") seatGroupId: Long): List<Seat>
+    """
+    )
+    fun findAllByGroupId(@Param("groupId") seatGroupId: Long): List<SeatEntity>
 
-    @Query("""
+    @Query(
+        """
         select max(s.displayOrder)
-        from Seat s
-        where s.group.id = :groupId
+        from SeatEntity s
+        where s.seatGroup.id = :groupId
           and s.deleted is false
-    """)
+    """
+    )
     fun maxDisplayOrderByGroupId(@Param("groupId") groupId: Long): Long?
 
 }

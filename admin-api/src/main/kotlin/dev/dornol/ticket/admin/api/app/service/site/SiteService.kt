@@ -11,7 +11,9 @@ import dev.dornol.ticket.admin.api.app.repository.file.CommonFileRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
-import dev.dornol.ticket.domain.entity.site.Site
+import dev.dornol.ticket.domain.entity.site.SiteEntity
+import dev.dornol.ticket.file.adapter.out.jpa.mapper.FileMetadataMapper
+import dev.dornol.ticket.file.application.port.`in`.ResolveFileUriUseCase
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -22,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional
 class SiteService(
     private val siteRepository: SiteRepository,
     private val managerRepository: ManagerRepository,
-    private val commonFileRepository: CommonFileRepository
+    private val commonFileRepository: CommonFileRepository,
+    private val resolveFileUriUseCase: ResolveFileUriUseCase,
+    private val fileMetadataMapper: FileMetadataMapper
 ) {
 
     @Transactional(readOnly = false)
@@ -39,21 +43,21 @@ class SiteService(
                     it.id!!,
                     it.name,
                     AddressDto(it.address.zipCode, it.address.mainAddress, it.address.detailAddress),
-                    it.seatingMapFile.location
+                    resolveFileUriUseCase.resolveFileUri(fileMetadataMapper.toDomain(it.seatingMapFile))
                 )
             }
             ?: throw BadRequestException()
     }
 
     @Transactional
-    fun save(userId: Long, site: SiteAddRequestDto): Site {
+    fun save(userId: Long, site: SiteAddRequestDto): SiteEntity {
         val manager = managerRepository.findByIdOrNull(userId) ?: throw BadRequestException()
         val seatingMapFile = commonFileRepository.findByIdOrNull(site.seatingMapFileId) ?: throw BadRequestException()
-        return Site(site.name, site.address.toEntity(), manager.company, seatingMapFile).also { siteRepository.save(it) }
+        return SiteEntity(site.name, site.address.toEntity(), manager.company, seatingMapFile).also { siteRepository.save(it) }
     }
 
     @Transactional
-    fun edit(userId: Long, id: Long, newSite: SiteEditRequestDto): Site {
+    fun edit(userId: Long, id: Long, newSite: SiteEditRequestDto): SiteEntity {
         val manager = managerRepository.findByIdOrNull(userId) ?: throw BadRequestException()
         val seatingMapFile = newSite.seatingMapFileId?.let { commonFileRepository.findByIdOrNull(it) }
         val site = siteRepository.findByIdOrNull(id)?.takeIf { it.company.id == manager.company.id }

@@ -5,8 +5,8 @@ import dev.dornol.ticket.admin.api.app.dto.seat.QSeatDto
 import dev.dornol.ticket.admin.api.app.dto.seat.QSeatGroupDto
 import dev.dornol.ticket.admin.api.app.dto.seat.SeatDto
 import dev.dornol.ticket.admin.api.app.dto.seat.SeatGroupDto
-import dev.dornol.ticket.domain.entity.seat.QSeat.seat
-import dev.dornol.ticket.domain.entity.seat.QSeatGroup.seatGroup
+import dev.dornol.ticket.domain.entity.seat.QSeatEntity.seatEntity as seat
+import dev.dornol.ticket.domain.entity.seat.QSeatGroupEntity.seatGroupEntity as seatGroup
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -37,11 +37,11 @@ class SeatGroupRepositoryImpl(
                 seat.name,
                 seat.offset,
                 seat.displayOrder,
-                seat.group.id
+                seat.seatGroup.id
             ))
             .from(seat)
-            .where(seat.group.id.`in`(seatGroupIds), seat.deleted.isFalse)
-            .orderBy(seat.group.displayOrder.asc(), seat.displayOrder.asc())
+            .where(seat.seatGroup.id.`in`(seatGroupIds), seat.deleted.isFalse)
+            .orderBy(seat.seatGroup.displayOrder.asc(), seat.displayOrder.asc())
             .fetch()
 
         return seatGroups to seats

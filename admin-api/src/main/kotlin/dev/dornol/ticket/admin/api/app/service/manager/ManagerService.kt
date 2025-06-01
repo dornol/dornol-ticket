@@ -7,9 +7,9 @@ import dev.dornol.ticket.admin.api.app.repository.company.CompanyRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.config.exception.join.UsernameExistsException
-import dev.dornol.ticket.domain.entity.company.Company
-import dev.dornol.ticket.domain.entity.manager.Manager
-import dev.dornol.ticket.domain.entity.manager.ManagerRole
+import dev.dornol.ticket.domain.entity.manager.CompanyEntity
+import dev.dornol.ticket.domain.entity.manager.ManagerEntity
+import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -29,8 +29,8 @@ class ManagerService(
         if (existsUsername(joinDto.username)) {
             throw UsernameExistsException(joinDto.username)
         }
-        val company = Company(joinDto.company.name, joinDto.company.businessNumber)
-        val manager = Manager(
+        val company = CompanyEntity(joinDto.company.name, joinDto.company.businessNumber)
+        val manager = ManagerEntity(
             password = passwordEncoder.encode(joinDto.password),
             username = joinDto.username,
             name = joinDto.name,

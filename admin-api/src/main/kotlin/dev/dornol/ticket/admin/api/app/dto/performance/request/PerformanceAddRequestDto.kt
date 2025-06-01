@@ -1,7 +1,6 @@
 package dev.dornol.ticket.admin.api.app.dto.performance.request
 
-import dev.dornol.ticket.domain.entity.performance.PerformanceType
-import jakarta.validation.constraints.Min
+import dev.dornol.ticket.performance.domain.PerformanceType
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size

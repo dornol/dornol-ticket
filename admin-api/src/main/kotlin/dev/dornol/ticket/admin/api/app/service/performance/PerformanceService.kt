@@ -9,8 +9,8 @@ import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
-import dev.dornol.ticket.domain.entity.performance.Performance
-import dev.dornol.ticket.domain.entity.performance.PerformanceType
+import dev.dornol.ticket.domain.entity.performance.PerformanceEntity
+import dev.dornol.ticket.performance.domain.PerformanceType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -28,9 +28,9 @@ class PerformanceService(
         performanceRepository.search(search, pageable)
 
     @Transactional
-    fun add(userId: Long, name: String, type: PerformanceType): Performance {
+    fun add(userId: Long, name: String, type: PerformanceType): PerformanceEntity {
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
-        return Performance(
+        return PerformanceEntity(
             name = name,
             type = type,
             company = manager.company,
@@ -54,7 +54,7 @@ class PerformanceService(
         return PerformanceDetailDto(performance)
     }
 
-    private fun assertAndGetPerformance(userId: Long, id: Long): Performance {
+    private fun assertAndGetPerformance(userId: Long, id: Long): PerformanceEntity {
         val performance = performanceRepository.findByIdOrNull(id)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         assertAccess(performance.company.id == manager.company.id)

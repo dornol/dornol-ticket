@@ -10,7 +10,7 @@ import dev.dornol.ticket.admin.api.app.dto.site.response.SiteListDto
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.site.QSite.site
+import dev.dornol.ticket.domain.entity.site.QSiteEntity.siteEntity as site
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

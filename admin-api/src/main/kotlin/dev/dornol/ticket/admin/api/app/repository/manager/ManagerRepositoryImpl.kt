@@ -11,9 +11,9 @@ import dev.dornol.ticket.admin.api.util.and
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.company.QCompany.company
-import dev.dornol.ticket.domain.entity.manager.ManagerRole
-import dev.dornol.ticket.domain.entity.manager.QManager.manager
+import dev.dornol.ticket.domain.entity.manager.QCompanyEntity.companyEntity as company
+import dev.dornol.ticket.domain.entity.manager.QManagerEntity.managerEntity as manager
+import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

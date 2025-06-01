@@ -9,7 +9,7 @@ import dev.dornol.ticket.admin.api.app.dto.performance.response.QPerformanceList
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.performance.QPerformance.performance
+import dev.dornol.ticket.domain.entity.performance.QPerformanceEntity.performanceEntity as performance
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

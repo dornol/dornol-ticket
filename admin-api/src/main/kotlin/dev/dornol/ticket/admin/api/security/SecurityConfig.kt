@@ -6,7 +6,7 @@ import dev.dornol.ticket.admin.api.security.authentication.AdminAuthenticationPr
 import dev.dornol.ticket.admin.api.security.filter.JsonUsernamePasswordAuthenticationFilter
 import dev.dornol.ticket.admin.api.security.handler.TokenResponseHandler
 import dev.dornol.ticket.admin.api.security.userdetails.AdminUserDetailsService
-import dev.dornol.ticket.domain.entity.manager.ManagerRole
+import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean

@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.app.dto.manager.request
 
 import dev.dornol.ticket.admin.api.app.dto.common.request.DefaultSearchDto
-import dev.dornol.ticket.domain.entity.manager.ManagerRole
+import dev.dornol.ticket.manager.domain.ManagerRole
 
 class ManagerSearchDto(
     searchFields: Set<ManagerSearchField> = hashSetOf(),

@@ -11,9 +11,9 @@ import dev.dornol.ticket.admin.api.app.dto.site.response.QSiteListDto
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.performance.QPerformance.performance
-import dev.dornol.ticket.domain.entity.performance.QPerformanceSchedule.performanceSchedule
-import dev.dornol.ticket.domain.entity.site.QSite.site
+import dev.dornol.ticket.domain.entity.performance.QPerformanceEntity.performanceEntity as performance
+import dev.dornol.ticket.domain.entity.performance.QPerformanceScheduleEntity.performanceScheduleEntity as performanceSchedule
+import dev.dornol.ticket.domain.entity.site.QSiteEntity.siteEntity as site
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

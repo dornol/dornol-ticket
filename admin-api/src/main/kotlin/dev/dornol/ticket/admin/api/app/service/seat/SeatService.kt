@@ -8,8 +8,8 @@ import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
-import dev.dornol.ticket.domain.entity.seat.Seat
-import dev.dornol.ticket.domain.entity.seat.SeatOffset
+import dev.dornol.ticket.domain.entity.seat.SeatEntity
+import dev.dornol.ticket.domain.entity.seat.SeatOffsetEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,17 +23,17 @@ class SeatService(
 ) {
 
     @Transactional
-    fun add(toLong: Long, siteId: Long, seatGroupId: Long, x: Double, y:Double): Seat {
+    fun add(toLong: Long, siteId: Long, seatGroupId: Long, x: Double, y:Double): SeatEntity {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId)?.alive() ?: throw BadRequestException()
         val maxDisplayOrder = seatRepository.maxDisplayOrderByGroupId(seatGroupId) ?: 0L
         assertAccess(site.id == seatGroup.site.id)
 
-        return Seat("new seat", seatGroup, SeatOffset(x, y), maxDisplayOrder + 1).also { seatRepository.save(it) }
+        return SeatEntity("new seat", seatGroup, SeatOffsetEntity(x, y), maxDisplayOrder + 1).also { seatRepository.save(it) }
     }
 
     @Transactional
-    fun duplicate(userId: Long, siteId: Long, seatGroupId: Long, seatId: Long): Seat {
+    fun duplicate(userId: Long, siteId: Long, seatGroupId: Long, seatId: Long): SeatEntity {
         val seat = this.validateAndGetSeat(userId, siteId, seatGroupId, seatId)
         val maxDisplayOrder = seatRepository.maxDisplayOrderByGroupId(seatGroupId) ?: 0L
         return seat.copy(maxDisplayOrder + 1).also { seatRepository.save(it) }
@@ -59,13 +59,13 @@ class SeatService(
         seat.delete(userId)
     }
 
-    private fun validateAndGetSeat(userId: Long, siteId: Long, seatGroupId: Long, seatId: Long): Seat {
+    private fun validateAndGetSeat(userId: Long, siteId: Long, seatGroupId: Long, seatId: Long): SeatEntity {
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
         val seatGroup = seatGroupRepository.findByIdOrNull(seatGroupId)?.alive() ?: throw BadRequestException()
         val seat = seatRepository.findByIdOrNull(seatId)?.alive() ?: throw BadRequestException()
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         assertAccess(site.id == seatGroup.site.id)
-        assertAccess(seatGroup.id == seat.group.id)
+        assertAccess(seatGroup.id == seat.seatGroup.id)
         assertAccess(manager.company.id == site.company.id)
 
         return seat
