@@ -23,7 +23,7 @@ data class PerformanceScheduleDetailDto(
                 schedule.site.address.mainAddress,
                 schedule.site.address.detailAddress
             ),
-            schedule.site.seatingMapFile.uuid.toString()
+            schedule.site.seatingMapFile.uuid
         ),
         date = schedule.performanceDate,
         time = schedule.performanceTime,

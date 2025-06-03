@@ -32,7 +32,7 @@ class SecurityServiceImpl(
     private fun getPrincipal(): Jwt {
         val auth: Authentication? = SecurityContextHolder.getContext().authentication
         if (auth == null || !auth.isAuthenticated) {
-            throw AccessDeniedException("Unauthenticated")
+            throw AccessDeniedException()
         }
 
         return auth.principal as Jwt

@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
-import dev.dornol.ticket.admin.api.app.constants.ERRORS_DEFAULT
 import dev.dornol.ticket.admin.api.config.message.MessageResolver
+import dev.dornol.ticket.common.exception.ExceptionCode
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
@@ -20,7 +20,7 @@ class DefaultExceptionHandler(
 ) : AbstractExceptionHandler(messageResolver) {
 
     @ExceptionHandler(Exception::class)
-    fun handleException(e: Exception) = errorResponse(ERRORS_DEFAULT).also {
+    fun handleException(e: Exception) = errorResponse(ExceptionCode.UNKNOWN.messageCode).also {
         log.error(e) { "unhandled exception: $e" }
     }
 

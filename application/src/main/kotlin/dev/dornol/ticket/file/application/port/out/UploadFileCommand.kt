@@ -7,7 +7,8 @@ import java.io.InputStream
 data class UploadFileCommand(
     val key: String,
     val storageType: StorageType,
-    val inputStream: InputStream,
+    val bucket: String,
     val name: String,
+    val inputStream: InputStream,
     val fileFormat: FileFormat
 )

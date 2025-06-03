@@ -5,6 +5,7 @@ import dev.dornol.ticket.file.application.port.out.FindMetadataPort
 import dev.dornol.ticket.file.application.port.out.SaveFileMetadataPort
 import dev.dornol.ticket.file.domain.FileMetadata
 import org.springframework.stereotype.Repository
+import java.util.*
 
 @Repository
 class FileMetadataPersistenceAdapter(
@@ -18,5 +19,9 @@ class FileMetadataPersistenceAdapter(
 
     override fun save(metadata: FileMetadata) {
         fileMetadataMapper.toEntity(metadata).let { entityRepository.save(it) }
+    }
+
+    override fun findByUuid(uuid: UUID): FileMetadata? {
+        return entityRepository.findByUuid(uuid)?.let { fileMetadataMapper.toDomain(it) }
     }
 }

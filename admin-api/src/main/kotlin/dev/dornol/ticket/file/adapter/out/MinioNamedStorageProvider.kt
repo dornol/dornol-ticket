@@ -6,6 +6,8 @@ import dev.dornol.ticket.file.application.port.out.UploadFileCommand
 import dev.dornol.ticket.file.domain.FileLocation
 import dev.dornol.ticket.file.domain.FileMetadata
 import dev.dornol.ticket.file.domain.StorageType
+import org.springframework.core.io.InputStreamResource
+import org.springframework.core.io.Resource
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
@@ -17,13 +19,12 @@ class MinioNamedStorageProvider(
     private val s3Properties: CloudS3Properties
 ) : NamedStorage {
     override val type = StorageType.MINIO
-    private val bucket: String = "my-bucket"
 
     override fun upload(command: UploadFileCommand): FileLocation {
 
         val key = "${command.key}_${command.name}"
         val putObjectRequest = PutObjectRequest.builder()
-            .bucket(bucket)
+            .bucket(command.bucket)
             .key(key)
             .contentType(command.fileFormat.mimeType)
             .build()
@@ -36,7 +37,7 @@ class MinioNamedStorageProvider(
         )
 
         return FileLocation(
-            bucket = bucket,
+            bucket = command.bucket,
             objectKey = key,
             storageType = type
         )
@@ -44,6 +45,14 @@ class MinioNamedStorageProvider(
 
     override fun resolveUri(fileMetadata: FileMetadata): String {
         return fileMetadata.location.makeFullPath(s3Properties.baseUrl)
+    }
+
+    override fun loadResource(fileMetadata: FileMetadata): Resource {
+        return InputStreamResource(
+            s3Client.getObject {
+                it.bucket(fileMetadata.location.bucket).key(fileMetadata.location.objectKey).build()
+            }
+        )
     }
 
 }

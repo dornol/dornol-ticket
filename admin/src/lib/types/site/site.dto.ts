@@ -21,7 +21,7 @@ export interface SiteDto {
   id: string;
   name: string;
   address: Address;
-  seatingMapLocation: string;
+  seatingMapFileUuid: string;
 }
 
 export interface SeatEditRequestDto {

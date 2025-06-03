@@ -7,8 +7,7 @@ import dev.dornol.ticket.file.domain.FileMetadata
 data class FileUploadResponseDto(
     @JsonSerialize(using = ToStringSerializer::class)
     val id: Long,
-    val location: String,
-    val key: String,
+    val uuid: String,
 ) {
-    constructor(metadata: FileMetadata, location: String): this(metadata.id.get(), location, metadata.uuid.toString())
+    constructor(metadata: FileMetadata): this(metadata.id.get(), metadata.uuid.toString())
 }

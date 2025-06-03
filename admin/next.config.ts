@@ -11,11 +11,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 's3.dornol.dev',
-        port: '',
-        pathname: "/**",
-        search: ''
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8080',
+        pathname: `${process.env.NEXT_PUBLIC_API_PATH}/files/**`,
       }
     ],
   }

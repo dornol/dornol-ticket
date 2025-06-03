@@ -12,8 +12,6 @@ import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.domain.entity.site.SiteEntity
-import dev.dornol.ticket.file.adapter.out.jpa.mapper.FileMetadataMapper
-import dev.dornol.ticket.file.application.port.`in`.ResolveFileUriUseCase
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -24,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 class SiteService(
     private val siteRepository: SiteRepository,
     private val managerRepository: ManagerRepository,
-    private val commonFileRepository: CommonFileRepository,
-    private val resolveFileUriUseCase: ResolveFileUriUseCase,
-    private val fileMetadataMapper: FileMetadataMapper
+    private val commonFileRepository: CommonFileRepository
 ) {
 
     @Transactional(readOnly = false)
@@ -43,7 +39,7 @@ class SiteService(
                     it.id!!,
                     it.name,
                     AddressDto(it.address.zipCode, it.address.mainAddress, it.address.detailAddress),
-                    resolveFileUriUseCase.resolveFileUri(fileMetadataMapper.toDomain(it.seatingMapFile))
+                    it.seatingMapFile.uuid
                 )
             }
             ?: throw BadRequestException()

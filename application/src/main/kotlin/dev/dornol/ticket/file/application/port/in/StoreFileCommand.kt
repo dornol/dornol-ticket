@@ -5,6 +5,7 @@ data class StoreFileCommand(
     val bytes: ByteArray,
     val name: String,
     val size: Long,
+    val bucket: String,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

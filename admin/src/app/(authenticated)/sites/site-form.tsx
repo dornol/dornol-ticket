@@ -15,6 +15,7 @@ import { Address as DaumAddress } from "react-daum-postcode/lib/loadPostcode";
 import { SiteAddRequestDto, SiteDto } from "@/lib/types/site/site.dto";
 import FileFormItem from "@/components/common/file-form-item";
 import { FileUploadResponseDto } from "@/lib/types/file/file.dto";
+import fileProvideService from "@/lib/service/file/file-provide-service";
 
 const siteDefaultFormSchema = {
   name: z.string()
@@ -152,7 +153,7 @@ export default function SiteForm({
             control={form.control}
             name="seatingMapFileId"
             render={() => (
-              <FileFormItem accept="image/*" onUpload={onFileUpload} defaultLocation={site?.seatingMapLocation} />
+              <FileFormItem accept="image/*" onUpload={onFileUpload} defaultLocation={site && fileProvideService.getFileViewUrl(site.seatingMapFileUuid)} />
             )}
           />
 
