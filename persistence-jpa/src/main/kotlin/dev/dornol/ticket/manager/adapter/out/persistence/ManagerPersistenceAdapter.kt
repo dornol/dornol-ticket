@@ -1,75 +1,34 @@
 package dev.dornol.ticket.manager.adapter.out.persistence
 
-import com.querydsl.core.types.dsl.BooleanExpression
-import com.querydsl.core.types.dsl.StringPath
-import com.querydsl.jpa.impl.JPAQueryFactory
-import dev.dornol.ticket.common.*
-import dev.dornol.ticket.common.search.PageMeta
 import dev.dornol.ticket.common.search.PageResult
-import dev.dornol.ticket.manager.application.port.out.CompanyDto
-import dev.dornol.ticket.manager.application.port.out.ManagerListDto
-import dev.dornol.ticket.manager.application.port.out.SearchManagersCriteria
-import dev.dornol.ticket.manager.application.port.out.SearchManagersPort
+import dev.dornol.ticket.common.toPageResult
+import dev.dornol.ticket.manager.adapter.out.jpa.mapper.CompanyMapper
+import dev.dornol.ticket.manager.adapter.out.jpa.mapper.ManagerManualMapper
+import dev.dornol.ticket.manager.adapter.out.jpa.mapper.ManagerMapper
+import dev.dornol.ticket.manager.adapter.out.persistence.query.ManagerQueryDslSupport
+import dev.dornol.ticket.manager.application.port.out.*
+import dev.dornol.ticket.manager.domain.Company
 import dev.dornol.ticket.manager.domain.CompanyId
+import dev.dornol.ticket.manager.domain.Manager
 import dev.dornol.ticket.manager.domain.ManagerId
-import dev.dornol.ticket.manager.domain.ManagerRole
-import dev.dornol.ticket.manager.domain.model.search.ManagerSearchField
 import dev.dornol.ticket.manager.domain.value.ManagerApproval
-import org.springframework.data.domain.Sort
-import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
-import dev.dornol.ticket.manager.adapter.out.jpa.QCompanyEntity.companyEntity as company
-import dev.dornol.ticket.manager.adapter.out.jpa.QManagerEntity.managerEntity as manager
 
 @Repository
 class ManagerPersistenceAdapter(
-    private val query: JPAQueryFactory
-) : SearchManagersPort {
+    private val managerEntityRepository: ManagerEntityRepository,
+    private val companyEntityRepository: CompanyEntityRepository,
+    private val queryDslSupport: ManagerQueryDslSupport,
 
-    val mapper: Map<ManagerSearchField, List<StringPath>> = mapOf(
-        ManagerSearchField.NAME to listOf(manager.name),
-        ManagerSearchField.USERNAME to listOf(manager.username),
-        ManagerSearchField.EMAIL to listOf(manager.email),
-        ManagerSearchField.PHONE to listOf(manager.phone),
-        ManagerSearchField.COMPANY_NAME to listOf(manager.company.name),
-    )
+    private val managerMapper: ManagerMapper,
+    private val managerManualMapper: ManagerManualMapper,
+    private val companyMapper: CompanyMapper
+) : SearchManagersPort, FindManagerPort, SaveManagerPort {
 
     override fun searchManagers(criteria: SearchManagersCriteria): PageResult<ManagerListDto> {
-        val pageable = criteria.pageQuery.toPageable()
-        val condition = managerListCondition(criteria)
-
-        val listQuery = query
-            .select(
-                QManagerListProjection(
-                    manager.id,
-                    manager.username,
-                    manager.name,
-                    manager.phone,
-                    manager.email,
-                    manager.managerRole,
-                    manager.approval,
-                    QCompanyProjection(
-                        company.id,
-                        company.name,
-                        company.businessNumber
-                    )
-                )
-            )
-            .from(manager)
-            .leftJoin(manager.company, company)
-            .where(*condition)
-            .orderBy(*sort(pageable.sort), manager.id.desc())
-            .offset(pageable.offset)
-            .limit(pageable.pageSize.toLong())
-
-        val countQuery = query
-            .select(manager.count())
-            .from(manager)
-            .where(*condition)
-
-        val page = PageableExecutionUtils.getPage(listQuery.fetch(), pageable) { countQuery.fetchOne() ?: 0 }
-        return PageResult(
-            content = page.content.map { ManagerListDto(
+        val page = queryDslSupport.searchManagers(criteria)
+        return page.toPageResult {
+            ManagerListDto(
                 id = ManagerId(it.id),
                 username = it.username,
                 email = it.email,
@@ -86,40 +45,21 @@ class ManagerPersistenceAdapter(
                     name = it.company.name,
                     businessNumber = it.company.businessNumber,
                 )
-            ) },
-            page = PageMeta(
-                size = page.size,
-                number = page.number,
-                totalElements = page.totalElements,
-                totalPages = page.totalPages
             )
-        )
-
-
-    }
-
-    private fun managerListCondition(criteria: SearchManagersCriteria) = arrayOf(
-        approved(criteria.approved) and manager.deleted.isFalse and role(criteria.managerRole),
-        criteria.textSearch(mapper),
-    )
-
-    private fun approved(approved: Boolean?): BooleanExpression? {
-        return approved?.let { manager.approval.approved.eq(it) }
-    }
-
-    private fun role(role: ManagerRole?): BooleanExpression? {
-        return role?.let { manager.managerRole.eq(it) }
-    }
-
-    private fun sort(sort: Sort) = sort.toOrderBy {
-        when (it.property) {
-            "username" -> manager.username.sort(it)
-            "name" -> manager.name.sort(it)
-            "email" -> manager.email.sort(it)
-            "businessName" -> company.name.sort(it)
-            "businessNumber" -> company.businessNumber.sort(it)
-            else -> null
         }
     }
+
+    override fun findByUsername(username: String): Manager? {
+        return managerEntityRepository.findByUsername(username)?.let { managerMapper.toDomain(it) }
+    }
+
+    override fun save(manager: Manager, company: Company) {
+        val companyEntity = companyMapper.toEntity(company)
+        companyEntityRepository.save(companyEntity)
+
+        val managerEntity = managerManualMapper.toEntity(manager, companyEntity)
+        managerEntityRepository.save(managerEntity)
+    }
+
 
 }

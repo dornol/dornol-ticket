@@ -9,9 +9,9 @@ import dev.dornol.ticket.manager.application.port.out.SearchManagersPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service("managerService2")
-open class ManagerService(
-    private val searchManagersPort: SearchManagersPort
+@Service
+open class ManagerSearchService(
+    private val searchManagersPort: SearchManagersPort,
 ) : SearchManagersUseCase {
 
     @Transactional

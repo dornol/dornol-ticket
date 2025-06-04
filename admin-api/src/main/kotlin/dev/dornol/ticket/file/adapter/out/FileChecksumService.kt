@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.util.DigestUtils
 
 @Service
-class FileServiceChecksum : FileChecksumPort {
+class FileChecksumService : FileChecksumPort {
     override fun getChecksum(bytes: ByteArray): String {
         return DigestUtils.md5DigestAsHex(bytes)
     }

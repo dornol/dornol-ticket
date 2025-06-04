@@ -6,7 +6,7 @@ import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceReposit
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceScheduleRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.app.service.common.SecurityService
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.domain.entity.performance.PerformanceScheduleEntity
 import org.springframework.data.domain.Pageable

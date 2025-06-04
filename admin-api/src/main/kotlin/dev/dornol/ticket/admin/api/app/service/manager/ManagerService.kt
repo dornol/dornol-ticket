@@ -5,8 +5,8 @@ import dev.dornol.ticket.admin.api.app.dto.manager.request.ManagerSearchDto
 import dev.dornol.ticket.admin.api.app.dto.user.UserDto
 import dev.dornol.ticket.admin.api.app.repository.company.CompanyRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
-import dev.dornol.ticket.admin.api.config.exception.join.UsernameExistsException
+import dev.dornol.ticket.common.exception.BadRequestException
+import dev.dornol.ticket.manager.application.exception.UsernameExistsException
 import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.manager.adapter.out.jpa.ManagerEntity
 import dev.dornol.ticket.manager.domain.ManagerRole

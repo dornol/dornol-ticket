@@ -6,7 +6,7 @@ import dev.dornol.ticket.admin.api.app.repository.seat.SeatGroupRepository
 import dev.dornol.ticket.admin.api.app.repository.seat.SeatRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.domain.entity.seat.SeatGroupEntity

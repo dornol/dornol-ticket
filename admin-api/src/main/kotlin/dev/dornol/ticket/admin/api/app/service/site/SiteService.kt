@@ -10,7 +10,7 @@ import dev.dornol.ticket.admin.api.app.dto.site.response.SiteListDto
 import dev.dornol.ticket.admin.api.app.repository.file.CommonFileRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.domain.entity.site.SiteEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

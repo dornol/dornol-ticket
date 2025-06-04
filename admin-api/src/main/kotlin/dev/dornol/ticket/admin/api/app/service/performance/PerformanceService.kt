@@ -6,7 +6,7 @@ import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceListD
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.domain.entity.performance.PerformanceEntity

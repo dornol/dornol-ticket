@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.config.handler.exception.dto.ErrorResponse
 import dev.dornol.ticket.admin.api.config.message.MessageResolver
 import org.springframework.core.Ordered
