@@ -1,46 +1,58 @@
 package dev.dornol.ticket.validation.file
 
-import dev.dornol.ticket.common.exception.ExceptionCode
 import dev.dornol.ticket.common.util.MessageUtil
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
-import java.io.InputStream
+import kotlin.properties.Delegates
 
 abstract class AbstractFileValidator<T>(
-    protected val mediaTypeDetector: MediaTypeDetector,
-    protected val messageUtil: MessageUtil,
+    protected val messageUtil: MessageUtil
 ) : ConstraintValidator<File, T> {
     lateinit var allowedMediaTypes: Set<SafeMediaType>
-    lateinit var exceptionCode: ExceptionCode
+    var maxSize by Delegates.notNull<Long>()
 
     override fun initialize(constraintAnnotation: File) {
         super.initialize(constraintAnnotation)
         this.init(constraintAnnotation)
     }
 
-    protected fun init(constraintAnnotation: File) {
-        allowedMediaTypes = if (constraintAnnotation.value.isEmpty()) SafeMediaType.entries.toSet() else constraintAnnotation.value.toSet()
-        exceptionCode = constraintAnnotation.code
-    }
-
-    protected fun detectMediaType(inputStream: InputStream): String {
-        return mediaTypeDetector.detect(inputStream)
-    }
-
-    protected fun isMediaTypeInWhiteList(mediaType: String): Boolean {
-        return allowedMediaTypes.any { it.mimeType == mediaType }
-    }
-
-    protected fun applyConstraintViolationIfNotValid(valid: Boolean, context: ConstraintValidatorContext): Boolean {
-        if (valid) {
+    override fun isValid(value: T?, context: ConstraintValidatorContext): Boolean {
+        if (value == null || isEmpty(value)) {
             return true
         }
 
+        if (!isValidMediaType(value)) {
+            applyConstraintViolation(context, "errors.validation.file.not-supported")
+            return false
+        } else if (!isValidFileSize(value)) {
+            applyConstraintViolation(context, "errors.validation.file.too-large")
+            return false
+        } else if (!isValidFilename(value)) {
+            applyConstraintViolation(context, "errors.validation.file.invalid-filename")
+            return false
+        }
+
+        return true
+    }
+
+    private fun init(constraintAnnotation: File) {
+        allowedMediaTypes = if (constraintAnnotation.value.isEmpty()) SafeMediaType.entries.toSet() else constraintAnnotation.value.toSet()
+        maxSize = constraintAnnotation.size
+    }
+
+    private fun applyConstraintViolation(context: ConstraintValidatorContext, messageKey: String) {
         context.disableDefaultConstraintViolation()
         context.buildConstraintViolationWithTemplate(
-            messageUtil.get(exceptionCode.messageCode)
+            messageUtil.get(messageKey)
         ).addConstraintViolation()
-        return false
     }
+
+    protected abstract fun isEmpty(value: T): Boolean
+
+    protected abstract fun isValidMediaType(value: T): Boolean
+
+    protected abstract fun isValidFileSize(value: T): Boolean
+
+    protected abstract fun isValidFilename(value: T): Boolean
 
 }

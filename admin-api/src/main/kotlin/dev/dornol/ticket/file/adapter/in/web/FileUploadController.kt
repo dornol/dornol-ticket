@@ -4,6 +4,9 @@ import dev.dornol.ticket.file.adapter.`in`.web.dto.Bucket
 import dev.dornol.ticket.file.adapter.`in`.web.dto.FileUploadResponseDto
 import dev.dornol.ticket.file.application.port.`in`.StoreFileCommand
 import dev.dornol.ticket.file.application.port.`in`.StoreFileUseCase
+import dev.dornol.ticket.validation.file.File
+import dev.dornol.ticket.validation.file.SafeMediaType.*
+import jakarta.validation.constraints.NotNull
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,11 +24,11 @@ class FileUploadController(
     @PostMapping("/{bucket}")
     fun uploadFile(
         @PathVariable bucket: String,
+        @NotNull @File(value = [IMAGE_JPEG, IMAGE_PNG])
         file: MultipartFile
     ): FileUploadResponseDto {
         val bucketEnum = Bucket.valueOf(bucket.uppercase())
-        require(file.originalFilename != null) { "original file must not be null." }
-        require(file.size > 0) { "file must not be empty." }
+
         val metadata = storeFileUseCase.storeFile(
             StoreFileCommand(
                 file.bytes,

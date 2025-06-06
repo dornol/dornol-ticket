@@ -27,7 +27,7 @@ abstract class BaseIdEntity(
     }
 
     override fun hashCode(): Int {
-        return if (id != 0L) id.hashCode() else super.hashCode()
+        return id?.hashCode() ?: super.hashCode()
     }
 
 }

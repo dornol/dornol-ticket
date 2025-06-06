@@ -75,6 +75,7 @@ class SecurityConfig(
             it.requestMatchers("/sites/**").authenticated()
             it.requestMatchers("/performances/**").authenticated()
             it.requestMatchers("/performance-schedules/**").authenticated()
+            it.requestMatchers("/files/view/**", "/files/download/**").permitAll()
             it.requestMatchers("/files/**").authenticated()
 
             it.requestMatchers("/managers/**").access(hasScope(ManagerRole.SYSTEM_ADMIN.name))

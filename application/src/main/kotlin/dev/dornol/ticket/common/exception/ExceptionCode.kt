@@ -16,8 +16,8 @@ enum class ExceptionCode(
     RESOURCE_NOT_FOUND("errors.validation.resource-not-found"),
     INVALID_REQUEST("errors.validation.invalid-request"),
     UNSUPPORTED_MEDIA_TYPE("errors.validation.file.not-supported"),
-    FILE_PROCESSING_FAILED("errors.validation.file.processing-failed"),
-    FILE_TOO_LARGE("errors.file.too-large"),
+    INVALID_FILENAME("errors.validation.file.invalid-filename"),
+    FILE_TOO_LARGE("errors.validation.file.too-large"),
 
     /**
      * server
@@ -27,6 +27,7 @@ enum class ExceptionCode(
     /**
      * business
      */
+    FILE_PROCESSING_FAILED("errors.business.file.processing-failed"),
     JOIN_USERNAME_EXISTS("errors.business.join.username-exists"),
 
 }

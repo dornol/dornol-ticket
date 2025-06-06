@@ -1,26 +1,19 @@
 package dev.dornol.ticket.validation.file
 
 import dev.dornol.ticket.common.util.MessageUtil
-import jakarta.validation.ConstraintValidatorContext
 import org.springframework.web.multipart.MultipartFile
 
 class FileCollectionValidator(
-    mediaTypeDetector: MediaTypeDetector,
+    private val helper: MultipartFileValidatorHelper,
     messageUtil: MessageUtil,
-) : AbstractFileValidator<Collection<MultipartFile>>(mediaTypeDetector, messageUtil) {
+) : AbstractFileValidator<Collection<MultipartFile>>(messageUtil) {
 
-    override fun isValid(
-        value: Collection<MultipartFile>?,
-        context: ConstraintValidatorContext
-    ): Boolean {
-        if (value == null || value.isEmpty()) {
-            return true
-        }
+    override fun isEmpty(value: Collection<MultipartFile>) = value.isEmpty()
 
-        return applyConstraintViolationIfNotValid(
-            value.all { isMediaTypeInWhiteList(detectMediaType(it.inputStream)) },
-            context
-        )
-    }
+    override fun isValidMediaType(value: Collection<MultipartFile>) = value.all { helper.isValidMediaType(it, allowedMediaTypes) }
+
+    override fun isValidFileSize(value: Collection<MultipartFile>) = value.all { helper.isValidFileSize(it, maxSize) }
+
+    override fun isValidFilename(value: Collection<MultipartFile>) = value.all { helper.isValidFilename(it) }
 
 }
