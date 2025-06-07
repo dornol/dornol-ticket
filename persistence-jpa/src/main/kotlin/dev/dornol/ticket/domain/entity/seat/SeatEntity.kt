@@ -10,11 +10,12 @@ private const val BOX_SIZE = 40.0
 @Table(name = "seat")
 @Entity
 class SeatEntity(
+    id: Long,
     name: String,
     group: SeatGroupEntity,
     offset: SeatOffsetEntity = SeatOffsetEntity(),
     displayOrder: Long = 0L,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(length = 30, nullable = false)
     var name: String = name
@@ -40,8 +41,9 @@ class SeatEntity(
         offset = SeatOffsetEntity(x, y)
     }
 
-    fun copy(displayOrder: Long): SeatEntity {
+    fun copy(newId: Long, displayOrder: Long): SeatEntity {
         return SeatEntity(
+            id = newId,
             name = this.name,
             group = this.seatGroup,
             offset = SeatOffsetEntity(min(IMAGE_AREA_SIZE - BOX_SIZE, this.offset.x + 10L), min(IMAGE_AREA_SIZE - BOX_SIZE, this.offset.y + 10)),

@@ -1,6 +1,5 @@
 package dev.dornol.ticket.domain.entity
 
-import dev.dornol.ticket.domain.generator.SnowFlakeGeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import org.hibernate.Hibernate
@@ -8,8 +7,7 @@ import org.hibernate.Hibernate
 @MappedSuperclass
 abstract class BaseIdEntity(
     @Id
-    @SnowFlakeGeneratedValue
-    val id: Long? = null
+    val id: Long
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -27,7 +25,7 @@ abstract class BaseIdEntity(
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: super.hashCode()
+        return if (id != 0L) id.hashCode() else super.hashCode()
     }
 
 }

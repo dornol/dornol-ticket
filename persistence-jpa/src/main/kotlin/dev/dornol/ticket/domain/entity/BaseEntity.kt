@@ -8,7 +8,9 @@ import java.time.LocalDateTime
 private val log = KotlinLogging.logger {}
 
 @MappedSuperclass
-abstract class BaseEntity : BaseCreationEntity() {
+abstract class BaseEntity(
+    id: Long
+) : BaseCreationEntity(id) {
 
     var deletedBy: Long? = null
         protected set

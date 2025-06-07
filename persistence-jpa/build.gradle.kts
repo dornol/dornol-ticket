@@ -27,13 +27,8 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.oshai/kotlin-logging-jvm
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.4")
 
-    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
-    implementation("org.mapstruct:mapstruct:1.6.3")
-
     implementation("io.github.openfeign.querydsl:querydsl-jpa-spring:6.11")
     kapt("io.github.openfeign.querydsl:querydsl-apt:6.11")
-    kapt("org.mapstruct:mapstruct-processor:1.6.3")
-    kaptTest("org.mapstruct:mapstruct-processor:1.6.3")
 
     implementation(project(":domain"))
     implementation(project(":application"))

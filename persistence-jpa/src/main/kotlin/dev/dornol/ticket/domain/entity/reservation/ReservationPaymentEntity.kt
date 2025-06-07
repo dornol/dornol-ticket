@@ -10,9 +10,10 @@ import jakarta.persistence.*
 @Table(name = "reservation_payment")
 @Entity
 class ReservationPaymentEntity(
+    id: Long,
     reservation: ReservationEntity,
     price: Money,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Convert(converter = MoneyConverter::class)
     @Column(nullable = false)

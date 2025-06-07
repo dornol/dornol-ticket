@@ -8,9 +8,10 @@ import jakarta.persistence.Table
 @Table(name = "company")
 @Entity
 class CompanyEntity(
+    id: Long,
     name: String,
     businessNumber: String,
-) : BaseCreationEntity() {
+) : BaseCreationEntity(id) {
 
     @Column(length = 30, nullable = false)
     var name: String = name

@@ -10,6 +10,7 @@ import dev.dornol.ticket.admin.api.app.dto.site.response.SiteListDto
 import dev.dornol.ticket.admin.api.app.repository.file.CommonFileRepository
 import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
+import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
 import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.domain.entity.site.SiteEntity
 import org.springframework.data.domain.Page
@@ -24,6 +25,7 @@ class SiteService(
     private val managerRepository: ManagerRepository,
     private val commonFileRepository: CommonFileRepository
 ) {
+    private val generator = SnowFlakeIdGenerator()
 
     @Transactional(readOnly = false)
     fun search(search: SearchContext<SiteSearchDto>, pageable: Pageable): Page<SiteListDto> {
@@ -49,7 +51,7 @@ class SiteService(
     fun save(userId: Long, site: SiteAddRequestDto): SiteEntity {
         val manager = managerRepository.findByIdOrNull(userId) ?: throw BadRequestException()
         val seatingMapFile = commonFileRepository.findByIdOrNull(site.seatingMapFileId) ?: throw BadRequestException()
-        return SiteEntity(site.name, site.address.toEntity(), manager.company, seatingMapFile).also { siteRepository.save(it) }
+        return SiteEntity(generator.generate(), site.name, site.address.toEntity(), manager.company, seatingMapFile).also { siteRepository.save(it) }
     }
 
     @Transactional

@@ -10,13 +10,14 @@ import java.util.*
 @Table(name = "file_metadata")
 @Entity
 class FileMetadataEntity(
+    id: Long,
     uuid: UUID = UUID.randomUUID(),
     name: String,
     size: Long,
     checksum: String,
     location: FileLocationEntity,
     format: FileFormatEntity,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(nullable = false, updatable = false, unique = true)
     val uuid: UUID = uuid

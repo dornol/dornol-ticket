@@ -9,10 +9,11 @@ import jakarta.persistence.*
 @Table(name = "performance")
 @Entity
 class PerformanceEntity(
+    id: Long,
     name: String,
     type: PerformanceType,
     company: CompanyEntity,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(length = 255, nullable = false)
     var name: String = name

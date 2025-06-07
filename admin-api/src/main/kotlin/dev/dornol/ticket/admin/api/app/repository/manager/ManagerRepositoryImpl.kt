@@ -44,7 +44,7 @@ class ManagerRepositoryImpl(
                     manager.name,
                     manager.phone,
                     manager.email,
-                    manager.managerRole,
+                    manager.role,
                     manager.approval,
                     company
                 )
@@ -74,7 +74,7 @@ class ManagerRepositoryImpl(
     }
 
     private fun role(role: ManagerRole?): BooleanExpression? {
-        return role?.let { manager.managerRole.eq(it) }
+        return role?.let { manager.role.eq(it) }
     }
 
     private fun sort(sort: Sort) = sort.toOrderBy {

@@ -14,7 +14,7 @@ class AdminUserDetailsService(
 
         return AdminUser(
             manager = manager,
-            authorities = listOf(SimpleGrantedAuthority(manager.managerRole.name))
+            authorities = listOf(SimpleGrantedAuthority(manager.role.name))
         )
     }
 

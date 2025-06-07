@@ -9,11 +9,12 @@ import jakarta.persistence.*
 @Table(name = "site")
 @Entity
 class SiteEntity(
+    id: Long,
     name: String,
     address: AddressEntity,
     company: CompanyEntity,
     seatingMapFile: FileMetadataEntity,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(length = 100, nullable = false)
     var name: String = name

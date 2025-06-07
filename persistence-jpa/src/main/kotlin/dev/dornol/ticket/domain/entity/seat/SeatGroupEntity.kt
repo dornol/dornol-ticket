@@ -7,11 +7,12 @@ import jakarta.persistence.*
 @Table(name = "seat_group")
 @Entity
 class SeatGroupEntity(
+    id: Long,
     name: String,
     site: SiteEntity,
     color: String,
     displayOrder: Long = 0,
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(length = 30, nullable = false)
     var name: String = name

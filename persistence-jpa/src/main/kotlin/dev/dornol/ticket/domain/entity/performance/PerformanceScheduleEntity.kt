@@ -9,11 +9,12 @@ import java.time.LocalTime
 @Table(name = "performance_schedule")
 @Entity
 class PerformanceScheduleEntity(
+    id: Long,
     performance: PerformanceEntity,
     site: SiteEntity,
     performanceDate: LocalDate,
     performanceTime: LocalTime
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Column(nullable = false)
     var performanceDate: LocalDate = performanceDate

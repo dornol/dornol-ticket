@@ -9,10 +9,11 @@ import jakarta.persistence.*
 @Table(name = "performance_schedule_seat_group")
 @Entity
 class PerformanceScheduleSeatGroup(
+    id: Long,
     performanceSchedule: PerformanceScheduleEntity,
     seatGroup: SeatGroupEntity,
     price: Money
-) : BaseEntity() {
+) : BaseEntity(id) {
 
     @Convert(converter = MoneyConverter::class)
     @Column(nullable = false)

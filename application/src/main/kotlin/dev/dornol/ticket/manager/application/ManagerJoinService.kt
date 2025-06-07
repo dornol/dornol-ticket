@@ -6,7 +6,7 @@ import dev.dornol.ticket.manager.application.infra.ManagerIdGenerator
 import dev.dornol.ticket.manager.application.port.`in`.CheckUsernameExistsUseCase
 import dev.dornol.ticket.manager.application.port.`in`.ManagerJoinCommand
 import dev.dornol.ticket.manager.application.port.`in`.ManagerJoinUseCase
-import dev.dornol.ticket.manager.application.port.out.FindManagerPort
+import dev.dornol.ticket.manager.application.port.out.FindManagerByUsernamePort
 import dev.dornol.ticket.manager.application.port.out.PasswordEncodePort
 import dev.dornol.ticket.manager.application.port.out.SaveManagerPort
 import dev.dornol.ticket.manager.domain.Company
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 open class ManagerJoinService(
-    private val findManagerPort: FindManagerPort,
+    private val findManagerByUsernamePort: FindManagerByUsernamePort,
     private val passwordEncodePort: PasswordEncodePort,
 
     private val saveManagerPort: SaveManagerPort,
@@ -28,7 +28,7 @@ open class ManagerJoinService(
 
     @Transactional(readOnly = true)
     override fun exists(username: String): Boolean {
-        val manager = findManagerPort.findByUsername(username)
+        val manager = findManagerByUsernamePort.findByUsername(username)
         return manager != null
     }
 

@@ -1,16 +1,22 @@
 package dev.dornol.ticket.manager.adapter.out.jpa.mapper
 
-import dev.dornol.ticket.DomainEntityWithIdMapper
 import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.manager.domain.Company
 import dev.dornol.ticket.manager.domain.CompanyId
-import org.mapstruct.Mapper
-import org.mapstruct.NullValueMappingStrategy
 
-@Mapper(
-    componentModel = "spring",
-    nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL,
-)
-interface CompanyMapper : DomainEntityWithIdMapper<Company, CompanyEntity, CompanyId> {
-    override fun map(id: Long?) = id?.let { CompanyId(id) }
+
+fun CompanyEntity.toDomain(): Company {
+    return Company(
+        id = CompanyId(this.id),
+        name = this.name,
+        businessNumber = this.businessNumber,
+    )
+}
+
+fun Company.toEntity(): CompanyEntity {
+    return CompanyEntity(
+        id = this.id.get(),
+        name = this.name,
+        businessNumber = this.businessNumber,
+    )
 }

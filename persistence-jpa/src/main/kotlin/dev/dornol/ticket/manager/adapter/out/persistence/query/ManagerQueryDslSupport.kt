@@ -29,7 +29,7 @@ class ManagerQueryDslSupport(
                     manager.name,
                     manager.phone,
                     manager.email,
-                    manager.managerRole,
+                    manager.role,
                     manager.approval,
                     QCompanyProjection(
                         company.id,

@@ -11,7 +11,9 @@ import java.time.LocalDateTime
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseCreationEntity : BaseIdEntity() {
+abstract class BaseCreationEntity(
+    id: Long
+) : BaseIdEntity(id) {
 
     @CreatedBy
     var createdBy: Long? = null

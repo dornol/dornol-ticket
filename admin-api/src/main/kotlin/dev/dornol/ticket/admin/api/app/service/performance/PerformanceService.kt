@@ -9,6 +9,7 @@ import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
+import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
 import dev.dornol.ticket.domain.entity.performance.PerformanceEntity
 import dev.dornol.ticket.performance.domain.PerformanceType
 import org.springframework.data.domain.Page
@@ -20,8 +21,9 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class PerformanceService(
     private val performanceRepository: PerformanceRepository,
-    private val managerRepository: ManagerRepository
+    private val managerRepository: ManagerRepository,
 ) {
+    private val snowFlakeIdGenerator: SnowFlakeIdGenerator = SnowFlakeIdGenerator()
 
     @Transactional(readOnly = true)
     fun search(search: PerformanceSearchDto, pageable: Pageable): Page<PerformanceListDto> =
@@ -31,6 +33,7 @@ class PerformanceService(
     fun add(userId: Long, name: String, type: PerformanceType): PerformanceEntity {
         val manager = managerRepository.findByIdOrNull(userId)?.alive() ?: throw AccessDeniedException()
         return PerformanceEntity(
+            id = snowFlakeIdGenerator.generate(),
             name = name,
             type = type,
             company = manager.company,

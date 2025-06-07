@@ -33,7 +33,7 @@ object ManagerPredicates {
     }
 
     fun role(role: ManagerRole?): BooleanExpression? {
-        return role?.let { manager.managerRole.eq(it) }
+        return role?.let { manager.role.eq(it) }
     }
 
     fun sort(sort: Sort) = sort.toOrderBy {
