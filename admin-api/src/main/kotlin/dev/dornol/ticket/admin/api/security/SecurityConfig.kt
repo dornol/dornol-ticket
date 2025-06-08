@@ -1,11 +1,11 @@
 package dev.dornol.ticket.admin.api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.security.authentication.AdminAuthenticationProvider
 import dev.dornol.ticket.admin.api.security.filter.JsonUsernamePasswordAuthenticationFilter
 import dev.dornol.ticket.admin.api.security.handler.TokenResponseHandler
 import dev.dornol.ticket.admin.api.security.userdetails.AdminUserDetailsService
+import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
 import dev.dornol.ticket.manager.domain.ManagerRole
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
@@ -52,7 +52,7 @@ class SecurityConfig(
     fun securityFilterChain(
         http: HttpSecurity,
         jsonUsernamePasswordAuthenticationFilter: JsonUsernamePasswordAuthenticationFilter,
-        managerRepository: ManagerRepository,
+        managerRepository: ManagerEntityRepository,
         messageSource: MessageSource,
         jwtDecoder: JwtDecoder
     ): SecurityFilterChain = http.run {
@@ -120,11 +120,11 @@ class SecurityConfig(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun userDetailsService(managerRepository: ManagerRepository) = AdminUserDetailsService(managerRepository)
+    fun userDetailsService(managerRepository: ManagerEntityRepository) = AdminUserDetailsService(managerRepository)
 
     @Bean
     fun authenticationManagerBean(
-        managerRepository: ManagerRepository,
+        managerRepository: ManagerEntityRepository,
         messageSource: MessageSource,
         jwtDecoder: JwtDecoder
     ): AuthenticationManager {

@@ -1,7 +1,7 @@
 package dev.dornol.ticket.manager.adapter.`in`.web
 
-import dev.dornol.ticket.admin.api.app.dto.manager.request.CheckUsernameDto
-import dev.dornol.ticket.admin.api.app.dto.manager.request.JoinRequestDto
+import dev.dornol.ticket.manager.adapter.`in`.web.dto.CheckUsernameDto
+import dev.dornol.ticket.manager.adapter.`in`.web.dto.JoinRequestDto
 import dev.dornol.ticket.manager.adapter.`in`.web.dto.CheckUsernameResponseDto
 import dev.dornol.ticket.manager.application.port.`in`.CheckUsernameExistsUseCase
 import dev.dornol.ticket.manager.application.port.`in`.ManagerJoinCommand

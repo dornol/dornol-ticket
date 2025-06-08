@@ -4,4 +4,8 @@ interface CurrentUserPort {
 
     fun getCurrentUserId(): Long
 
+    fun getCurrentUserCompanyId(): Long
+
+    fun matchCompanyId(id: Long)
+
 }

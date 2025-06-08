@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-open class ManagerService(
+internal open class ManagerService(
     private val findManagerByIdPort: FindManagerByIdPort,
 ) : FindManagerUseCase {
 

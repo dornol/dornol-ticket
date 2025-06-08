@@ -9,7 +9,7 @@ import dev.dornol.ticket.manager.domain.ManagerId
 import org.springframework.stereotype.Service
 
 @Service
-class ManagerApprovalService(
+internal class ManagerApprovalService(
     private val findManagerByIdPort: FindManagerByIdPort,
     private val approveManagerPort: ApproveManagerPort,
     private val currentUserPort: CurrentUserPort,

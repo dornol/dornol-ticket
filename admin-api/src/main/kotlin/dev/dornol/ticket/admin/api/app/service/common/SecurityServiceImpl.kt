@@ -1,8 +1,8 @@
 package dev.dornol.ticket.admin.api.app.service.common
 
-import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
 import dev.dornol.ticket.admin.api.util.alive
+import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class SecurityServiceImpl(
-    private val managerRepository: ManagerRepository
+    private val managerRepository: ManagerEntityRepository
 ) : SecurityService {
     override fun getUserId() = getPrincipal().subject.toLong()
 

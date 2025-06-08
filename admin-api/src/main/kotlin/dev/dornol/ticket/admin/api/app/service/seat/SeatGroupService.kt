@@ -1,16 +1,16 @@
 package dev.dornol.ticket.admin.api.app.service.seat
 
 import dev.dornol.ticket.admin.api.app.dto.seat.SeatGroupDto
-import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.seat.SeatGroupRepository
 import dev.dornol.ticket.admin.api.app.repository.seat.SeatRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
-import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.domain.entity.seat.SeatGroupEntity
+import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +18,7 @@ import org.springframework.util.Assert
 
 @Service
 class SeatGroupService(
-    private val managerRepository: ManagerRepository,
+    private val managerRepository: ManagerEntityRepository,
     private val siteRepository: SiteRepository,
     private val seatGroupRepository: SeatGroupRepository,
     private val seatRepository: SeatRepository

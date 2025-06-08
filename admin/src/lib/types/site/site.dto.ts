@@ -14,7 +14,7 @@ export interface Address {
 export interface SiteAddRequestDto {
   name: string;
   address: Address;
-  seatingMapFileId?: string;
+  seatingMapFileUuid?: string;
 }
 
 export interface SiteDto {

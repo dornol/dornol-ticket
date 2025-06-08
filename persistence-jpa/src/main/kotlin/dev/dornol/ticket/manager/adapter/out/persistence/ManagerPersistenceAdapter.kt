@@ -5,13 +5,12 @@ import dev.dornol.ticket.common.toPageResult
 import dev.dornol.ticket.manager.adapter.out.jpa.mapper.ManagerEntityUpdater
 import dev.dornol.ticket.manager.adapter.out.jpa.mapper.toDomain
 import dev.dornol.ticket.manager.adapter.out.jpa.mapper.toEntity
+import dev.dornol.ticket.manager.adapter.out.persistence.mapper.toManagerListDto
 import dev.dornol.ticket.manager.adapter.out.persistence.query.ManagerQueryDslSupport
+import dev.dornol.ticket.manager.application.port.`in`.dto.ManagerListDto
 import dev.dornol.ticket.manager.application.port.out.*
 import dev.dornol.ticket.manager.domain.Company
-import dev.dornol.ticket.manager.domain.CompanyId
 import dev.dornol.ticket.manager.domain.Manager
-import dev.dornol.ticket.manager.domain.ManagerId
-import dev.dornol.ticket.manager.domain.value.ManagerApproval
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 
@@ -26,26 +25,7 @@ class ManagerPersistenceAdapter(
 
     override fun searchManagers(criteria: SearchManagersCriteria): PageResult<ManagerListDto> {
         val page = queryDslSupport.searchManagers(criteria)
-        return page.toPageResult {
-            ManagerListDto(
-                id = ManagerId(it.id),
-                username = it.username,
-                email = it.email,
-                phone = it.phone,
-                name = it.name,
-                managerRole = it.managerRole,
-                approval = ManagerApproval(
-                    approved = it.approval.approved,
-                    approvedAt = it.approval.approvedAt,
-                    approvedBy = it.approval.approvedBy?.let { by -> ManagerId(by) }
-                ),
-                company = CompanyDto(
-                    id = CompanyId(it.company.id),
-                    name = it.company.name,
-                    businessNumber = it.company.businessNumber,
-                )
-            )
-        }
+        return page.toPageResult { it.toManagerListDto() }
     }
 
     override fun findByUsername(username: String): Manager? {

@@ -8,7 +8,7 @@ import dev.dornol.ticket.common.textSearch
 import dev.dornol.ticket.common.toOrderBy
 import dev.dornol.ticket.manager.application.port.out.SearchManagersCriteria
 import dev.dornol.ticket.manager.domain.ManagerRole
-import dev.dornol.ticket.manager.domain.model.search.ManagerSearchField
+import dev.dornol.ticket.manager.application.port.`in`.ManagerSearchField
 import org.springframework.data.domain.Sort
 import dev.dornol.ticket.manager.adapter.out.jpa.QCompanyEntity.companyEntity as company
 import dev.dornol.ticket.manager.adapter.out.jpa.QManagerEntity.managerEntity as manager

@@ -3,14 +3,14 @@ package dev.dornol.ticket.admin.api.app.service.performance
 import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceSearchDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceDetailDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceListDto
-import dev.dornol.ticket.admin.api.app.repository.manager.ManagerRepository
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceRepository
 import dev.dornol.ticket.admin.api.config.exception.common.AccessDeniedException
-import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
+import dev.dornol.ticket.common.exception.BadRequestException
 import dev.dornol.ticket.domain.entity.performance.PerformanceEntity
+import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
 import dev.dornol.ticket.performance.domain.PerformanceType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class PerformanceService(
     private val performanceRepository: PerformanceRepository,
-    private val managerRepository: ManagerRepository,
+    private val managerRepository: ManagerEntityRepository,
 ) {
     private val snowFlakeIdGenerator: SnowFlakeIdGenerator = SnowFlakeIdGenerator()
 
