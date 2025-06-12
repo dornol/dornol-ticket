@@ -1,9 +1,9 @@
 package dev.dornol.ticket.site.adapter.out.jpa.mapper
 
-import dev.dornol.ticket.domain.entity.site.SiteEntity
 import dev.dornol.ticket.file.adapter.out.jpa.FileMetadataEntity
 import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.manager.domain.CompanyId
+import dev.dornol.ticket.site.adapter.out.jpa.SiteEntity
 import dev.dornol.ticket.site.domain.Site
 import dev.dornol.ticket.site.domain.SiteId
 

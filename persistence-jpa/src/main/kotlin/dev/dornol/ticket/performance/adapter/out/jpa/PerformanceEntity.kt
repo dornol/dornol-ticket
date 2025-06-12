@@ -1,4 +1,4 @@
-package dev.dornol.ticket.domain.entity.performance
+package dev.dornol.ticket.performance.adapter.out.jpa
 
 import dev.dornol.ticket.domain.converter.enums.PerformanceTypeConverter
 import dev.dornol.ticket.domain.entity.BaseEntity

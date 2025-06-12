@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.repository.seat
 
-import dev.dornol.ticket.domain.entity.seat.SeatEntity
+import dev.dornol.ticket.site.adapter.out.jpa.SeatEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

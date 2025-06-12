@@ -9,8 +9,8 @@ import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
 import dev.dornol.ticket.common.exception.BadRequestException
-import dev.dornol.ticket.domain.entity.performance.PerformanceEntity
 import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceEntity
 import dev.dornol.ticket.performance.domain.PerformanceType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

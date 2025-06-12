@@ -1,4 +1,4 @@
-package dev.dornol.ticket.domain.entity.seat
+package dev.dornol.ticket.site.adapter.out.jpa
 
 import dev.dornol.ticket.domain.entity.BaseEntity
 import jakarta.persistence.*

@@ -1,6 +1,6 @@
 package dev.dornol.ticket.site.adapter.out.jpa.mapper
 
-import dev.dornol.ticket.domain.entity.site.address.AddressEntity
+import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
 import dev.dornol.ticket.site.domain.value.Address
 
 fun AddressEntity.toDomain(): Address {

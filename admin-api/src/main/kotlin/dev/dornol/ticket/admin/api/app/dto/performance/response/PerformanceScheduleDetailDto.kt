@@ -2,7 +2,7 @@ package dev.dornol.ticket.admin.api.app.dto.performance.response
 
 import dev.dornol.ticket.admin.api.app.dto.site.response.AddressDto
 import dev.dornol.ticket.admin.api.app.dto.site.response.SiteDto
-import dev.dornol.ticket.domain.entity.performance.PerformanceScheduleEntity
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleEntity
 import java.time.LocalDate
 import java.time.LocalTime
 

@@ -1,24 +1,23 @@
-package dev.dornol.ticket.admin.api.app.repository.seat
+package dev.dornol.ticket.site.adapter.out.persistence.query
 
 import com.querydsl.jpa.impl.JPAQueryFactory
-import dev.dornol.ticket.admin.api.app.dto.seat.QSeatDto
-import dev.dornol.ticket.admin.api.app.dto.seat.QSeatGroupDto
-import dev.dornol.ticket.admin.api.app.dto.seat.SeatDto
-import dev.dornol.ticket.admin.api.app.dto.seat.SeatGroupDto
+import dev.dornol.ticket.site.adapter.out.persistence.QSeatGroupProjection
+import dev.dornol.ticket.site.adapter.out.persistence.QSeatProjection
+import dev.dornol.ticket.site.adapter.out.persistence.SeatGroupProjection
+import dev.dornol.ticket.site.adapter.out.persistence.SeatProjection
+import org.springframework.stereotype.Component
 import dev.dornol.ticket.site.adapter.out.jpa.QSeatEntity.seatEntity as seat
 import dev.dornol.ticket.site.adapter.out.jpa.QSeatGroupEntity.seatGroupEntity as seatGroup
-import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
 
-@Repository
-class SeatGroupRepositoryImpl(
+@Component
+class SeatGroupQueryDslSupport(
     private val query: JPAQueryFactory
-) : SeatGroupQueryRepository {
+) {
 
-    @Transactional(readOnly = true)
-    override fun getSeatGroupsAndSeats(siteId: Long): Pair<List<SeatGroupDto>, List<SeatDto>> {
+    fun getSeatGroupsAndSeats(siteId: Long): Pair<List<SeatGroupProjection>, List<SeatProjection>> {
+
         val seatGroups = query
-            .select(QSeatGroupDto(
+            .select(QSeatGroupProjection(
                 seatGroup.id,
                 seatGroup.name,
                 seatGroup.color,
@@ -32,7 +31,7 @@ class SeatGroupRepositoryImpl(
         val seatGroupIds = seatGroups.map { it.id.toLong() }.toList()
 
         val seats = query
-            .select(QSeatDto(
+            .select(QSeatProjection(
                 seat.id,
                 seat.name,
                 seat.offset,
@@ -46,5 +45,4 @@ class SeatGroupRepositoryImpl(
 
         return seatGroups to seats
     }
-
 }

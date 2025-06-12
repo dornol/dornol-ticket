@@ -8,7 +8,7 @@ import dev.dornol.ticket.site.port.out.SearchSitesCriteria
 import org.springframework.data.domain.Page
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Component
-import dev.dornol.ticket.domain.entity.site.QSiteEntity.siteEntity as site
+import dev.dornol.ticket.site.adapter.out.jpa.QSiteEntity.siteEntity as site
 
 @Component
 class SiteQueryDslSupport(

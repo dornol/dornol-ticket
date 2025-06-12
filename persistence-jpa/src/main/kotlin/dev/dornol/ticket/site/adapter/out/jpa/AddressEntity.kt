@@ -1,4 +1,4 @@
-package dev.dornol.ticket.domain.entity.site.address
+package dev.dornol.ticket.site.adapter.out.jpa
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable

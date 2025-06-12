@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.app.dto.site.response
 
 import com.querydsl.core.annotations.QueryProjection
-import dev.dornol.ticket.domain.entity.site.address.AddressEntity
+import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
 
 data class SiteListDto(
     val id: String,

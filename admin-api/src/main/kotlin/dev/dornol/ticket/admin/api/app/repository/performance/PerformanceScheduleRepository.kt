@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.repository.performance
 
-import dev.dornol.ticket.domain.entity.performance.PerformanceScheduleEntity
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

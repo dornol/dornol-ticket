@@ -1,6 +1,6 @@
 package dev.dornol.ticket.admin.api.app.dto.site.response
 
-import dev.dornol.ticket.domain.entity.site.address.AddressEntity
+import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 

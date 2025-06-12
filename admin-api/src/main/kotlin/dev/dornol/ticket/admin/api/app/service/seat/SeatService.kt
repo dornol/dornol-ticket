@@ -8,9 +8,9 @@ import dev.dornol.ticket.admin.api.util.alive
 import dev.dornol.ticket.admin.api.util.assertAccess
 import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
 import dev.dornol.ticket.common.exception.BadRequestException
-import dev.dornol.ticket.domain.entity.seat.SeatEntity
-import dev.dornol.ticket.domain.entity.seat.SeatOffsetEntity
+import dev.dornol.ticket.site.adapter.out.jpa.SeatOffsetEntity
 import dev.dornol.ticket.manager.adapter.out.persistence.ManagerEntityRepository
+import dev.dornol.ticket.site.adapter.out.jpa.SeatEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

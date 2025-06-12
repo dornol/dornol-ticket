@@ -5,10 +5,10 @@ import dev.dornol.ticket.domain.converter.MoneyConverter
 import dev.dornol.ticket.domain.converter.enums.CancelReasonConverter
 import dev.dornol.ticket.domain.converter.enums.ReservationStatusConverter
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.performance.PerformanceScheduleSeatGroup
-import dev.dornol.ticket.domain.entity.seat.SeatEntity
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleSeatGroup
 import dev.dornol.ticket.reservation.domain.CancelReason
 import dev.dornol.ticket.reservation.domain.ReservationStatus
+import dev.dornol.ticket.site.adapter.out.jpa.SeatEntity
 import jakarta.persistence.*
 
 @Table(name = "reservation")

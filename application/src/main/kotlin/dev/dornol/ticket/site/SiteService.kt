@@ -1,4 +1,4 @@
-package dev.dornol.ticket.site.port
+package dev.dornol.ticket.site
 
 import dev.dornol.ticket.common.application.out.CurrentUserPort
 import dev.dornol.ticket.common.exception.BadRequestException
@@ -38,12 +38,14 @@ internal open class SiteService(
 
     @Transactional(readOnly = true)
     override fun searchSites(command: SearchSitesCommand): PageResult<SiteListDto> {
-        return searchSitesPort.searchSites(SearchSitesCriteria(
-            searchKeys = command.searchKeys,
-            searchText = command.searchText,
-            pageQuery = command.pageQuery,
-            companyId = currentUserPort.getCurrentUserCompanyId()
-        ))
+        return searchSitesPort.searchSites(
+            SearchSitesCriteria(
+                searchKeys = command.searchKeys,
+                searchText = command.searchText,
+                pageQuery = command.pageQuery,
+                companyId = currentUserPort.getCurrentUserCompanyId()
+            )
+        )
     }
 
     @Transactional(readOnly = true)

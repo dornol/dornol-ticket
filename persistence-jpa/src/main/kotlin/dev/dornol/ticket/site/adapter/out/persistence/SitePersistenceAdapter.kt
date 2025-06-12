@@ -34,7 +34,7 @@ class SitePersistenceAdapter(
     }
 
     override fun findById(id: Long): Site? {
-        return siteEntityRepository.findWithFileByIdOrNull(id)?.toDomain()
+        return siteEntityRepository.findWithFileByIdOrNull(id)?.takeIf { !it.deleted }?.toDomain()
     }
 
     override fun save(site: Site) {

@@ -1,7 +1,7 @@
-package dev.dornol.ticket.domain.entity.performance
+package dev.dornol.ticket.performance.adapter.out.jpa
 
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.site.SiteEntity
+import dev.dornol.ticket.site.adapter.out.jpa.SiteEntity
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalTime

@@ -1,9 +1,9 @@
-package dev.dornol.ticket.domain.entity.performance
+package dev.dornol.ticket.performance.adapter.out.jpa
 
 import dev.dornol.ticket.common.domain.Money
 import dev.dornol.ticket.domain.converter.MoneyConverter
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.seat.SeatGroupEntity
+import dev.dornol.ticket.site.adapter.out.jpa.SeatGroupEntity
 import jakarta.persistence.*
 
 @Table(name = "performance_schedule_seat_group")

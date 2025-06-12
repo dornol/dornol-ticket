@@ -1,10 +1,15 @@
-package dev.dornol.ticket.domain.entity.site
+package dev.dornol.ticket.site.adapter.out.jpa
 
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
 import dev.dornol.ticket.file.adapter.out.jpa.FileMetadataEntity
-import dev.dornol.ticket.domain.entity.site.address.AddressEntity
-import jakarta.persistence.*
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
+import jakarta.persistence.Column
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 
 @Table(name = "site")
 @Entity

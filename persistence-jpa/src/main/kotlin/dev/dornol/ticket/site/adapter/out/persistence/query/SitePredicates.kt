@@ -8,10 +8,9 @@ import dev.dornol.ticket.site.port.`in`.SiteSearchField
 import dev.dornol.ticket.site.port.`in`.SiteSearchField.*
 import dev.dornol.ticket.site.port.out.SearchSitesCriteria
 import org.springframework.data.domain.Sort
-import dev.dornol.ticket.domain.entity.site.QSiteEntity.siteEntity as site
+import dev.dornol.ticket.site.adapter.out.jpa.QSiteEntity.siteEntity as site
 
 object SitePredicates {
-
     val mapper: Map<SiteSearchField, List<StringPath>> = mapOf(
         NAME to listOf(site.name),
         COMPANY_NAME to listOf(site.company.name),

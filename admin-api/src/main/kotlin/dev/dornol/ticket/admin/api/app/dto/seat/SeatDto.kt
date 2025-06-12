@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.app.dto.seat
 
 import com.querydsl.core.annotations.QueryProjection
-import dev.dornol.ticket.domain.entity.seat.SeatOffsetEntity
+import dev.dornol.ticket.site.adapter.out.jpa.SeatOffsetEntity
 
 data class SeatDto(
     val id: String,

@@ -1,7 +1,6 @@
-package dev.dornol.ticket.domain.entity.seat
+package dev.dornol.ticket.site.adapter.out.jpa
 
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.domain.entity.site.SiteEntity
 import jakarta.persistence.*
 
 @Table(name = "seat_group")
