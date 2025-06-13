@@ -8,4 +8,12 @@ class SeatGroup(
     val siteId: SiteId,
     var color: String,
     var displayOrder: Long = 0,
-) : Domain<SeatGroupId>(id)
+) : Domain<SeatGroupId>(id) {
+
+    fun edit(name: String, color: String, displayOrder: Long) {
+        this.name = name
+        this.color = color
+        this.displayOrder = displayOrder
+    }
+
+}

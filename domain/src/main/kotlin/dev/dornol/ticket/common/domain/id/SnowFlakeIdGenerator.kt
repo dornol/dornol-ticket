@@ -70,6 +70,7 @@ class SnowFlakeIdGenerator : IdGenerator {
 
         private fun currentTimestamp(): Long = Instant.now().toEpochMilli()
 
+        fun generate() = generateId()
     }
 
     override fun generate() = generateId()
