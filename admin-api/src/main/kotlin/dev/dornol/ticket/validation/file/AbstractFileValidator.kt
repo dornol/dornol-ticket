@@ -21,18 +21,25 @@ abstract class AbstractFileValidator<T>(
             return true
         }
 
-        if (!isValidMediaType(value)) {
-            applyConstraintViolation(context, "errors.validation.file.not-supported")
-            return false
-        } else if (!isValidFileSize(value)) {
-            applyConstraintViolation(context, "errors.validation.file.too-large")
-            return false
-        } else if (!isValidFilename(value)) {
-            applyConstraintViolation(context, "errors.validation.file.invalid-filename")
-            return false
+        return when {
+            !isValidFilename(value) -> {
+                applyConstraintViolation(context, "errors.validation.file.invalid-filename")
+                false
+            }
+            !isValidFileSize(value) -> {
+                applyConstraintViolation(context, "errors.validation.file.too-large")
+                false
+            }
+            !isValidMediaType(value) -> {
+                applyConstraintViolation(context, "errors.validation.file.not-supported")
+                false
+            }
+            !isValidExtension(value) -> {
+                applyConstraintViolation(context, "errors.validation.file.invalid-extension")
+                false
+            }
+            else -> true
         }
-
-        return true
     }
 
     private fun init(constraintAnnotation: File) {
@@ -43,7 +50,7 @@ abstract class AbstractFileValidator<T>(
     private fun applyConstraintViolation(context: ConstraintValidatorContext, messageKey: String) {
         context.disableDefaultConstraintViolation()
         context.buildConstraintViolationWithTemplate(
-            messageUtil.get(messageKey)
+            messageUtil.getMessage(messageKey)
         ).addConstraintViolation()
     }
 
@@ -54,5 +61,7 @@ abstract class AbstractFileValidator<T>(
     protected abstract fun isValidFileSize(value: T): Boolean
 
     protected abstract fun isValidFilename(value: T): Boolean
+
+    protected abstract fun isValidExtension(value: T): Boolean
 
 }

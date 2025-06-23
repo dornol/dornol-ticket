@@ -4,6 +4,6 @@ import java.io.InputStream
 
 interface MediaTypeDetector {
 
-    fun detect(inputStream: InputStream): String
+    fun detect(originalFilename: String, inputStream: InputStream): String
 
 }

@@ -1,5 +1,6 @@
 package dev.dornol.ticket.validation.file
 
+import org.apache.commons.io.FilenameUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 
@@ -9,7 +10,7 @@ class MultipartFileValidatorHelper(
 ) {
 
     fun isValidMediaType(value: MultipartFile, allowed: Set<SafeMediaType>): Boolean {
-        val detected = mediaTypeDetector.detect(value.inputStream)
+        val detected = mediaTypeDetector.detect(value.originalFilename ?: "", value.inputStream)
         return allowed.any { it.mimeType == detected }
     }
 
@@ -30,6 +31,23 @@ class MultipartFileValidatorHelper(
             return false
         }
         return true
+    }
+
+    fun isValidExtension(value: MultipartFile): Boolean {
+        val originalFilename = value.originalFilename
+        if (originalFilename == null) {
+            return false
+        }
+
+        val extension = FilenameUtils.getExtension(originalFilename).lowercase()
+        if (extension.isBlank()) {
+            return false
+        }
+
+        val detectedMime = mediaTypeDetector.detect(originalFilename, value.inputStream)
+
+        return SafeMediaType.entries.filter { it.mimeType == detectedMime.lowercase() }
+            .any { it.extensions.contains(extension) }
     }
 
 }

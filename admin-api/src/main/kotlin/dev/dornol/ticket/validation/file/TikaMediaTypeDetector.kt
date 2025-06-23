@@ -8,5 +8,5 @@ import java.io.InputStream
 class TikaMediaTypeDetector(
     private val tika: Tika = Tika()
 ) : MediaTypeDetector {
-    override fun detect(inputStream: InputStream): String = tika.detect(inputStream)
+    override fun detect(originalFilename: String, inputStream: InputStream): String = tika.detect(inputStream, originalFilename)
 }

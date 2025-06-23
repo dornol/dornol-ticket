@@ -16,4 +16,6 @@ class FileValidator(
 
     override fun isValidFilename(value: MultipartFile) = helper.isValidFilename(value)
 
+    override fun isValidExtension(value: MultipartFile) = helper.isValidExtension(value)
+
 }

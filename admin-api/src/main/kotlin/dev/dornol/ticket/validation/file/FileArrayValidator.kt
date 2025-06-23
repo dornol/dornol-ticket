@@ -16,4 +16,6 @@ class FileArrayValidator(
 
     override fun isValidFilename(value: Array<MultipartFile>) = value.all { helper.isValidFilename(it) }
 
+    override fun isValidExtension(value: Array<MultipartFile>) = value.all { helper.isValidExtension(it) }
+
 }

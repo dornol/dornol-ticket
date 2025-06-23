@@ -9,11 +9,11 @@ class MessageUtil(
     private val localeUtil: LocaleUtil
 ) {
 
-    fun get(code: String): String {
+    fun getMessage(code: String): String {
         return messageSource.getMessage(code, null, code, localeUtil.getLocale())!!
     }
 
-    fun get(code: String, vararg args: Any): String {
+    fun getMessage(code: String, vararg args: Any): String {
         return messageSource.getMessage(code, args, code, localeUtil.getLocale())!!
     }
 

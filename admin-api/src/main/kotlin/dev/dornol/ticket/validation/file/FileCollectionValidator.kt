@@ -16,4 +16,6 @@ class FileCollectionValidator(
 
     override fun isValidFilename(value: Collection<MultipartFile>) = value.all { helper.isValidFilename(it) }
 
+    override fun isValidExtension(value: Collection<MultipartFile>) = value.all { helper.isValidExtension(it) }
+
 }
