@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.performance.request
+package dev.dornol.ticket.performance.adapter.`in`.web.dto
 
 import dev.dornol.ticket.performance.domain.PerformanceType
 import jakarta.validation.constraints.NotBlank

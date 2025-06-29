@@ -10,4 +10,9 @@ class Performance(
     val companyId: CompanyId,
 ) : Domain<PerformanceId>(id) {
 
+    fun edit(name: String, type: PerformanceType) {
+        this.name = name
+        this.type = type
+    }
+
 }

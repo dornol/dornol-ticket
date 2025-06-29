@@ -1,6 +1,7 @@
 package dev.dornol.ticket.performance.adapter.out.persistence.query
 
 import com.querydsl.core.types.dsl.StringPath
+import dev.dornol.ticket.common.sort
 import dev.dornol.ticket.common.textSearch
 import dev.dornol.ticket.common.toOrderBy
 import dev.dornol.ticket.performance.port.`in`.PerformanceSearchField

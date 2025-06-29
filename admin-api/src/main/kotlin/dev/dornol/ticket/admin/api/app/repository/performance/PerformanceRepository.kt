@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PerformanceRepository : JpaRepository<PerformanceEntity, Long>, PerformanceQueryRepository {
+interface PerformanceRepository : JpaRepository<PerformanceEntity, Long> {
 }

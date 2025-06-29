@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
         "dev.dornol.ticket.file.adapter.out.persistence",
         "dev.dornol.ticket.manager.adapter.out.persistence",
         "dev.dornol.ticket.site.adapter.out.persistence",
+        "dev.dornol.ticket.performance.adapter.out.persistence",
     ]
 )
 @EntityScan(basePackages = ["dev.dornol.ticket"])

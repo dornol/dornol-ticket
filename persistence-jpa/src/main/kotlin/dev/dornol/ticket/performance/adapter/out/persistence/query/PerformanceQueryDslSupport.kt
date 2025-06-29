@@ -2,7 +2,9 @@ package dev.dornol.ticket.performance.adapter.out.persistence.query
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dev.dornol.ticket.common.toPageable
+import dev.dornol.ticket.performance.adapter.out.jpa.QPerformanceEntity.performanceEntity as performance
 import dev.dornol.ticket.performance.adapter.out.persistence.PerformanceListProjection
+import dev.dornol.ticket.performance.adapter.out.persistence.QPerformanceListProjection
 import dev.dornol.ticket.performance.port.out.SearchPerformancesCriteria
 import org.springframework.data.domain.Page
 import org.springframework.data.support.PageableExecutionUtils
@@ -18,7 +20,7 @@ class PerformanceQueryDslSupport(
         val condition = PerformancePredicates.build(criteria)
 
         val listQuery = query
-            .select(QPerformanceListDto(
+            .select(QPerformanceListProjection(
                 performance.id,
                 performance.name,
                 performance.type

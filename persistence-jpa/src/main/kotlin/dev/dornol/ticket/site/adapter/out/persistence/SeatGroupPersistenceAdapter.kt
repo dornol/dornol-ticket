@@ -57,9 +57,9 @@ class SeatGroupPersistenceAdapter(
         seatGroupEntityRepository.save(seatGroupEntity)
     }
 
-    override fun deleteSeatGroup(id: SeatGroupId) {
+    override fun deleteSeatGroup(seatGroup: SeatGroup, deletedBy: Long) {
         val seatGroupEntity =
-            seatGroupEntityRepository.findByIdOrNull(id.get())?.alive() ?: throw IllegalArgumentException()
+            seatGroupEntityRepository.findByIdOrNull(seatGroup.id.get())?.alive() ?: throw IllegalArgumentException()
 
         seatGroupEntity.delete()
     }

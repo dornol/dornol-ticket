@@ -75,7 +75,7 @@ open class SeatGroupService(
         val findById = findSitePort.findById(seatGroup.siteId.get()) ?: throw IllegalArgumentException()
         currentUserPort.matchCompanyId(findById.companyId.get())
 
-        deleteSeatGroupPort.deleteSeatGroup(seatGroupId)
+        deleteSeatGroupPort.deleteSeatGroup(seatGroup, currentUserPort.getCurrentUserId())
     }
 
 }
