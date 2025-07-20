@@ -1,26 +1,26 @@
 package dev.dornol.ticket.site.adapter.`in`.web
 
-import dev.dornol.ticket.admin.api.app.dto.seat.request.SeatGroupAddRequestDto
-import dev.dornol.ticket.admin.api.app.service.seat.SeatGroupService
+import dev.dornol.ticket.site.adapter.`in`.web.dto.SeatGroupAddRequestDto
+import dev.dornol.ticket.site.adapter.`in`.web.dto.SeatGroupEditRequestDto
+import dev.dornol.ticket.site.port.`in`.AddSeatGroupUseCase
+import dev.dornol.ticket.site.port.`in`.DeleteSeatGroupUseCase
+import dev.dornol.ticket.site.port.`in`.EditSeatGroupUseCase
 import dev.dornol.ticket.site.port.`in`.FindSeatGroupsUseCase
+import dev.dornol.ticket.site.port.`in`.command.AddSeatGroupCommand
+import dev.dornol.ticket.site.port.`in`.command.EditSeatGroupCommand
 import dev.dornol.ticket.site.port.`in`.dto.SeatGroupDto
 import jakarta.validation.Valid
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/sites/{siteId}/seat-groups")
 @RestController
 class SeatGroupController(
-    private val seatGroupService: SeatGroupService,
-    private val findSeatGroupsUseCase: FindSeatGroupsUseCase
+    private val findSeatGroupsUseCase: FindSeatGroupsUseCase,
+    private val addSeatGroupUseCase: AddSeatGroupUseCase,
+    private val editSeatGroupUseCase: EditSeatGroupUseCase,
+    private val deleteSeatGroupUseCase: DeleteSeatGroupUseCase,
 ) {
 
     @GetMapping
@@ -31,28 +31,32 @@ class SeatGroupController(
         return findSeatGroupsUseCase.findSeatGroups(siteId)
     }
 
-//    @PostMapping
-//    fun addSeatGroup(
-//        @PathVariable siteId: Long,
-//        @Valid @RequestBody dto: SeatGroupAddRequestDto,
-//        @AuthenticationPrincipal jwt: Jwt
-//    ): String {
-//        return seatGroupService.add(jwt.subject.toLong(), siteId, dto.name, dto.color).id.toString()
-//    }
-//
-//    @PutMapping("/{seatGroupId}")
-//    fun updateSeatGroup(
-//        @PathVariable siteId: Long,
-//        @PathVariable seatGroupId: Long,
-//        @Valid @RequestBody dto: SeatGroupAddRequestDto,
-//        @AuthenticationPrincipal jwt: Jwt
-//    ) = seatGroupService.edit(jwt.subject.toLong(), siteId, seatGroupId, dto.name, dto.color)
-//
-//    @DeleteMapping("/{seatGroupId}")
-//    fun deleteSeatGroup(
-//        @PathVariable siteId: Long,
-//        @PathVariable seatGroupId: Long,
-//        @AuthenticationPrincipal jwt: Jwt
-//    ) = seatGroupService.delete(jwt.subject.toLong(), siteId, seatGroupId)
+    @PostMapping
+    fun addSeatGroup(
+        @PathVariable siteId: Long,
+        @Valid @RequestBody dto: SeatGroupAddRequestDto,
+        @AuthenticationPrincipal jwt: Jwt
+    ): String {
+        val seatGroup = addSeatGroupUseCase.addSeatGroup(AddSeatGroupCommand(siteId, dto.name, dto.color))
+        return seatGroup.name
+    }
+
+    @PutMapping("/{seatGroupId}")
+    fun updateSeatGroup(
+        @PathVariable siteId: Long,
+        @PathVariable seatGroupId: Long,
+        @Valid @RequestBody dto: SeatGroupEditRequestDto,
+        @AuthenticationPrincipal jwt: Jwt
+    ) = editSeatGroupUseCase.editSeatGroup(
+        seatGroupId,
+        EditSeatGroupCommand(siteId, dto.name, dto.color, dto.displayOrder)
+    )
+
+    @DeleteMapping("/{seatGroupId}")
+    fun deleteSeatGroup(
+        @PathVariable siteId: Long,
+        @PathVariable seatGroupId: Long,
+        @AuthenticationPrincipal jwt: Jwt
+    ) = deleteSeatGroupUseCase.deleteSeatGroup(seatGroupId)
 
 }

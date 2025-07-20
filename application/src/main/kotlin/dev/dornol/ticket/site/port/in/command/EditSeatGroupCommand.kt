@@ -1,4 +1,4 @@
-package dev.dornol.ticket.site.port.`in`
+package dev.dornol.ticket.site.port.`in`.command
 
 data class EditSeatGroupCommand(
     val siteId: Long,

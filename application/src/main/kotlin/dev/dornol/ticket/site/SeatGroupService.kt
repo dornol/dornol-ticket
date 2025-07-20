@@ -6,6 +6,8 @@ import dev.dornol.ticket.site.domain.SeatGroup
 import dev.dornol.ticket.site.domain.SeatGroupId
 import dev.dornol.ticket.site.domain.SiteId
 import dev.dornol.ticket.site.port.`in`.*
+import dev.dornol.ticket.site.port.`in`.command.AddSeatGroupCommand
+import dev.dornol.ticket.site.port.`in`.command.EditSeatGroupCommand
 import dev.dornol.ticket.site.port.`in`.dto.SeatGroupDto
 import dev.dornol.ticket.site.port.out.*
 import org.springframework.stereotype.Service
@@ -34,22 +36,20 @@ open class SeatGroupService(
     }
 
     @Transactional
-    override fun addSeatGroup(command: AddSeatGroupCommand) {
+    override fun addSeatGroup(command: AddSeatGroupCommand): SeatGroup {
         val findById = findSitePort.findById(command.siteId) ?: throw IllegalArgumentException()
         currentUserPort.matchCompanyId(findById.companyId.get())
 
         val maxDisplayOrder =
             findMaxSeatGroupDisplayOrderPort.findMaxDisplayOrderBySiteId(SiteId(command.siteId))
 
-        addSeatGroupPort.addSeatGroup(
-            SeatGroup(
-                id = domainIdGenerator.generate(),
-                name = command.name,
-                siteId = SiteId(command.siteId),
-                color = command.color,
-                displayOrder = maxDisplayOrder
-            )
-        )
+        return SeatGroup(
+            id = domainIdGenerator.generate(),
+            name = command.name,
+            siteId = SiteId(command.siteId),
+            color = command.color,
+            displayOrder = maxDisplayOrder
+        ).also { addSeatGroupPort.addSeatGroup(it) }
     }
 
     @Transactional

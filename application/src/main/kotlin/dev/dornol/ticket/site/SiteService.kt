@@ -7,12 +7,12 @@ import dev.dornol.ticket.manager.domain.CompanyId
 import dev.dornol.ticket.site.domain.Site
 import dev.dornol.ticket.site.domain.value.Address
 import dev.dornol.ticket.site.infra.SiteIdGenerator
-import dev.dornol.ticket.site.port.`in`.EditSiteCommand
+import dev.dornol.ticket.site.port.`in`.command.EditSiteCommand
 import dev.dornol.ticket.site.port.`in`.EditSiteUseCase
 import dev.dornol.ticket.site.port.`in`.FindSiteUseCase
-import dev.dornol.ticket.site.port.`in`.SaveSiteCommand
+import dev.dornol.ticket.site.port.`in`.command.SaveSiteCommand
 import dev.dornol.ticket.site.port.`in`.SaveSiteUseCase
-import dev.dornol.ticket.site.port.`in`.SearchSitesCommand
+import dev.dornol.ticket.site.port.`in`.command.SearchSitesCommand
 import dev.dornol.ticket.site.port.`in`.SearchSitesUseCase
 import dev.dornol.ticket.site.port.`in`.dto.SiteDto
 import dev.dornol.ticket.site.port.`in`.dto.SiteListDto

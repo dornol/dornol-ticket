@@ -1,5 +1,6 @@
 package dev.dornol.ticket.site.adapter.out.persistence
 
+import dev.dornol.ticket.common.alive
 import dev.dornol.ticket.common.search.PageResult
 import dev.dornol.ticket.common.toPageResult
 import dev.dornol.ticket.file.adapter.out.persistence.FileMetadataEntityRepository
@@ -34,7 +35,7 @@ class SitePersistenceAdapter(
     }
 
     override fun findById(id: Long): Site? {
-        return siteEntityRepository.findWithFileByIdOrNull(id)?.takeIf { !it.deleted }?.toDomain()
+        return siteEntityRepository.findWithFileByIdOrNull(id)?.alive()?.toDomain()
     }
 
     override fun save(site: Site) {

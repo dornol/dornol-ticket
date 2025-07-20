@@ -10,4 +10,9 @@ class Seat(
     var offset: SeatOffset = SeatOffset(),
     var displayOrder: Long = 0L,
 ) : Domain<SeatId>(id) {
+
+    fun copy(newSeatId: SeatId, newDisplayOrder: Long): Seat {
+        return Seat(newSeatId, name, groupId, offset, newDisplayOrder)
+    }
+
 }

@@ -4,10 +4,10 @@ import dev.dornol.ticket.site.adapter.`in`.web.dto.SiteAddRequestDto
 import dev.dornol.ticket.site.adapter.`in`.web.dto.SiteEditRequestDto
 import dev.dornol.ticket.site.adapter.`in`.web.dto.SiteSearchDto
 import dev.dornol.ticket.site.adapter.`in`.web.mapper.toSearchSiteCommand
-import dev.dornol.ticket.site.port.`in`.EditSiteCommand
+import dev.dornol.ticket.site.port.`in`.command.EditSiteCommand
 import dev.dornol.ticket.site.port.`in`.EditSiteUseCase
 import dev.dornol.ticket.site.port.`in`.FindSiteUseCase
-import dev.dornol.ticket.site.port.`in`.SaveSiteCommand
+import dev.dornol.ticket.site.port.`in`.command.SaveSiteCommand
 import dev.dornol.ticket.site.port.`in`.SaveSiteUseCase
 import dev.dornol.ticket.site.port.`in`.SearchSitesUseCase
 import dev.dornol.ticket.site.port.`in`.dto.AddressDto
