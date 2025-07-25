@@ -7,10 +7,17 @@ import dev.dornol.ticket.site.domain.SeatGroupId
 import dev.dornol.ticket.site.domain.value.SeatOffset
 import dev.dornol.ticket.site.infra.SeatIdGenerator
 import dev.dornol.ticket.site.port.`in`.AddSeatUseCase
+import dev.dornol.ticket.site.port.`in`.DeleteSeatUseCase
 import dev.dornol.ticket.site.port.`in`.DuplicateSeatUseCase
+import dev.dornol.ticket.site.port.`in`.EditSeatUseCase
 import dev.dornol.ticket.site.port.`in`.FindMaxSeatGroupDisplayOrderPort
+import dev.dornol.ticket.site.port.`in`.MoveSeatUseCase
 import dev.dornol.ticket.site.port.`in`.command.AddSeatCommand
+import dev.dornol.ticket.site.port.`in`.command.EditSeatCommand
+import dev.dornol.ticket.site.port.`in`.command.MoveSeatCommand
 import dev.dornol.ticket.site.port.out.AddSeatPort
+import dev.dornol.ticket.site.port.out.DeleteSeatPort
+import dev.dornol.ticket.site.port.out.EditSeatPort
 import dev.dornol.ticket.site.port.out.FindSeatGroupPort
 import dev.dornol.ticket.site.port.out.FindSeatPort
 import dev.dornol.ticket.site.port.out.FindSitePort
@@ -24,11 +31,13 @@ open class SeatService(
     private val maxSeatGroupDisplayOrderPort: FindMaxSeatGroupDisplayOrderPort,
     private val findSeatPort: FindSeatPort,
     private val addSeatPort: AddSeatPort,
+    private val editSeatPort: EditSeatPort,
+    private val deleteSeatPort: DeleteSeatPort,
 
     private val seatIdGenerator: SeatIdGenerator,
 
     private val currentUserPort: CurrentUserPort
-) : AddSeatUseCase, DuplicateSeatUseCase {
+) : AddSeatUseCase, DuplicateSeatUseCase, MoveSeatUseCase, EditSeatUseCase, DeleteSeatUseCase {
 
     @Transactional
     override fun addSeat(command: AddSeatCommand): Seat {
@@ -58,5 +67,39 @@ open class SeatService(
 
         return seat.copy(seatIdGenerator.generate(), maxDisplayOrder + 1)
             .also { addSeatPort.addSeat(it) }
+    }
+
+    @Transactional
+    override fun moveSeat(seatId: Long, command: MoveSeatCommand) {
+        val seat = findSeatPort.findSeat(seatId) ?: throw BadRequestException()
+        val seatGroup = findSeatGroupPort.findSeatGroup(seat.groupId) ?: throw BadRequestException()
+        val site = findSitePort.findById(seatGroup.siteId.get()) ?: throw BadRequestException()
+        currentUserPort.matchCompanyId(site.companyId.get())
+
+        seat.moveTo(command.x, command.y)
+
+        editSeatPort.editSeat(seat)
+    }
+
+    @Transactional
+    override fun editSeat(seatId: Long, command: EditSeatCommand) {
+        val seat = findSeatPort.findSeat(seatId) ?: throw BadRequestException()
+        val seatGroup = findSeatGroupPort.findSeatGroup(seat.groupId) ?: throw BadRequestException()
+        val site = findSitePort.findById(seatGroup.siteId.get()) ?: throw BadRequestException()
+        currentUserPort.matchCompanyId(site.companyId.get())
+
+        seat.edit(command.name, SeatGroupId(command.newSeatGroupId))
+
+        editSeatPort.editSeat(seat)
+    }
+
+    @Transactional
+    override fun deleteSeat(seatId: Long) {
+        val seat = findSeatPort.findSeat(seatId) ?: throw BadRequestException()
+        val seatGroup = findSeatGroupPort.findSeatGroup(seat.groupId) ?: throw BadRequestException()
+        val site = findSitePort.findById(seatGroup.siteId.get()) ?: throw BadRequestException()
+        currentUserPort.matchCompanyId(site.companyId.get())
+
+        deleteSeatPort.deleteSeat(seat.id)
     }
 }

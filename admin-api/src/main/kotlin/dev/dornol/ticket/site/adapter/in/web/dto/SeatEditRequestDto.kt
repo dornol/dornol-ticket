@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.seat.request
+package dev.dornol.ticket.site.adapter.`in`.web.dto
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank

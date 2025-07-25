@@ -1,6 +1,7 @@
 package dev.dornol.ticket.site.adapter.out.jpa
 
 import dev.dornol.ticket.domain.entity.BaseEntity
+import dev.dornol.ticket.site.domain.Seat
 import jakarta.persistence.*
 import kotlin.math.min
 
@@ -39,6 +40,15 @@ class SeatEntity(
 
     fun moveTo(x: Double, y: Double) {
         offset = SeatOffsetEntity(x, y)
+    }
+
+    fun apply(seat: Seat, seatGroup: SeatGroupEntity) {
+        this.name = seat.name
+        this.seatGroup = seatGroup
+        this.offset = SeatOffsetEntity(
+            x = seat.offset.x,
+            y = seat.offset.y,
+        )
     }
 
     fun copy(newId: Long, displayOrder: Long): SeatEntity {

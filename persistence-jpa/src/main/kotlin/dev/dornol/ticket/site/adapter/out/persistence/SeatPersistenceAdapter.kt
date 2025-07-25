@@ -8,6 +8,8 @@ import dev.dornol.ticket.site.domain.Seat
 import dev.dornol.ticket.site.domain.SeatGroupId
 import dev.dornol.ticket.site.domain.SeatId
 import dev.dornol.ticket.site.port.out.AddSeatPort
+import dev.dornol.ticket.site.port.out.DeleteSeatPort
+import dev.dornol.ticket.site.port.out.EditSeatPort
 import dev.dornol.ticket.site.port.out.FindSeatPort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Repository
 class SeatPersistenceAdapter(
     private val seatEntityRepository: SeatEntityRepository,
     private val seatGroupEntityRepository: SeatGroupEntityRepository,
-) : AddSeatPort, FindSeatPort {
+) : AddSeatPort, FindSeatPort, EditSeatPort, DeleteSeatPort {
 
     override fun addSeat(seat: Seat) {
         val seatEntity = SeatEntity(
@@ -42,6 +44,21 @@ class SeatPersistenceAdapter(
                 displayOrder = it.displayOrder,
             )
         }
+    }
+
+    override fun editSeat(seat: Seat) {
+        val seatEntity = seatEntityRepository.findByIdOrNull(seat.id.get())?.alive()
+            ?: throw IllegalStateException()
+        seatEntity.apply(
+            seat = seat,
+            seatGroup = seatGroupEntityRepository.findById(seat.groupId.get()).get(),
+        )
+    }
+
+    override fun deleteSeat(id: SeatId) {
+        val seatEntity = seatEntityRepository.findByIdOrNull(id.get())?.alive()
+            ?: throw IllegalStateException()
+        seatEntity.delete()
     }
 
 }
