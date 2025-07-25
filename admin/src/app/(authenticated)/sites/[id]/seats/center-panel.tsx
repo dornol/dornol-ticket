@@ -6,6 +6,7 @@ import { SeatDto, SeatGroup, SeatOffset } from "@/lib/types/seat/seat.dto";
 import { SiteDto } from "@/lib/types/site/site.dto";
 import { QueryObserverResult, useMutation } from "@tanstack/react-query";
 import seatService from "@/lib/service/seat/seat-service";
+import fileProvideService from "@/lib/service/file/file-provide-service";
 
 export default function CenterPanel({
   site,
@@ -66,7 +67,7 @@ export default function CenterPanel({
           <div
             className="relative w-[1200px] h-[1200px] max-w-[1200px] max-h-[1200px] bg-no-repeat bg-top bg-contain"
             style={{
-              backgroundImage: `url(${site?.seatingMapLocation})`,
+              backgroundImage: `url(${site ? fileProvideService.getFileViewUrl(site.seatingMapFileUuid) : ''})`,
               backgroundSize: '100% 100%',
             }}
           >

@@ -1,2 +1,2 @@
 rootProject.name = "dornol-ticket"
-include("domain", "admin-api")
+include("domain", "application", "persistence-jpa", "admin-api")

@@ -50,8 +50,9 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:8.0")
 
     implementation("io.micrometer:micrometer-registry-prometheus")
-
+    implementation(project(":persistence-jpa"))
     implementation(project(":domain"))
+    implementation(project(":application"))
 }
 
 kotlin {

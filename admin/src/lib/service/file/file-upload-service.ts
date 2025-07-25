@@ -1,20 +1,23 @@
 import apiClient from "@/lib/axios/api";
 import { FileUploadResponseDto } from "@/lib/types/file/file.dto";
 
-const FILE_UPLOAD_URL = "/files"
+const FILE_UPLOAD_URL = (bucket: string) => `/files/${bucket}`
 
 
 class FileUploadService {
 
-  async upload(file: File): Promise<FileUploadResponseDto> {
+  async upload(bucket: string, file: File): Promise<FileUploadResponseDto> {
     const formData = new FormData();
     formData.append("file", file);
-    const res = await apiClient.post(FILE_UPLOAD_URL, formData, {
+    return apiClient.post(FILE_UPLOAD_URL(bucket), formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       }
-    });
-    return res.data;
+    })
+      .then((response) => response.data)
+      .catch((e) => {
+        console.log(e)
+      });
   }
 
 }

@@ -25,15 +25,15 @@ class AdminAuthenticationProvider(
         try {
             user = userDetailsService.loadUserByUsername(username)
         } catch (e: UsernameNotFoundException) {
-            throw BadCredentialsException(messageSource.getMessage("authentication.not-found", null, Locale.getDefault()))
+            throw BadCredentialsException(messageSource.getMessage("errors.auth.not-found", null, Locale.getDefault()))
         }
 
         if (!passwordEncoder.matches(authentication.credentials.toString(), user.password)) {
-            throw BadCredentialsException(messageSource.getMessage("authentication.not-found", null, Locale.getDefault()))
+            throw BadCredentialsException(messageSource.getMessage("errors.auth.not-found", null, Locale.getDefault()))
         }
 
         if (!user.approved) {
-            throw BadCredentialsException(messageSource.getMessage("authentication.not-approved", null, Locale.getDefault()))
+            throw BadCredentialsException(messageSource.getMessage("errors.auth.not-approved", null, Locale.getDefault()))
         }
 
         user.eraseCredentials()

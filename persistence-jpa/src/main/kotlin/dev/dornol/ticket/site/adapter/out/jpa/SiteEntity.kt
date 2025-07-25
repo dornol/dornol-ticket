@@ -1,0 +1,49 @@
+package dev.dornol.ticket.site.adapter.out.jpa
+
+import dev.dornol.ticket.domain.entity.BaseEntity
+import dev.dornol.ticket.file.adapter.out.jpa.FileMetadataEntity
+import dev.dornol.ticket.manager.adapter.out.jpa.CompanyEntity
+import jakarta.persistence.Column
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
+
+@Table(name = "site")
+@Entity
+class SiteEntity(
+    id: Long,
+    name: String,
+    address: AddressEntity,
+    company: CompanyEntity,
+    seatingMapFile: FileMetadataEntity,
+) : BaseEntity(id) {
+
+    @Column(length = 100, nullable = false)
+    var name: String = name
+        protected set
+
+    @Embedded
+    var address: AddressEntity = address
+        protected set
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, updatable = false)
+    val company: CompanyEntity = company
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seating_map_file_id", nullable = false)
+    var seatingMapFile: FileMetadataEntity = seatingMapFile
+        protected set
+
+    fun edit(name: String, address: AddressEntity, seatingMapFile: FileMetadataEntity?) {
+        this.name = name
+        this.address = address
+        if (seatingMapFile != null) {
+            this.seatingMapFile = seatingMapFile
+        }
+    }
+
+}

@@ -15,6 +15,7 @@ import { Address as DaumAddress } from "react-daum-postcode/lib/loadPostcode";
 import { SiteAddRequestDto, SiteDto } from "@/lib/types/site/site.dto";
 import FileFormItem from "@/components/common/file-form-item";
 import { FileUploadResponseDto } from "@/lib/types/file/file.dto";
+import fileProvideService from "@/lib/service/file/file-provide-service";
 
 const siteDefaultFormSchema = {
   name: z.string()
@@ -36,13 +37,13 @@ const siteDefaultFormSchema = {
 
 const siteAddFormSchema = z.object({
   ...siteDefaultFormSchema,
-  seatingMapFileId: z.string()
+  seatingMapFileUuid: z.string()
     .nonempty({ message: "좌석 배치도를 업로드해주세요." })
 });
 
 const siteEditFormSchema = z.object({
   ...siteDefaultFormSchema,
-  seatingMapFileId: z.string()
+  seatingMapFileUuid: z.string()
 });
 
 export default function SiteForm({
@@ -67,7 +68,7 @@ export default function SiteForm({
         mainAddress: "",
         detailAddress: "",
       },
-      seatingMapFileId: "",
+      seatingMapFileUuid: "",
       ...site,
     },
   });
@@ -81,7 +82,7 @@ export default function SiteForm({
   }
 
   const onFileUpload = (data: FileUploadResponseDto) => {
-    form.setValue("seatingMapFileId", data.id);
+    form.setValue("seatingMapFileUuid", data.uuid);
   }
 
   return (
@@ -150,9 +151,9 @@ export default function SiteForm({
 
           <FormField
             control={form.control}
-            name="seatingMapFileId"
+            name="seatingMapFileUuid"
             render={() => (
-              <FileFormItem accept="image/*" onUpload={onFileUpload} defaultLocation={site?.seatingMapLocation} />
+              <FileFormItem accept="image/*" onUpload={onFileUpload} defaultLocation={site && fileProvideService.getFileViewUrl(site.seatingMapFileUuid)} />
             )}
           />
 

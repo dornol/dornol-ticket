@@ -6,9 +6,10 @@ import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceReposit
 import dev.dornol.ticket.admin.api.app.repository.performance.PerformanceScheduleRepository
 import dev.dornol.ticket.admin.api.app.repository.site.SiteRepository
 import dev.dornol.ticket.admin.api.app.service.common.SecurityService
-import dev.dornol.ticket.admin.api.config.exception.common.BadRequestException
 import dev.dornol.ticket.admin.api.util.alive
-import dev.dornol.ticket.domain.entity.performance.PerformanceSchedule
+import dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator
+import dev.dornol.ticket.common.exception.BadRequestException
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleEntity
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -23,6 +24,7 @@ class PerformanceScheduleService(
     private val siteRepository: SiteRepository,
     private val securityService: SecurityService
 ) {
+    private val generator = SnowFlakeIdGenerator()
 
     @Transactional(readOnly = true)
     fun search(searchDto: PerformanceScheduleSearchDto, pageable: Pageable) =
@@ -32,7 +34,7 @@ class PerformanceScheduleService(
     fun findWithDetailsById(scheduleId: Long): PerformanceScheduleDetailDto {
         val schedule =
             performanceScheduleRepository.findWithDetailsById(scheduleId)?.alive() ?: throw BadRequestException()
-        securityService.assertCompanyId(schedule.performance.company.id!!)
+        securityService.assertCompanyId(schedule.performance.company.id)
 
         return PerformanceScheduleDetailDto(schedule)
     }
@@ -43,13 +45,14 @@ class PerformanceScheduleService(
         siteId: Long,
         performanceDate: LocalDate,
         performanceTime: LocalTime
-    ): PerformanceSchedule {
+    ): PerformanceScheduleEntity {
         val performance = performanceRepository.findByIdOrNull(performanceId)?.alive() ?: throw BadRequestException()
         val site = siteRepository.findByIdOrNull(siteId)?.alive() ?: throw BadRequestException()
-        securityService.assertCompanyId(performance.company.id!!)
-        securityService.assertCompanyId(site.company.id!!)
+        securityService.assertCompanyId(performance.company.id)
+        securityService.assertCompanyId(site.company.id)
 
-        return PerformanceSchedule(
+        return PerformanceScheduleEntity(
+            id = generator.generate(),
             performance = performance,
             site = site,
             performanceDate = performanceDate,
@@ -78,11 +81,11 @@ class PerformanceScheduleService(
 
     private fun findValidSchedule(
         performanceScheduleId: Long,
-    ): PerformanceSchedule {
+    ): PerformanceScheduleEntity {
         val schedule =
             performanceScheduleRepository.findByIdOrNull(performanceScheduleId)?.alive() ?: throw BadRequestException()
-        securityService.assertCompanyId(schedule.performance.company.id!!)
-        securityService.assertCompanyId(schedule.site.company.id!!)
+        securityService.assertCompanyId(schedule.performance.company.id)
+        securityService.assertCompanyId(schedule.site.company.id)
 
         return schedule
     }
