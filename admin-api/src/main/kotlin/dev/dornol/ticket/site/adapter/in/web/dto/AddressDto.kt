@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.site.response
+package dev.dornol.ticket.site.adapter.`in`.web.dto
 
 import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
 import jakarta.validation.constraints.NotBlank

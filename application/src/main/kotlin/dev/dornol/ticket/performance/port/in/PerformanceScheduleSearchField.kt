@@ -1,4 +1,4 @@
-package dev.dornol.ticket.admin.api.app.dto.performance.request
+package dev.dornol.ticket.performance.port.`in`
 
 enum class PerformanceScheduleSearchField {
     PERFORMANCE_NAME,

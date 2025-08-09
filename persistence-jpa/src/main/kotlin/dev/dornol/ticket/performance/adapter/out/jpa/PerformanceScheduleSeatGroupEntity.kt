@@ -8,7 +8,7 @@ import jakarta.persistence.*
 
 @Table(name = "performance_schedule_seat_group")
 @Entity
-class PerformanceScheduleSeatGroup(
+class PerformanceScheduleSeatGroupEntity(
     id: Long,
     performanceSchedule: PerformanceScheduleEntity,
     seatGroup: SeatGroupEntity,

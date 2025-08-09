@@ -5,7 +5,7 @@ import dev.dornol.ticket.domain.converter.MoneyConverter
 import dev.dornol.ticket.domain.converter.enums.CancelReasonConverter
 import dev.dornol.ticket.domain.converter.enums.ReservationStatusConverter
 import dev.dornol.ticket.domain.entity.BaseEntity
-import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleSeatGroup
+import dev.dornol.ticket.performance.adapter.out.jpa.PerformanceScheduleSeatGroupEntity
 import dev.dornol.ticket.reservation.domain.CancelReason
 import dev.dornol.ticket.reservation.domain.ReservationStatus
 import dev.dornol.ticket.site.adapter.out.jpa.SeatEntity
@@ -15,7 +15,7 @@ import jakarta.persistence.*
 @Entity
 class ReservationEntity(
     id: Long,
-    scheduleSeatGroup: PerformanceScheduleSeatGroup,
+    scheduleSeatGroup: PerformanceScheduleSeatGroupEntity,
     seat: SeatEntity,
     price: Money,
     state: ReservationStatus = ReservationStatus.PENDING_PAYMENT,
@@ -35,7 +35,7 @@ class ReservationEntity(
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "schedule_seat_group_id", nullable = false, updatable = false)
-    val scheduleSeatGroup: PerformanceScheduleSeatGroup = scheduleSeatGroup
+    val scheduleSeatGroup: PerformanceScheduleSeatGroupEntity = scheduleSeatGroup
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "seat_id", nullable = false, updatable = false)

@@ -2,6 +2,7 @@ package dev.dornol.ticket.admin.api.app.dto.site.response
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
+import dev.dornol.ticket.site.adapter.`in`.web.dto.AddressDto
 import java.util.*
 
 data class SiteDto(

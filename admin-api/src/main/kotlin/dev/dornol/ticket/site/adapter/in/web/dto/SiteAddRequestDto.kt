@@ -1,6 +1,6 @@
 package dev.dornol.ticket.site.adapter.`in`.web.dto
 
-import dev.dornol.ticket.admin.api.app.dto.site.response.AddressDto
+import dev.dornol.ticket.site.adapter.`in`.web.dto.AddressDto
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
