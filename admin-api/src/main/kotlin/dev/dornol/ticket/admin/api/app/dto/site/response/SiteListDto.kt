@@ -1,19 +1,19 @@
 package dev.dornol.ticket.admin.api.app.dto.site.response
 
 import com.querydsl.core.annotations.QueryProjection
-import dev.dornol.ticket.domain.entity.site.address.Address
+import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
 
 data class SiteListDto(
     val id: String,
     val name: String,
-    val address: Address,
+    val address: AddressEntity,
     val companyId: String
 ) {
     @QueryProjection
     constructor(
         id: Long,
         name: String,
-        address: Address,
+        address: AddressEntity,
         companyId: Long
     ) : this(id.toString(), name, address, companyId.toString())
 }

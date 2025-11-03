@@ -3,7 +3,7 @@ package dev.dornol.ticket.admin.api.app.repository.performance
 import com.querydsl.core.types.dsl.StringPath
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceScheduleSearchDto
-import dev.dornol.ticket.admin.api.app.dto.performance.request.PerformanceScheduleSearchField
+import dev.dornol.ticket.performance.port.`in`.PerformanceScheduleSearchField
 import dev.dornol.ticket.admin.api.app.dto.performance.response.PerformanceScheduleListDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.QPerformanceListDto
 import dev.dornol.ticket.admin.api.app.dto.performance.response.QPerformanceScheduleListDto
@@ -11,9 +11,9 @@ import dev.dornol.ticket.admin.api.app.dto.site.response.QSiteListDto
 import dev.dornol.ticket.admin.api.util.sort
 import dev.dornol.ticket.admin.api.util.textSearch
 import dev.dornol.ticket.admin.api.util.toOrderBy
-import dev.dornol.ticket.domain.entity.performance.QPerformance.performance
-import dev.dornol.ticket.domain.entity.performance.QPerformanceSchedule.performanceSchedule
-import dev.dornol.ticket.domain.entity.site.QSite.site
+import dev.dornol.ticket.performance.adapter.out.jpa.QPerformanceEntity.performanceEntity as performance
+import dev.dornol.ticket.performance.adapter.out.jpa.QPerformanceScheduleEntity.performanceScheduleEntity as performanceSchedule
+import dev.dornol.ticket.site.adapter.out.jpa.QSiteEntity.siteEntity as site
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

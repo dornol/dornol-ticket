@@ -10,6 +10,7 @@ import Lightbox from "yet-another-react-lightbox";
 
 import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
+import fileProvideService from "@/lib/service/file/file-provide-service";
 
 export default function FileFormItem({
   accept = "image/*",
@@ -27,11 +28,11 @@ export default function FileFormItem({
   const handleFileUpload = async (file: File) => {
     setUploading(true);
 
-    const data = await fileUploadService.upload(file)
+    const data = await fileUploadService.upload('site', file)
 
-    if (data?.key) {
+    if (data?.uuid) {
       onUpload(data)
-      setPreviewUrl(data.location); // optional: 미리보기용 URL
+      setPreviewUrl(fileProvideService.getFileViewUrl(data.uuid)); // optional: 미리보기용 URL
     } else {
       Dialog.alert("파일 업로드 실패");
     }

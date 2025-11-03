@@ -14,14 +14,14 @@ export interface Address {
 export interface SiteAddRequestDto {
   name: string;
   address: Address;
-  seatingMapFileId?: string;
+  seatingMapFileUuid?: string;
 }
 
 export interface SiteDto {
   id: string;
   name: string;
   address: Address;
-  seatingMapLocation: string;
+  seatingMapFileUuid: string;
 }
 
 export interface SeatEditRequestDto {

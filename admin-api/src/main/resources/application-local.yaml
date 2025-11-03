@@ -8,6 +8,8 @@ spring:
     enabled: true
 
   jpa:
+    hibernate:
+      ddl-auto: validate
     show-sql: true
 
   data:

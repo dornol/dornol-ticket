@@ -1,0 +1,19 @@
+package dev.dornol.ticket.site.adapter.`in`.web.dto
+
+import dev.dornol.ticket.site.adapter.out.jpa.AddressEntity
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+
+data class AddressDto(
+    @field:Size(max = 5)
+    @field:NotBlank
+    val zipCode: String?,
+    @field:NotBlank
+    @field:Size(max = 255)
+    val mainAddress: String,
+    @field:NotBlank
+    @field:Size(max = 255)
+    val detailAddress: String,
+) {
+    fun toEntity() = AddressEntity(zipCode, mainAddress, detailAddress)
+}

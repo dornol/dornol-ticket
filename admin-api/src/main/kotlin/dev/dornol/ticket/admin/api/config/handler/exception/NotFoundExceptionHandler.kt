@@ -1,7 +1,7 @@
 package dev.dornol.ticket.admin.api.config.handler.exception
 
-import dev.dornol.ticket.admin.api.app.constants.ERRORS_NOT_FOUND
 import dev.dornol.ticket.admin.api.config.message.MessageResolver
+import dev.dornol.ticket.common.exception.ExceptionCode
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
@@ -21,7 +21,7 @@ class NotFoundExceptionHandler(
 ) : AbstractExceptionHandler(messageResolver) {
 
     @ExceptionHandler(NoResourceFoundException::class)
-    fun handleException(e: Exception) = errorResponse(ERRORS_NOT_FOUND).also {
+    fun handleException(e: Exception) = errorResponse(ExceptionCode.RESOURCE_NOT_FOUND.messageCode).also {
         log.debug(e) { "no resource found exception: $e" }
     }
 }

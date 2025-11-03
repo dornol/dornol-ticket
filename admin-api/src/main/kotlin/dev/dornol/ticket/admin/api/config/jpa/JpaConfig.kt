@@ -9,7 +9,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
-@EnableJpaRepositories(basePackages = ["dev.dornol.ticket.admin.api.app.repository"])
+@EnableJpaRepositories(
+    basePackages = [
+        "dev.dornol.ticket.admin.api.app.repository",
+        "dev.dornol.ticket.file.adapter.out.persistence",
+        "dev.dornol.ticket.manager.adapter.out.persistence",
+        "dev.dornol.ticket.site.adapter.out.persistence",
+        "dev.dornol.ticket.performance.adapter.out.persistence",
+    ]
+)
 @EntityScan(basePackages = ["dev.dornol.ticket"])
 @EnableJpaAuditing
 class JpaConfig(
@@ -20,6 +28,7 @@ class JpaConfig(
     @PostConstruct
     fun initSnowFlakeGenerator() {
         SnowFlakeIdGenerator.initialize(nodeId)
+        dev.dornol.ticket.common.domain.id.SnowFlakeIdGenerator.initialize(nodeId)
     }
 
 }
